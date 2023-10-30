@@ -7,6 +7,7 @@ require("dotenv").config();
 const student = require("./Router/StudentAuth");
 const form = require("./Router/FormAuth");
 const hello = require("./Router/HelloRouter");
+const faculty = require("./Router/Faculty/FacultyAuthRouter");
 // middlewares
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(student);
 app.use(form);
 app.use(hello);
+app.use(faculty);
 
 //connecting to the database
 mongoose
