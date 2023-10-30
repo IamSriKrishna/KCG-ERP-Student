@@ -42,55 +42,57 @@ class _FromToWidgetState extends State<FromToWidget> {
             },
             child: SizedBox(
               height: double.infinity,
-              width: MediaQuery.of(context).size.width * 0.373,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    S.current.from,
-                    style: GoogleFonts.merriweather(
-                      color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
-                      fontSize: 18
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.alarm,
+              width: MediaQuery.of(context).size.width * 0.38,
+              child: FittedBox(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      S.current.from,
+                      style: GoogleFonts.merriweather(
                         color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                        fontSize: 18
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: RobotoBoldFont(
-                          text:
-                              '${widget.selectedFrom.hour}:${widget.selectedFrom.minute}',
-                          size: 25,
-                          textColor: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.alarm,
+                          color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
                         ),
-                      ),
-                      widget.selectedFrom.hour >= 12
-                          ?
-                          Text(
-                            'Pm',
-                            style: GoogleFonts.merriweather(
-                              color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
-                            ),
-                          )
-                          : Text(
-                            'Am',
-                            style: GoogleFonts.merriweather(
-                              color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
-                            ),
-                          )
-                    ],
-                  ),
-                  const Divider(
-                    indent: 25,
-                    endIndent: 25,
-                    thickness: 2,
-                  )
-                ],
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RobotoBoldFont(
+                            text:
+                                '${widget.selectedFrom.hour}:${widget.selectedFrom.minute}',
+                            size: 25,
+                            textColor: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                          ),
+                        ),
+                        widget.selectedFrom.hour >= 12
+                            ?
+                            Text(
+                              'Pm',
+                              style: GoogleFonts.merriweather(
+                                color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                              ),
+                            )
+                            : Text(
+                              'Am',
+                              style: GoogleFonts.merriweather(
+                                color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                              ),
+                            )
+                      ],
+                    ),
+                    const Divider(
+                      indent: 25,
+                      endIndent: 25,
+                      thickness: 2,
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -109,55 +111,57 @@ class _FromToWidgetState extends State<FromToWidget> {
             },
             child: SizedBox(
               height: double.infinity,
-              width: MediaQuery.of(context).size.width * 0.373,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    S.current.to,
-                    style: GoogleFonts.merriweather(
-                      color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
-                      fontSize: 18
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.alarm,
+              width: MediaQuery.of(context).size.width * 0.38,
+              child: FittedBox(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      S.current.to,
+                      style: GoogleFonts.merriweather(
                         color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                        fontSize: 18
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: RobotoBoldFont(
-                          text:
-                              '${widget.selectedTo.hour}:${widget.selectedTo.minute}',
-                          size: 25,
-                          textColor: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
-                        ),
-                      ),
-                      widget.selectedTo.hour >= 12
-                      ?
-                      Text(
-                        'Pm',
-                        style: GoogleFonts.merriweather(
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.alarm,
                           color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
                         ),
-                      )
-                      : Text(
-                        'Am',
-                        style: GoogleFonts.merriweather(
-                          color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RobotoBoldFont(
+                            text:
+                                '${widget.selectedTo.hour}:${widget.selectedTo.minute}',
+                            size: 25,
+                            textColor: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                          ),
                         ),
-                      )
-                    ],
-                  ),
-                  const Divider(
-                    indent: 25,
-                    endIndent: 25,
-                    thickness: 2,
-                  )
-                ],
+                        widget.selectedTo.hour >= 12
+                        ?
+                        Text(
+                          'Pm',
+                          style: GoogleFonts.merriweather(
+                            color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                          ),
+                        )
+                        : Text(
+                          'Am',
+                          style: GoogleFonts.merriweather(
+                            color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                          ),
+                        )
+                      ],
+                    ),
+                    const Divider(
+                      indent: 25,
+                      endIndent: 25,
+                      thickness: 2,
+                    )
+                  ],
+                ),
               ),
             ),
           ),

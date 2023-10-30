@@ -9,6 +9,7 @@ import 'package:kcgerp/Feature/Screen/OverScreen/Profile/Widget/LanguageScreen.d
 import 'package:kcgerp/Provider/StudenProvider.dart';
 import 'package:kcgerp/Util/util.dart';
 import 'package:kcgerp/Widget/Additional/ProfileWidget.dart';
+import 'package:kcgerp/Widget/CupertinoWidgets/CustomCupertinoModalpop.dart';
 import 'package:kcgerp/l10n/AppLocalization.dart';
 import 'package:provider/provider.dart';
 class ProfileBottomWidget extends StatefulWidget {
@@ -58,7 +59,9 @@ class _ProfileBottomWidgetState extends State<ProfileBottomWidget> {
               title: 'Personal Information', 
               description: "This is your space to control account settings, update your profile, and review your activity on our platform.", 
               child: ProfileWidget(
-                onTap: (){}, 
+                onTap: (){
+                  CustomCupertinoModalPop(context: context, content: S.current.development);
+                }, 
                 title: S.current.myProfile, 
                 iconColor: Color.fromRGBO(130, 194, 233, 1), 
                 color: Color.fromRGBO(214, 230, 242, 1), 

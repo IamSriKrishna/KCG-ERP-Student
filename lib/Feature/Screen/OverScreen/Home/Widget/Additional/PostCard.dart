@@ -1,4 +1,5 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -6,6 +7,7 @@ import 'package:kcgerp/Provider/DarkThemeProvider.dart';
 import 'package:kcgerp/Provider/StudenProvider.dart';
 import 'package:kcgerp/Util/util.dart';
 import 'package:kcgerp/Widget/Additional/likeAnimation.dart';
+import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:provider/provider.dart';
 
 class PostCard extends StatefulWidget {
@@ -89,11 +91,16 @@ class _PostCardState extends State<PostCard> {
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.35,
+                      height: MediaQuery.of(context).size.height * 0.32,
                       width: double.infinity,
-                      child: Image.network(
-                        'https://www.kcgtech.in/assets/img/intro-bg.jpg',
-                        fit: BoxFit.cover,
+                      child: PinchZoom(
+                        maxScale: 3,
+                        child: CachedNetworkImage(
+                          imageUrl: 'https://www.kcgtech.in/assets/img/intro-bg.jpg',
+                          progressIndicatorBuilder: (context, url, downloadProgress) => 
+                            Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                          errorWidget: (context, url, error) => Icon(Icons.error),
+                        ),
                       ),
                     ),
                     AnimatedOpacity(

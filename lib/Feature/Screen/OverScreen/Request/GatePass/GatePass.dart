@@ -3,11 +3,12 @@ import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kcgerp/Feature/Service/Credit.dart';
+import 'package:kcgerp/Feature/Service/FormService.dart';
 import 'package:kcgerp/Provider/DarkThemeProvider.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/GatePass/GatePassHistory.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/Widget/ApprovalButton.dart';
-import 'package:kcgerp/Feature/Screen/OverScreen/Request/Widget/FromToWidget.dart';
 import 'package:kcgerp/Provider/StudenProvider.dart';
+import 'package:kcgerp/Util/FontStyle/RobotoBoldFont.dart';
 import 'package:kcgerp/Util/util.dart';
 import 'package:kcgerp/l10n/AppLocalization.dart';
 import 'package:provider/provider.dart';
@@ -27,9 +28,40 @@ class _GatePassScreenState extends State<GatePassScreen> {
   TimeOfDay selectedFrom = TimeOfDay.now();
   TimeOfDay selectedTo = TimeOfDay.now();
   StudentCredit studentCredit = StudentCredit();
+  FormService _formService = FormService();
+  void leave({
+    required String rollno,
+    required String name,
+    required String department,
+    required String image,
+    required String year,
+    required String Studentclass,
+    required String reason,
+    required String id,
+    required int spent,
+    required String from,
+    required String to,
+  }){
+    _formService.UploadForm(
+      context: context, 
+      rollno: rollno, 
+      name: name, 
+      department: department, 
+      image: image, 
+      year: year, 
+      formtype: 'Gate Pass', 
+      Studentclass: Studentclass, 
+      reason: reason, 
+      no_of_days: 0, 
+      from: from, 
+      to: to, 
+      createdAt: DateTime.now(), 
+      id: id, 
+      spent: spent
+    );
+  }
   @override
   void initState() {
-    widget.locale;
     super.initState();
   }
   @override
@@ -99,7 +131,6 @@ class _GatePassScreenState extends State<GatePassScreen> {
               dayTextStyle: GoogleFonts.merriweather(
                 color: theme.getDarkTheme?Colors.white:themeColor.appBarColor,
               ),
-              locale: widget.locale,
             )
           ),
           const Divider(
@@ -108,7 +139,152 @@ class _GatePassScreenState extends State<GatePassScreen> {
             thickness: 2,
           ),
           //From-To
-          FromToWidget(selectedFrom: selectedFrom, selectedTo: selectedTo),
+          Container(
+      padding: const EdgeInsets.all(15),
+      height: MediaQuery.of(context).size.height * 0.16,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: () async {
+              final TimeOfDay? timeOfDay = await showTimePicker(
+                  context: context,
+                  initialTime: selectedFrom,
+                  initialEntryMode: TimePickerEntryMode.dialOnly);
+              if (timeOfDay != null) {
+                setState(() {
+                  selectedFrom = timeOfDay;
+                });
+              }
+            },
+            child: SizedBox(
+              height: double.infinity,
+              width: MediaQuery.of(context).size.width * 0.38,
+              child: FittedBox(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      S.current.from,
+                      style: GoogleFonts.merriweather(
+                        color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                        fontSize: 18
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.alarm,
+                          color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RobotoBoldFont(
+                            text:
+                                '${selectedFrom.hour}:${selectedFrom.minute}',
+                            size: 25,
+                            textColor: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                          ),
+                        ),
+                        selectedFrom.hour >= 12
+                            ?
+                            Text(
+                              'Pm',
+                              style: GoogleFonts.merriweather(
+                                color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                              ),
+                            )
+                            : Text(
+                              'Am',
+                              style: GoogleFonts.merriweather(
+                                color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                              ),
+                            )
+                      ],
+                    ),
+                    const Divider(
+                      indent: 25,
+                      endIndent: 25,
+                      thickness: 2,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Expanded(child: Image.asset(assetImage.requestForm2)),
+          GestureDetector(
+            onTap: () async {
+              final TimeOfDay? timeOfDay = await showTimePicker(
+                  context: context,
+                  initialTime: selectedTo,
+                  initialEntryMode: TimePickerEntryMode.dialOnly);
+              if (timeOfDay != null) {
+                setState(() {
+                  selectedTo = timeOfDay;
+                });
+              }
+            },
+            child: SizedBox(
+              height: double.infinity,
+              width: MediaQuery.of(context).size.width * 0.38,
+              child: FittedBox(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      S.current.to,
+                      style: GoogleFonts.merriweather(
+                        color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                        fontSize: 18
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.alarm,
+                          color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RobotoBoldFont(
+                            text:
+                                '${selectedTo.hour}:${selectedTo.minute}',
+                            size: 25,
+                            textColor: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                          ),
+                        ),
+                        selectedTo.hour >= 12
+                        ?
+                        Text(
+                          'Pm',
+                          style: GoogleFonts.merriweather(
+                            color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                          ),
+                        )
+                        : Text(
+                          'Am',
+                          style: GoogleFonts.merriweather(
+                            color: theme.getDarkTheme?themeColor.backgroundColor:themeColor.appBarColor,
+                          ),
+                        )
+                      ],
+                    ),
+                    const Divider(
+                      indent: 25,
+                      endIndent: 25,
+                      thickness: 2,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
           //Send Request message
           Padding(
             padding: const EdgeInsets.all(20.0),
@@ -146,6 +322,19 @@ class _GatePassScreenState extends State<GatePassScreen> {
                 studentCredit.updateStudentCreditToZero(student.id, 0);
               }
               else{
+                leave(
+                  rollno: student.rollno, 
+                  name: student.name, 
+                  department: student.department, 
+                  image: student.dp, 
+                  year: student.year, 
+                  Studentclass: 'NULL', 
+                  reason: message.text, 
+                  id: student.id, 
+                  spent: credit, 
+                  from: '${selectedFrom.hour}:${selectedFrom.minute}', 
+                  to: '${selectedTo.hour}:${selectedTo.minute}'
+                );
                 studentCredit.updateStudentCredit(student.id, credit);
               }
             

@@ -32,14 +32,7 @@ class _RequestScreenState extends State<RequestScreen> {
       
     });
   }
-  @override
-  void didChangeDependencies() {
-    LoadUp();
-    setState(() {
-      
-    });
-    super.didChangeDependencies();
-  }
+
   final List<Approval> approval = [
     Approval(
       credit:100,

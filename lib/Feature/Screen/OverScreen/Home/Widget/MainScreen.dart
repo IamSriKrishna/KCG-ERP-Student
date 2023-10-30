@@ -26,8 +26,9 @@ class MainScreen extends StatelessWidget {
         }, 
         body:ListView.builder(
           itemCount: 1,
-                itemBuilder:(context, index) => PostCard(),
-              ),
+          physics: BouncingScrollPhysics(),
+            itemBuilder:(context, index) => PostCard(),
+          ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kcgerp/Constrains/Component.dart';
 import 'package:kcgerp/Provider/DarkThemeProvider.dart';
@@ -100,17 +101,15 @@ class _ProBackgroundState extends State<ProBackground> {
           )
         ),
         Align(
-          alignment: Alignment(0.0, -0.8),
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.15,
-            width: MediaQuery.of(context).size.width * 0.25,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: NetworkImage(student.user.dp))
+          alignment: Alignment(0.0, -0.75),
+          child: ClipOval(
+            child: CachedNetworkImage(
+              imageUrl: student.user.dp,
+              width: MediaQuery.of(context).size.width * 0.23, // Adjust the width and height as needed
+              height: MediaQuery.of(context).size.height * 0.115,
+              fit: BoxFit.cover, // You can choose how the image fits within the circle
             ),
-          )
-        ),
+          ),),
         Align(
           alignment: Alignment(0.0, -0.5),
           child: RobotoMediumFont(

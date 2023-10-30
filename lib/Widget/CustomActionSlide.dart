@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/Leave/LeaveWidget/LeaveExpand.dart';
 import 'package:kcgerp/Feature/Service/Credit.dart';
 import 'package:kcgerp/Provider/StudenProvider.dart';
+import 'package:kcgerp/l10n/AppLocalization.dart';
 import 'package:provider/provider.dart';
 
 class LeaveCustomActionButton extends StatefulWidget {
@@ -43,11 +44,11 @@ class _LeaveCustomActionButtonState extends State<LeaveCustomActionButton> {
                 context: context, 
                 builder:(context) => CupertinoAlertDialog(
                   title: Text(
-                    'Warning!',
+                    S.current.warning,
                     style: GoogleFonts.merriweather()
                   ),
                   content: Text(
-                    'Please Select 1 or More days to continue',
+                    S.current.pleaseselectoneormoredaystocontinue,
                     style: GoogleFonts.merriweather()
                   ),
                   actions: [
@@ -56,7 +57,7 @@ class _LeaveCustomActionButtonState extends State<LeaveCustomActionButton> {
                         Navigator.pop(context);
                       }, 
                     child: Text(
-                      'OK',
+                      S.current.ok,
                       style: GoogleFonts.merriweather(),
                     )
                   )
@@ -69,11 +70,11 @@ class _LeaveCustomActionButtonState extends State<LeaveCustomActionButton> {
                 context: context, 
                 builder:(context) => CupertinoAlertDialog(
                   title: Text(
-                    'Warning!',
+                    S.current.warning,
                     style: GoogleFonts.merriweather()
                   ),
                   content: Text(
-                    'Kindly Refill your credit',
+                    S.current.kindlyrefillyourcredit,
                     style: GoogleFonts.merriweather()
                   ),
                   actions: [
@@ -82,7 +83,7 @@ class _LeaveCustomActionButtonState extends State<LeaveCustomActionButton> {
                         Navigator.pop(context);
                       }, 
                     child: Text(
-                      'OK',
+                      S.current.ok,
                       style: GoogleFonts.merriweather(),
                     )
                   )
@@ -115,7 +116,7 @@ class _LeaveCustomActionButtonState extends State<LeaveCustomActionButton> {
             borderRadius: BorderRadius.circular(10)
           ),
             child: Text(
-              'Continue',
+              S.current.continues,
               style: GoogleFonts.merriweather(
                 color: Colors.white
               ),
@@ -151,11 +152,11 @@ class NullCustomActionButton extends StatelessWidget {
                 context: context, 
                 builder:(context) => CupertinoAlertDialog(
                   title: Text(
-                    'Warning!',
+                    S.current.warning,
                     style: GoogleFonts.merriweather()
                   ),
                   content: Text(
-                    'Please Select 1 or More days to continue',
+                    S.current.pleaseselectoneormoredaystocontinue,
                     style: GoogleFonts.merriweather()
                   ),
                   actions: [
@@ -164,7 +165,7 @@ class NullCustomActionButton extends StatelessWidget {
                         Navigator.pop(context);
                       }, 
                     child: Text(
-                      'OK',
+                      S.current.ok,
                       style: GoogleFonts.merriweather(),
                     )
                   )
@@ -177,11 +178,11 @@ class NullCustomActionButton extends StatelessWidget {
                 context: context, 
                 builder:(context) => CupertinoAlertDialog(
                   title: Text(
-                    'Warning!',
+                    S.current.warning,
                     style: GoogleFonts.merriweather()
                   ),
                   content: Text(
-                    'Kindly Refill your credit',
+                    S.current.kindlyrefillyourcredit,
                     style: GoogleFonts.merriweather()
                   ),
                   actions: [
@@ -190,7 +191,7 @@ class NullCustomActionButton extends StatelessWidget {
                         Navigator.pop(context);
                       }, 
                     child: Text(
-                      'OK',
+                      S.current.ok,
                       style: GoogleFonts.merriweather(),
                     )
                   )
@@ -210,7 +211,7 @@ class NullCustomActionButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
-            'Continue',
+            S.current.continues,
             style: GoogleFonts.merriweather(
               color: Colors.white
             ),

@@ -74,7 +74,7 @@ class _ODCustomActionSlideButtonState extends State<ODCustomActionSlideButton> {
                     style: GoogleFonts.merriweather()
                   ),
                   content: Text(
-                    S.current.warning,
+                    S.current.kindlyrefillyourcredit,
                     style: GoogleFonts.merriweather()
                   ),
                   actions: [

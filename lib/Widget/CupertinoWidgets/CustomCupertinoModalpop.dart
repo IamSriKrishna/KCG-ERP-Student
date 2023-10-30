@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kcgerp/l10n/AppLocalization.dart';
 
 void CustomCupertinoModalPop({
   required BuildContext context,
@@ -10,7 +11,7 @@ void CustomCupertinoModalPop({
     context: context, 
     builder:(context) => CupertinoAlertDialog(
       title: Text(
-        'Warning!',
+        S.current.warning,
         style: GoogleFonts.merriweather()
       ),
       content: Text(
@@ -23,7 +24,7 @@ void CustomCupertinoModalPop({
             Navigator.pop(context);
           }, 
         child: Text(
-          'OK',
+          S.current.ok,
           style: GoogleFonts.merriweather(),
         )
       )
