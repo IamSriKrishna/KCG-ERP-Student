@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoRegularFont.dart';
 
-showSnackBar({required BuildContext context,required String text}){
+void showSnackBar({required BuildContext context,required String text}){
   
-  return ScaffoldMessenger.of(context).showSnackBar(
+  ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       duration: const Duration(seconds: 5),
       padding: const EdgeInsets.all(10),

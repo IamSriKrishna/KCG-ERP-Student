@@ -143,7 +143,7 @@ class AuthService{
         userProvider.setUser(userRes.body);
       }
     } catch (e) {
-      showSnackBar(context:context,text: e.toString());
+      print(e);
     }
   }
 

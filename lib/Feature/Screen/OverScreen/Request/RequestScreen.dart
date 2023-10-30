@@ -9,7 +9,6 @@ import 'package:kcgerp/Feature/Screen/OverScreen/Request/Widget/CustomApprovalWi
 import 'package:kcgerp/Util/util.dart';
 import 'package:kcgerp/Widget/CustomSliverAppbar.dart/CustomApprovalSliverAppBar.dart';
 import 'package:kcgerp/l10n/AppLocalization.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 
 class RequestScreen extends StatefulWidget {
@@ -80,7 +79,7 @@ class _RequestScreenState extends State<RequestScreen> {
       ),  
     ),
   ];
-  Future<void> onRefresh()async{
+  Future<void> OnRefresh()async{
     LoadUp();
     setState(() {
       
@@ -100,8 +99,8 @@ class _RequestScreenState extends State<RequestScreen> {
             )
           ];
         },
-        body: LiquidPullToRefresh(
-          onRefresh: onRefresh,
+        body: RefreshIndicator(
+          onRefresh: OnRefresh,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal:10.0),
             child: GridView.builder(

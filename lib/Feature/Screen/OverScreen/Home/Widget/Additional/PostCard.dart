@@ -152,11 +152,6 @@ class _PostCardState extends State<PostCard> {
                     ),
                     onPressed: () {}
                   ),
-                  IconButton(
-                      icon: const Icon(
-                        Icons.send,
-                      ),
-                      onPressed: () {}),
                   Expanded(
                       child: Align(
                     alignment: Alignment.bottomRight,
