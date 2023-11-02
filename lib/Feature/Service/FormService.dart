@@ -32,8 +32,9 @@ class FormService{
     required String from,
     required String to,
     required DateTime createdAt,
-    required String id,
-    required int spent
+    required String studentid,
+    required int spent,
+    required String fcmtoken
   }
   )async{
     try {
@@ -57,8 +58,10 @@ class FormService{
     }
       FormModel user = FormModel(
         spent:spent,
-        id: id,
+        id: '',
+        studentid: studentid,
         name: name, 
+        fcmtoken: fcmtoken,
         rollno: rollno, 
         department: department, 
         dp: image, 
@@ -86,14 +89,12 @@ class FormService{
         context: context,
         onSuccess: () {
           LocalNotifications.showSimpleNotification(
-                    title: 'Campus~Link',
-                    body: "Form Request Successfully Sent\nCheck History",
-                  ).then((value) => Navigator.pushNamedAndRemoveUntil(context, OverScreen.route, (route) => false).then((value) => showSnackBar(
+            title: 'Campus~Link',
+            body: "Form Request Successfully Sent\nCheck History",
+          ).then((value) => Navigator.pushNamedAndRemoveUntil(context, OverScreen.route, (route) => false).then((value) => showSnackBar(
             context:context,
             text:'Account created! Login with the same credentials!',
           )));
-          
-          
         },
       );
     } catch (e) {

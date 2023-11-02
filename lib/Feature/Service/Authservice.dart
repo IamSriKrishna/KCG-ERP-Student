@@ -23,15 +23,19 @@ class AuthService{
     required String department,
     required File image,
     required String year,
+    required String fcmtoken
   }
   )async{
     try {
-      final cloudinary = CloudinaryPublic('dadtmv9ma', 't154mm7k', cache: false);
+      
+    final cloudinary = CloudinaryPublic('dadtmv9ma', 't154mm7k', cache: false);
+      
       CloudinaryResponse response = await cloudinary.uploadFile(
         CloudinaryFile.fromFile(image.path, resourceType: CloudinaryResourceType.Image,folder: '$department Student Profile Image'),);
       Student user = Student(
         id: '',
         name: name,
+        fcmtoken:fcmtoken,
         dp:response.url,
         password: password,
         year: year,
@@ -49,19 +53,22 @@ class AuthService{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-
+      print(res);
+      print(res.body);
       httpErrorHandle(
         response: res,
         context: context,
         onSuccess: () {
-          
-          Navigator.pushNamed(context, Login.route).then((value) => showSnackBar(
+          Navigator.pushNamed(context, Login.route).then((value) => Future.delayed(
+            Duration(seconds: 1)
+          ).then((value) => showSnackBar(
             context:context,
             text:'Account created! Login with the same credentials!',
-          ));
+          )));
           
         },
       );
+      
     } catch (e) {
       showSnackBar( context:context,text: e.toString());
     }
@@ -83,6 +90,7 @@ class AuthService{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
+      print(res.body);
       httpErrorHandle(
         response: res,
         context: context,
@@ -100,7 +108,6 @@ class AuthService{
             SplashScreen.route,
             (route) => false,
           );
-          print(res.body);
         },
       );
     } catch (e) {
@@ -129,7 +136,6 @@ class AuthService{
       );
 
       var response = jsonDecode(tokenRes.body);
-
       if (response == true) {
         http.Response userRes = await http.get(
           Uri.parse('$uri/'),

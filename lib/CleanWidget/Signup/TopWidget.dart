@@ -28,7 +28,7 @@ class SignUpTopWidget extends StatelessWidget {
               textColor: Color.fromARGB(255, 236, 236, 236),
             ),
           ),
-          Lottie.asset('asset/lottie/signup.json',height: 140)
+          Lottie.asset('asset/lottie/signup.json',height: MediaQuery.of(context).size.height * 0.22)
         ],
       ),
     );

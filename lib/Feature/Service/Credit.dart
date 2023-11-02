@@ -9,7 +9,7 @@ class StudentCredit{
     String? token = prefs.getString('x-auth-token');
     final String apiUrl = '$uri/students/$studentId/update-credit';
 
-    final Map<String, dynamic> data = {'amountToDeduct': amountToDeduct};
+    final Map<String, dynamic> data = {'credit': amountToDeduct};
 
     final response = await http.put(
       Uri.parse(apiUrl),

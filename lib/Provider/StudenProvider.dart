@@ -6,6 +6,7 @@ class StudentProvider extends ChangeNotifier {
   Student _user = Student(
       id: '',
       name: '',
+      fcmtoken: '',
       rollno: '',
       password: '',
       year: '',
@@ -33,6 +34,7 @@ class StudentProvider extends ChangeNotifier {
     _user = Student(
       id: '',
       name: '',
+      fcmtoken: '',
       rollno: '',
       password: '',
       year: '',

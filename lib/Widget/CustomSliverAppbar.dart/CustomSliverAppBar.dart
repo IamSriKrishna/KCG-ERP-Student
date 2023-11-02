@@ -1,10 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Home/Widget/Additional/TopMainScreen.dart';
 import 'package:kcgerp/Provider/DarkThemeProvider.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoBoldFont.dart';
 import 'package:kcgerp/Util/util.dart';
 import 'package:provider/provider.dart';
-
+import 'package:http/http.dart' as http;
 class CustomSliverAppBar extends StatelessWidget {
   final String text;
   final IconData? icon1;
@@ -25,7 +27,36 @@ class CustomSliverAppBar extends StatelessWidget {
     this.leadingOnTap,
     this.leadingWidth,
     });
+Future<void> sendNotification() async {
+  final String apiUrl = '$uri/send-notification'; // Replace with your API URL
 
+  Map<String, String> headers = {
+    'Content-Type': 'application/json',
+  };
+
+  Map<String, dynamic> requestBody = {
+    'registrationToken': 'cdm6bOT7S9ehnWbSgy4osT:APA91bEpNcDQZlR-Q6wdtmswm1cdMkRoOgjeQmUPqp3sZ6N24iIoWdb8ZBjBQQZIn3F9mYRMHpOrNluUDxG03DuEZhJIRalkUwCQ-aTxX1Zqk2u97qmd-Zs0aUp1nIOlVk7AcC5v2xSP',
+    'body': 'sent',
+  };
+
+  try {
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: headers,
+      body: jsonEncode(requestBody),
+    );
+
+    if (response.statusCode == 200) {
+      print('Notification sent successfully');
+    } else {
+      print('Error sending notification: ${response.statusCode}');
+      // You can handle the error response here
+    }
+  } catch (e) {
+    print('Exception while sending notification: $e');
+    // Handle the exception
+  }
+}
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<DarkThemeProvider>(context);
@@ -44,7 +75,9 @@ class CustomSliverAppBar extends StatelessWidget {
         bottom: TopMainScreen(context: context,),
         actions: [
           GestureDetector(
-            onTap: icon2OnTap ,
+            onTap: (){
+              sendNotification();
+            } ,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Icon(

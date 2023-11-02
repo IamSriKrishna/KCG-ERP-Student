@@ -6,6 +6,7 @@ class Student {
   final String rollno;
   final String password;
   final int credit;
+  final String fcmtoken;
   final String department;
   final String token;
   final String dp;
@@ -14,6 +15,7 @@ class Student {
   Student({
     required this.id,
     required this.name,
+    required this.fcmtoken,
     required this.rollno,
     required this.password,
     required this.department,
@@ -31,6 +33,7 @@ class Student {
       'rollno': rollno,
       'password': password,
       'credit': credit,
+      'fcmtoken':fcmtoken,
       "department":department,
       'dp':dp,
       'year':year,
@@ -44,6 +47,7 @@ class Student {
       id: map['_id'] ?? '',
       name: map['name'] ?? '',
       rollno: map['rollno'] ?? '',
+      fcmtoken:map['fcmtoken'] ?? '',
       password: map['password'] ?? '',
       dp:map["dp"]??'',
       year:map['year']??'',
@@ -65,6 +69,7 @@ class Student {
     String? password,
     String? department,
     String? dp,
+    String? fcmtoken,
     String? Studentclass,
     String? year,
     int? credit,
@@ -74,6 +79,7 @@ class Student {
       id: id ?? this.id,
       name: name ?? this.name,
       dp:dp?? this.dp,
+      fcmtoken:fcmtoken??this.fcmtoken,
       year:year??this.year,
       Studentclass:Studentclass??this.Studentclass,
       department: department??this.department,

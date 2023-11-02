@@ -1,5 +1,9 @@
 
 
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -19,11 +23,27 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  Platform.isAndroid?
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: 'AIzaSyCishefTquUez42NWNNToO61QKxIomFJkE', 
+      appId: '1:879927221521:android:c46c67a6f1ea8b6eb1c0b0', 
+      messagingSenderId: '879927221521', 
+      projectId: 'campuslink-d1f2d'
+    )
+  ):Firebase.initializeApp(); 
   await LocalNotifications.init();
+  FirebaseMessaging.instance.getToken().then((value)async{
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  pref.setString('fcmToken', value!);
+  print('main file la print agudhu:$value');
+  });
   await SharedPreferences.getInstance();
-
   Get.put(LanguageController()); // Initialize the LanguageController
 
+  FirebaseMessaging.onBackgroundMessage((message) => 
+    firebaseMessaginBackgroundHandler(message)
+  );
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) =>  runApp(
         MultiProvider(
@@ -41,6 +61,10 @@ void main() async{
   ));
 }
 
+Future<void> firebaseMessaginBackgroundHandler(RemoteMessage message)async{
+  await Firebase.initializeApp();
+  print('FirebaseMessageing:$message');
+}
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -49,13 +73,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   String locale = ''; 
-final AuthService authService = AuthService();
+  final AuthService authService = AuthService();
 
   @override
   void initState() {
     super.initState();
-    
+    _firebaseMessaging.requestPermission(
+      announcement: true
+    );
     authService.getUserData(context);
     loadSelectedLanguage();
   }

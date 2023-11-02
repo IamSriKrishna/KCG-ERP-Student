@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kcgerp/CleanWidget/Signup/TopWidget.dart';
+import 'package:kcgerp/CleanWidget/customspinkit.dart';
 import 'package:kcgerp/Feature/Screen/Auth/Login.dart';
 import 'package:kcgerp/Feature/Service/Authservice.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoBoldFont.dart';
-import 'package:kcgerp/Util/showsnackbar.dart';
 import 'package:kcgerp/Util/util.dart';
 import 'package:kcgerp/Widget/AuthBottomNavigatorWidget/AuthBottomNavigatorWidget.dart';
 import 'package:kcgerp/Widget/CupertinoWidgets/CustomCupertinoModalpop.dart';
 import 'package:kcgerp/Widget/TextField/CustomTextField.dart';
 import 'package:kcgerp/Widget/TextField/CustomTextFieldPassword.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class SignUp extends StatefulWidget {
   static const route = '/SignUp';
   const SignUp({super.key});
@@ -20,16 +20,15 @@ class SignUp extends StatefulWidget {
   @override
   State<SignUp> createState() => _SignUpState();
 }
-
 class _SignUpState extends State<SignUp> {
-  
-  String selectedDepartment = 'Computer Science Department';
-  String Studentclass = 'Third Year';
+  String? fcmToken = '';
+  String selectedDepartment = 'Choose Department';
+  String studentclass = 'Choose Year';
   TextEditingController name = TextEditingController();
   TextEditingController rollNo = TextEditingController();
   TextEditingController password = TextEditingController();
   AuthService _authService = AuthService();
-
+  bool _signup = false;
   File? _image;
   Future<void> _pickImage() async {
     final imagePicker = ImagePicker();
@@ -40,10 +39,28 @@ class _SignUpState extends State<SignUp> {
       });
     } 
   }
-  void signup(){
-    if(selectedDepartment.isEmpty||name.text.isEmpty||rollNo.text.isEmpty||password.text.isEmpty||_image == null){
-      if(selectedDepartment.isEmpty){
-        CustomCupertinoModalPop(context: context, content: 'Department Is Missing');
+  @override
+  void initState(){
+    _initializePreferences();
+    super.initState();
+  }
+  void _initializePreferences() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    fcmToken = await pref.getString('fcmToken');
+    print(fcmToken);
+  }
+  void signup()async{
+    if(
+      selectedDepartment.isEmpty||name.text.isEmpty||
+      rollNo.text.isEmpty||password.text.isEmpty||
+      _image == null|| studentclass == 'Choose Year'||
+      selectedDepartment == 'Choose Department'
+      ){
+      if(selectedDepartment == 'Choose Department'){
+        CustomCupertinoModalPop(context: context, content: 'Choose Department');
+      }
+      if(studentclass == 'Choose Year'){
+        CustomCupertinoModalPop(context: context, content: 'Choose Year');
       }
       else if(name.text.isEmpty){
         CustomCupertinoModalPop(context: context, content: 'Name Is Missing');
@@ -60,24 +77,29 @@ class _SignUpState extends State<SignUp> {
       else{
         CustomCupertinoModalPop(context: context, content: 'Kindly FIll all the form');
       }
-      //CustomCupertinoModalPop(context: context, content: 'Kindly FIll all the form');
+      
+      setState(() {
+        _signup = false;
+      });
     }
     else{
       _authService.signUp(
-      department:selectedDepartment,
-      context: context, 
-      image: _image!,
-      year:Studentclass,
-      rollNo: rollNo.text, 
-      password: password.text, 
-      name: name.text
-    );
-    Navigator.pushNamed(context, Login.route).then((value) => showSnackBar(
-      context:context,
-      text:'Account created! Login with the same credentials!',
-    ));
+        department:selectedDepartment,
+        context: context, 
+        image: _image!,
+        year:studentclass,
+        fcmtoken: fcmToken!,
+        rollNo: rollNo.text, 
+        password: password.text, 
+        name: name.text
+      );
+      setState(() {
+        _signup = true;
+      });
     }
-    
+    // setState(() {
+    //   _signup = false;
+    // });
   }
 
   @override
@@ -87,7 +109,7 @@ class _SignUpState extends State<SignUp> {
         children: [
           SignUpTopWidget(),
           Padding(
-            padding: EdgeInsets.only(top:230),
+            padding: EdgeInsets.only(top:MediaQuery.of(context).size.height * 0.3),
             child: Container(
               height: MediaQuery.of(context).size.height * 0.7,
               width: double.infinity,
@@ -99,9 +121,8 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(top:10.0),
+                padding: const EdgeInsets.only(top:0.0),
                 child: ListView(
-                  physics: BouncingScrollPhysics(),
                   children: [
                     GestureDetector(
                       onTap: _pickImage,
@@ -155,6 +176,7 @@ class _SignUpState extends State<SignUp> {
                               borderRadius: BorderRadius.circular(15),
                               value: selectedDepartment,
                               items: <String>[
+                                'Choose Department',
                                 'Computer Science Department', 
                                 'Civil Engineering', 
                                 'Electronics and Communication Engineering', 
@@ -201,8 +223,9 @@ class _SignUpState extends State<SignUp> {
                             dropdownColor: Colors.white,
                             padding: EdgeInsets.symmetric(horizontal: 10),
                             borderRadius: BorderRadius.circular(15),
-                            value: Studentclass,
+                            value: studentclass,
                             items: <String>[
+                              'Choose Year',
                               'First Year', 
                               'Second Year', 
                               'Third Year', 
@@ -221,7 +244,7 @@ class _SignUpState extends State<SignUp> {
                             }).toList(),
                             onChanged: (newValue) {
                               setState(() {
-                                Studentclass = newValue!;
+                                studentclass = newValue!;
                               });
                             },
                           ),
@@ -241,6 +264,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                         onPressed: (){
+                          
                           signup();
                         }, 
                         child: RobotoBoldFont(text: 'SignUp')
@@ -258,9 +282,10 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
           ),
+          _signup == true?
+          CustomSpinkit():Container()
         ],
       ),
-      
     );
   }
 }

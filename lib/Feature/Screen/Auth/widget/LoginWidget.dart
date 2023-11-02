@@ -31,7 +31,7 @@ class LoginWidget extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.0995,
           ),
-          Lottie.asset('asset/lottie/login.json',height: 100),
+          Lottie.asset('asset/lottie/login.json',height: MediaQuery.of(context).size.height * 0.18,),
         ],
       ),
     );

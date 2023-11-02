@@ -37,8 +37,9 @@ class _GatePassScreenState extends State<GatePassScreen> {
     required String year,
     required String Studentclass,
     required String reason,
-    required String id,
+    required String studentid,
     required int spent,
+    required String fcmtoken,
     required String from,
     required String to,
   }){
@@ -49,6 +50,7 @@ class _GatePassScreenState extends State<GatePassScreen> {
       department: department, 
       image: image, 
       year: year, 
+      fcmtoken:fcmtoken,
       formtype: 'Gate Pass', 
       Studentclass: Studentclass, 
       reason: reason, 
@@ -56,7 +58,7 @@ class _GatePassScreenState extends State<GatePassScreen> {
       from: from, 
       to: to, 
       createdAt: DateTime.now(), 
-      id: id, 
+      studentid: studentid, 
       spent: spent
     );
   }
@@ -327,10 +329,11 @@ class _GatePassScreenState extends State<GatePassScreen> {
                   name: student.name, 
                   department: student.department, 
                   image: student.dp, 
+                  fcmtoken:student.fcmtoken,
                   year: student.year, 
                   Studentclass: 'NULL', 
                   reason: message.text, 
-                  id: student.id, 
+                  studentid: student.id, 
                   spent: credit, 
                   from: '${selectedFrom.hour}:${selectedFrom.minute}', 
                   to: '${selectedTo.hour}:${selectedTo.minute}'

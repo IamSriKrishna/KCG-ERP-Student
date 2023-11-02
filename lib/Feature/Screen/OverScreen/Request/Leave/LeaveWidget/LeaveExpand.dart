@@ -24,7 +24,7 @@ class _LeaveExpandState extends State<LeaveExpand> {
   FormService _formService = FormService();
   TextEditingController _reason = TextEditingController();
   void UploadForm(
-    String id,
+    String studentid,
     String rollno,
     String name,
     String department,
@@ -37,12 +37,14 @@ class _LeaveExpandState extends State<LeaveExpand> {
     String to,
     DateTime createdAt,
     int spent,
+    String fcmToken
   ){
     _formService.UploadForm(
-      id: id,
+      studentid: studentid,
       context: context, 
       createdAt:createdAt,
-      rollno: rollno, 
+      rollno: rollno,
+      fcmtoken: fcmToken, 
       name: name, 
       department: department, 
       image: image,
@@ -137,7 +139,8 @@ class _LeaveExpandState extends State<LeaveExpand> {
                     DateFormat('yyyy-MM-dd').format(startDay).toString(),
                     DateFormat('yyyy-MM-dd').format(endDay).toString(),
                     DateTime.now(),
-                    spent
+                    spent,
+                    student.fcmtoken
                   );
                   
                 }, 

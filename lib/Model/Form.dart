@@ -2,6 +2,7 @@ import 'dart:convert'; // Import the dart:convert library
 
 class FormModel {
   final String id;
+  final String studentid;
   final String name;
   final String rollno;
   final String department;
@@ -14,16 +15,19 @@ class FormModel {
   final String from;
   final String response;
   final int spent;
+  final String fcmtoken;
   final String to;
   final DateTime createdAt; // Add the createdAt field
 
   FormModel({
     required this.id,
+    required this.studentid,
     required this.name,
     required this.rollno,
     required this.department,
     required this.dp,
     required this.year,
+    required this.fcmtoken,
     required this.response,
     required this.formtype,
     required this.no_of_days,
@@ -38,12 +42,14 @@ class FormModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'studentid': studentid,
       'name': name,
       'rollno': rollno,
       'department': department,
       'dp': dp,
       'response': response,
       'spent':spent,
+      'fcmtoken':fcmtoken,
       'formtype': formtype,
       'year': year,
       'no_of_days': no_of_days,
@@ -57,11 +63,13 @@ class FormModel {
 
   factory FormModel.fromMap(Map<String, dynamic> map) {
     return FormModel(
-      id: map['id'] ?? '',
+      id: map['_id'] ?? '',
+      studentid: map['studentid']?? '',
       name: map['name'] ?? '',
       rollno: map['rollno'] ?? '',
       dp: map["dp"] ?? '',
       response: map['response'] ?? '',
+      fcmtoken:map['fcmtoken'] ?? '',
       spent:map['spent'] ?? 0,
       no_of_days: map['no_of_days'] ?? 0,
       reason: map['reason'] ?? '',
@@ -81,6 +89,7 @@ class FormModel {
 
   FormModel copyWith({
     String? id,
+    String? studentid,
     String? name,
     String? rollno,
     String? department,
@@ -91,6 +100,7 @@ class FormModel {
     String? from,
     String? to,
     String? Studentclass,
+    String? fcmtoken,
     String? formtype,
     String? year,
     int? spent,
@@ -98,6 +108,7 @@ class FormModel {
   }) {
     return FormModel(
       id: id ?? this.id,
+      studentid: studentid ?? this.studentid,
       name: name ?? this.name,
       dp: dp ?? this.dp,
       spent:spent??this.spent,
@@ -105,13 +116,14 @@ class FormModel {
       year: year ?? this.year,
       formtype: formtype ?? this.formtype,
       from: from ?? this.from,
+      fcmtoken:fcmtoken??this.fcmtoken,
       response: response ?? this.response,
       to: to ?? this.to,
       Studentclass: Studentclass ?? this.Studentclass,
       department: department ?? this.department,
       reason: reason ?? this.reason,
       rollno: rollno ?? this.rollno,
-      createdAt: createdAt ?? this.createdAt, // Assign createdAt
+      createdAt: createdAt ?? this.createdAt, 
     );
   }
 }

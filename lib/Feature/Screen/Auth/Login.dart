@@ -32,7 +32,7 @@ class _LoginState extends State<Login> {
         children: [
           LoginWidget(),
           Padding(
-            padding: const EdgeInsets.only(top:307.0),
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.415),
             child: Container(
               height: MediaQuery.of(context).size.height * 0.7,
               width: double.infinity,
