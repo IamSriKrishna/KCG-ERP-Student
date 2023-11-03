@@ -81,8 +81,15 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    _firebaseMessaging.setForegroundNotificationPresentationOptions(
+      badge: true,
+      sound: true
+    );
     _firebaseMessaging.requestPermission(
-      announcement: true
+      announcement: true,
+      carPlay: true,
+      criticalAlert: true,
+      provisional: true
     );
     authService.getUserData(context);
     loadSelectedLanguage();
@@ -99,7 +106,7 @@ Future<void> loadSelectedLanguage() async {
   @override
   Widget build(BuildContext context) {
     return Consumer<DarkThemeProvider>(
-  builder: (context, darkThemeProvider, child) {
+      builder: (context, darkThemeProvider, child) {
         return GetMaterialApp(
           localizationsDelegates: [
             S.delegate, 
@@ -112,22 +119,22 @@ Future<void> loadSelectedLanguage() async {
           theme:  Styles().themeData(darkThemeProvider.getDarkTheme, context),
           debugShowCheckedModeBanner: false,
           home:FutureBuilder(
-      future: authService.getUserData(context),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(body: Center(child: CircularProgressIndicator()));
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          final student = Provider.of<StudentProvider>(context).user;
-          if (student.token.isNotEmpty) {
-            return OverScreen();
-          } else {
-            return OnBoardScreen();
-          }
-        }
-      },
-    ),
+            future: authService.getUserData(context),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Scaffold(body: Center(child: CircularProgressIndicator()));
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                final student = Provider.of<StudentProvider>(context).user;
+                if (student.token.isNotEmpty) {
+                  return OverScreen();
+                } else {
+                  return OnBoardScreen();
+                }
+              }
+            },
+          ),
           onGenerateRoute: (settings) => onGenerator(settings,locale),
         );
       },

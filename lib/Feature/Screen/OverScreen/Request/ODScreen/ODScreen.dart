@@ -46,8 +46,8 @@ class _ODScreenState extends State<ODScreen>with SingleTickerProviderStateMixin 
         context: context,
         text: S.current.booking
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
+        //crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Card(
             elevation: 10,

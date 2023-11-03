@@ -264,7 +264,6 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                         onPressed: (){
-                          
                           signup();
                         }, 
                         child: RobotoBoldFont(text: 'SignUp')
