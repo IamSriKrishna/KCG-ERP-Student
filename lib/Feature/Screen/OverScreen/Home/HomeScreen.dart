@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Home/Widget/MainScreen.dart';
-import 'package:kcgerp/Feature/Screen/OverScreen/Home/Widget/Notification.dart';
+import 'package:kcgerp/Feature/Screen/Messenger/MessageScreen.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const route = '/HomeScreen';
   const HomeScreen({super.key});
 
   @override
@@ -19,18 +21,20 @@ class _HomeScreenState extends State<HomeScreen> {
         physics: NeverScrollableScrollPhysics(),
         controller: _controller,
         children: [
-          MainScreen(
-            icon1OnTap: () {
-              _controller.nextPage(duration:const  Duration(
-                milliseconds: 250
-              ), curve: Curves.linear);
-            },
+          ShowCaseWidget(
+            builder: Builder(builder:(context) => MainScreen(
+                icon1OnTap: () {
+                  _controller.nextPage(duration:const  Duration(
+                    milliseconds: 250
+                  ), curve: Curves.ease);
+                },
+              ),)
           ),
-          NotificationScreen(
-            icon1OnTap: () {
-              _controller.previousPage(duration:const  Duration(
+          MessageScreen(
+            icon1OnTap: () async{
+              await _controller.previousPage(duration:const  Duration(
                 milliseconds: 250
-              ), curve: Curves.linear);
+              ), curve: Curves.ease);
             },)
         ],
       ),

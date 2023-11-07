@@ -23,7 +23,8 @@ class AuthService{
     required String department,
     required File image,
     required String year,
-    required String fcmtoken
+    required String fcmtoken,
+    required String studentclass
   }
   )async{
     try {
@@ -34,12 +35,13 @@ class AuthService{
         CloudinaryFile.fromFile(image.path, resourceType: CloudinaryResourceType.Image,folder: '$department Student Profile Image'),);
       Student user = Student(
         id: '',
+        certified:false,
         name: name,
         fcmtoken:fcmtoken,
         dp:response.url,
         password: password,
         year: year,
-        Studentclass: '',
+        Studentclass: studentclass,
         rollno: rollNo,
         department: department,
         credit: 0,
@@ -160,5 +162,17 @@ class AuthService{
     print(a);
   }
 
-  
+Future<List<Student>> searchStudentsByName(String name) async {
+  final response = await http.get(Uri.parse('$uri/students/search?name=$name'));
+  print(response.body);
+  if (response.statusCode == 200) {
+    List<dynamic> jsonList = json.decode(response.body);
+    List<Student> students = jsonList.map((json) => Student.fromMap(json)).toList();
+    return students;
+  } else if (response.statusCode == 404) {
+    return []; 
+  } else {
+    throw Exception('Failed to fetch data');
+  }
+}
 }

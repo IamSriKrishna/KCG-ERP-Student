@@ -7,6 +7,7 @@ class StudentProvider extends ChangeNotifier {
       id: '',
       name: '',
       fcmtoken: '',
+      certified:false,
       rollno: '',
       password: '',
       year: '',
@@ -18,7 +19,7 @@ class StudentProvider extends ChangeNotifier {
   );
 
   Student get user => _user;
-
+  
   void setUser(String user) {
     _user = Student.fromJson(user);
     notifyListeners();
@@ -35,6 +36,7 @@ class StudentProvider extends ChangeNotifier {
       id: '',
       name: '',
       fcmtoken: '',
+      certified:false,
       rollno: '',
       password: '',
       year: '',

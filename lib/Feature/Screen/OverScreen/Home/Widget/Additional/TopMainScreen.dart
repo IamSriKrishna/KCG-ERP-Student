@@ -8,7 +8,8 @@ import 'package:provider/provider.dart';
 
 class TopMainScreen extends StatefulWidget implements PreferredSizeWidget {
   final BuildContext context;
-  const TopMainScreen({super.key,required this.context});
+  final ScrollController? scrollController;
+  const TopMainScreen({super.key, required this.context, this.scrollController});
 
   @override
   State<TopMainScreen> createState() => _TopMainScreenState();
@@ -22,7 +23,9 @@ class TopMainScreen extends StatefulWidget implements PreferredSizeWidget {
 
 class _TopMainScreenState extends State<TopMainScreen> {
   String greeting = '';
-
+  void scrollToTop() {
+    widget.scrollController!.animateTo(0, duration: Duration(seconds: 1), curve: Curves.easeInOut);
+  }
   @override
   void initState() {
     super.initState();
@@ -51,28 +54,33 @@ class _TopMainScreenState extends State<TopMainScreen> {
   Widget build(BuildContext context) {
     final student = Provider.of<StudentProvider>(context);
     final theme = Provider.of<DarkThemeProvider>(context);
-    return Container(
-      padding: const EdgeInsets.all(5),
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.102,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              RobotoBoldFont(
-                text: greeting,
-                size: 25,
-                textColor: theme.getDarkTheme ? themeColor.backgroundColor : themeColor.darkTheme,
-              ),
-            ],
-          ),
-          RobotoBoldFont(
-            text: "${student.user.name.toString().toUpperCase()}:)",
-            size: 25,
-            textColor: theme.getDarkTheme ? themeColor.appThemeColor : themeColor.appThemeColor2,
-          ),
-        ],
+    return InkWell(
+      onTap: () {
+        scrollToTop();
+      },
+      child: Container(
+        padding: const EdgeInsets.all(5),
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.102,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                RobotoBoldFont(
+                  text: greeting,
+                  size: 25,
+                  textColor: theme.getDarkTheme ? themeColor.backgroundColor : themeColor.darkTheme,
+                ),
+              ],
+            ),
+            RobotoBoldFont(
+              text: "${student.user.name.toString().toUpperCase()}:)",
+              size: 25,
+              textColor: theme.getDarkTheme ? themeColor.appThemeColor : themeColor.appThemeColor2,
+            ),
+          ],
+        ),
       ),
     );
   }

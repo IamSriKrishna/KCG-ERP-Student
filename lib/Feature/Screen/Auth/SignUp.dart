@@ -30,6 +30,7 @@ class _SignUpState extends State<SignUp> {
   AuthService _authService = AuthService();
   bool _signup = false;
   File? _image;
+  String  studentSection = 'Select Section';
   Future<void> _pickImage() async {
     final imagePicker = ImagePicker();
     final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
@@ -84,6 +85,14 @@ class _SignUpState extends State<SignUp> {
     }
     else{
       _authService.signUp(
+        studentclass: 
+        studentclass=='First Year'?
+        studentclass.replaceAll(studentclass, '1-$studentSection'):
+        studentclass=='Second Year'?
+        studentclass.replaceAll(studentclass, '2-$studentSection'):
+        studentclass=='Third Year'?
+        studentclass.replaceAll(studentclass, '3-$studentSection'):
+        studentclass.replaceAll(studentclass, '4-$studentSection'),
         department:selectedDepartment,
         context: context, 
         image: _image!,
@@ -121,7 +130,7 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(top:0.0),
+                padding: const EdgeInsets.only(top:8.5),
                 child: ListView(
                   children: [
                     GestureDetector(
@@ -245,6 +254,55 @@ class _SignUpState extends State<SignUp> {
                             onChanged: (newValue) {
                               setState(() {
                                 studentclass = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const  EdgeInsets.symmetric(horizontal:8.0,vertical: 5),
+                      child: Card(
+                        color: Colors.white,
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.5)
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 0),
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            icon: Icon(
+                              Icons.arrow_drop_down_circle_sharp,
+                              color: Colors.grey,
+                              size: 18.5,
+                            ),
+                            underline: Container(),
+                            dropdownColor: Colors.white,
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            borderRadius: BorderRadius.circular(15),
+                            value: studentSection,
+                            items: <String>[
+                              'Select Section',
+                              'A', 
+                              'B', 
+                              'C', 
+                              'D',
+                              ].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: GoogleFonts.merriweather(
+                                    fontSize: 14,
+                                    color: Colors.black54
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                studentSection = newValue!;
                               });
                             },
                           ),

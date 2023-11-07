@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Profile/Widget/ProfBackground.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Profile/Widget/ProfileBottomWidget.dart';
+import 'package:kcgerp/l10n/AppLocalization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
@@ -39,19 +43,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          children: [
-            ProBackground(theme: themeMode,),
-            ProfileBottomWidget(
-              myProfile: myProfile, 
-              forgetPIN: forgetPIN, 
-              language: language, 
-              signOut: signOut
-            )
-          ],
+    return WillPopScope(onWillPop: ()async {
+        await showCupertinoModalPopup<void>(
+          context: context, 
+          builder:(context) => CupertinoAlertDialog(
+            title: Text(
+              S.current.warning,
+              style: GoogleFonts.merriweather()
+            ),
+            content: Text(
+              S.current.wanttoexitcampuslink,
+              style: GoogleFonts.merriweather()
+            ),
+            actions: [
+              TextButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                }, 
+              child: Text(
+                S.current.no,
+                style: GoogleFonts.merriweather(),
+              )
+            ),
+            
+              TextButton(
+                onPressed: (){
+                  SystemNavigator.pop();
+                }, 
+              child: Text(
+                S.current.yes,
+                style: GoogleFonts.merriweather(),
+              )
+            ),
+            ],
+          ),
+        );
+        return false;
+      },
+      child: Scaffold(
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Stack(
+            children: [
+              ProBackground(theme: themeMode,),
+              ProfileBottomWidget(
+                myProfile: myProfile, 
+                forgetPIN: forgetPIN, 
+                language: language, 
+                signOut: signOut
+              )
+            ],
+          ),
         ),
       ),
     );

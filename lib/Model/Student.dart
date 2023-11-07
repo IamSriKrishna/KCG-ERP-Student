@@ -3,6 +3,7 @@ import 'dart:convert';
 class Student {
   final String id;
   final String name;
+  final bool certified;
   final String rollno;
   final String password;
   final int credit;
@@ -16,6 +17,7 @@ class Student {
     required this.id,
     required this.name,
     required this.fcmtoken,
+    required this.certified,
     required this.rollno,
     required this.password,
     required this.department,
@@ -30,6 +32,7 @@ class Student {
     return {
       'id': id,
       'name': name,
+      'certified':certified,
       'rollno': rollno,
       'password': password,
       'credit': credit,
@@ -46,6 +49,7 @@ class Student {
     return Student(
       id: map['_id'] ?? '',
       name: map['name'] ?? '',
+      certified:map['certified']??false,
       rollno: map['rollno'] ?? '',
       fcmtoken:map['fcmtoken'] ?? '',
       password: map['password'] ?? '',
@@ -67,6 +71,7 @@ class Student {
     String? name,
     String? rollno,
     String? password,
+    bool? certified,
     String? department,
     String? dp,
     String? fcmtoken,
@@ -78,6 +83,7 @@ class Student {
     return Student(
       id: id ?? this.id,
       name: name ?? this.name,
+      certified:certified??this.certified,
       dp:dp?? this.dp,
       fcmtoken:fcmtoken??this.fcmtoken,
       year:year??this.year,

@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/Leave/LeaveWidget/CustomSfCalendar.dart';
 import 'package:kcgerp/Feature/Service/Authservice.dart';
 import 'package:kcgerp/Model/approval.dart';
@@ -27,9 +30,10 @@ class _RequestScreenState extends State<RequestScreen> {
   }
   void LoadUp()async{
     await _authService.getUserData(context);
-    setState(() {
-      
-    });
+  }
+void didChangeDependencies() {
+    super.didChangeDependencies();
+    LoadUp();
   }
 
   final List<Approval> approval = [
@@ -88,72 +92,111 @@ class _RequestScreenState extends State<RequestScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<DarkThemeProvider>(context);
-    return Scaffold(
-      backgroundColor:theme.getDarkTheme?themeColor.darkTheme: themeColor.backgroundColor,
-      body: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            CustomApprovalSliverAppBar(
-              text: S.current.approval,
-              leadingWidth: 0,
-            )
-          ];
-        },
-        body: RefreshIndicator(
-          onRefresh: OnRefresh,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal:10.0),
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 5,
-                childAspectRatio: 0.8
-                ),
-              physics: const BouncingScrollPhysics(),
-              itemCount: approval.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    if(approval[index].credit == approval[0].credit){
-                      Navigator.pushNamed(
-                        context, 
-                        ODScreen.route,
-                        arguments: {
-                          'credit':approval[0].credit,
-                          'color':approval[0].color
-                        }
-                      );
-                    }
-                    else if(approval[index].credit == approval[1].credit){
-                      Navigator.pushNamed(
-                        context,
-                        CustomSFCalendar.route,
-                        arguments: {
-                          'credit':approval[1].credit,
-                          'color':approval[1].color
-                        }
-                      );
-                    }
-                    else{
-                      Navigator.pushNamed(
-                        context, 
-                        GatePassScreen.route,
-                        arguments: {
-                          'credit':approval[2].credit
-                        }
-                      );
-                    }
-                  },
-                  child: CustomApprovalWidget(
-                    color: approval[index].color, 
-                    title: approval[index].approval, 
-                    detail: approval[index].approvalElaborate, 
-                    credit: approval[index].credit, 
-                    image: approval[index].image
+    return WillPopScope(
+      onWillPop: ()async {
+        await showCupertinoModalPopup<void>(
+          context: context, 
+          builder:(context) => CupertinoAlertDialog(
+            title: Text(
+              S.current.warning,
+              style: GoogleFonts.merriweather()
+            ),
+            content: Text(
+              S.current.wanttoexitcampuslink,
+              style: GoogleFonts.merriweather()
+            ),
+            actions: [
+              TextButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                }, 
+              child: Text(
+                S.current.no,
+                style: GoogleFonts.merriweather(),
+              )
+            ),
+            
+              TextButton(
+                onPressed: (){
+                  SystemNavigator.pop();
+                }, 
+              child: Text(
+                S.current.yes,
+                style: GoogleFonts.merriweather(),
+              )
+            ),
+            ],
+          ),
+        );
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor:theme.getDarkTheme?themeColor.darkTheme: themeColor.backgroundColor,
+        body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return [
+              CustomApprovalSliverAppBar(
+                text: S.current.approval,
+                leadingWidth: 0,
+              )
+            ];
+          },
+          body: RefreshIndicator(
+            onRefresh: OnRefresh,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal:10.0),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 5,
+                  crossAxisSpacing: 5,
+                  childAspectRatio: 0.8
                   ),
-                );
-              },
+                physics: const BouncingScrollPhysics(),
+                itemCount: approval.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      if(approval[index].credit == approval[0].credit){
+                        Navigator.pushNamed(
+                          context, 
+                          ODScreen.route,
+                          arguments: {
+                            'credit':approval[0].credit,
+                            'color':approval[0].color
+                          }
+                        );
+                      }
+                      else if(approval[index].credit == approval[1].credit){
+                        Navigator.pushNamed(
+                          context,
+                          CustomSFCalendar.route,
+                          arguments: {
+                            'credit':approval[1].credit,
+                            'color':approval[1].color
+                          }
+                        );
+                      }
+                      else{
+                        Navigator.pushNamed(
+                          context, 
+                          GatePassScreen.route,
+                          arguments: {
+                            'credit':approval[2].credit
+                          }
+                        );
+                      }
+                    },
+                    child: CustomApprovalWidget(
+                      color: approval[index].color, 
+                      title: approval[index].approval, 
+                      detail: approval[index].approvalElaborate, 
+                      credit: approval[index].credit, 
+                      image: approval[index].image
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ),

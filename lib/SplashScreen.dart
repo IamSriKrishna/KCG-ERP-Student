@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/OverScreen.dart';
+import 'package:kcgerp/Feature/Service/UpdateFCMToken.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoRegularFont.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   static const route = '/SplashScreen';
@@ -13,15 +15,27 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+  String? fcmToken = '';
 
+  final UpdateFCMToken _updateFCMToken = UpdateFCMToken();
+  void Update(){
+    _updateFCMToken.fcmUpdate(
+      context: context, fcmtoken: fcmToken!);
+  }
+  void _initializePreferences() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    fcmToken = await pref.getString('fcmToken');
+    print(fcmToken);
+  }
   @override
   void initState() {
     super.initState();
+    _initializePreferences();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     Future.delayed(Duration(milliseconds: 2950),(){
       Navigator.pushReplacementNamed(context, OverScreen.route);
-    });
+    }).then((value) => Update());
   }
   @override
 

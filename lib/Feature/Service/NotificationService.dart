@@ -10,7 +10,7 @@ class NotificationService{
     required BuildContext context,
     required List<String> toAllFaculty
   }) async {
-    final student = Provider.of<StudentProvider>(context).user;
+    final student = Provider.of<StudentProvider>(context,listen: false).user;
     final Map<String, dynamic> requestData = {
       "registrationTokens": toAllFaculty,
       "body": "Form Request Recieved from ${student.name}", 

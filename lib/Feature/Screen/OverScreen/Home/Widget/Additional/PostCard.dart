@@ -2,15 +2,15 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:kcgerp/Provider/DarkThemeProvider.dart';
 import 'package:kcgerp/Util/util.dart';
 import 'package:kcgerp/Widget/Additional/likeAnimation.dart';
-import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:zoom_pinch_overlay/zoom_pinch_overlay.dart';
 
 class PostCard extends StatefulWidget {
   final String dp;
@@ -36,6 +36,11 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
+    Future<void> link(Uri _url) async {
+  if (!await launchUrl(_url)) {
+    throw Exception('Could not launch $_url');
+  }
+}
   bool isLikeAnimating = false;
   @override
   Widget build(BuildContext context) {
@@ -96,65 +101,21 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
               // IMAGE SECTION OF THE POST
-              GestureDetector(
-                onDoubleTap: () {
-                  setState(() {
-                    isLikeAnimating = !isLikeAnimating;
-                  });
-                },
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.32,
-                      width: double.infinity,
-                      child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.32,
-                        width: double.infinity,
-                        child: CarouselSlider(
-                          items: widget.images.map(
-                            (i) {
-                              return Builder(
-                                builder: (BuildContext context) => PinchZoom(
-                                  maxScale: 3,
-                                  child: Image.network(
-                                    i,
-                                    fit: BoxFit.contain,
-                                    height:  MediaQuery.of(context).size.height * 0.32,
-                                    width: double.infinity,
-                                  ),
-                                ),
-                              );
-                            },
-                          ).toList(),
-                          options: CarouselOptions(
-                            viewportFraction: 1,
-                            height: 200,
-                          ),
-                        )
-                      ),
-                    ),
-                    AnimatedOpacity(
-                      duration: const Duration(milliseconds: 200),
-                      opacity: isLikeAnimating ? 1 : 0,
-                      child: LikeAnimation(
-                        isAnimating: isLikeAnimating,
-                        duration: const Duration(
-                          milliseconds: 400,
-                        ),
-                        onEnd: () {
-                          setState(() {
-                            isLikeAnimating = false;
-                          });
-                        },
-                        child: const Icon(
-                          Icons.favorite,
-                          color: Colors.white,
-                          size: 100,
-                        ),
-                      ),
-                    ),
-                  ],
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.27,
+                width: double.infinity,
+                child: ZoomOverlay(
+                  modalBarrierColor: Colors.black12, // Optional
+                  minScale: 0.5, // Optional
+                  maxScale: 3.0, // Optional
+                  animationCurve: Curves.fastOutSlowIn, // Defaults to fastOutSlowIn which mimics IOS instagram behavior
+                  animationDuration: Duration(milliseconds: 300), // Defaults to 100 Milliseconds. Recommended duration is 300 milliseconds for Curves.fastOutSlowIn
+                  twoTouchOnly: true, // Defaults to false
+                  onScaleStart: () {}, // optional VoidCallback
+                  onScaleStop: () {}, // optional VoidCallback
+                  child: CachedNetworkImage(
+                      imageUrl: widget.images[0],
+                  ),
                 ),
               ),
               // LIKE, COMMENT SECTION OF THE POST
@@ -234,20 +195,40 @@ class _PostCardState extends State<PostCard> {
                         ),
                       ),
                     ),
-                    widget.link!='null'?Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Text(
-                            'Link:',
-                            style: GoogleFonts.merriweather(
-                              color:theme.getDarkTheme?themeColor.backgroundColor: themeColor.darkTheme,
-                              // fontSize: 14
+                    widget.link!='null'?Container(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: Text(
+                              'Link:',
+                              style: GoogleFonts.merriweather(
+                                color:theme.getDarkTheme?themeColor.backgroundColor: themeColor.darkTheme,
+                                fontSize: 14
+                              ),
                             ),
                           ),
-                        ),
-                        InkWell(child: Text(widget.link))
-                      ],
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top:2.0),
+                              child: InkWell(
+                                onTap: () {
+                                  link(Uri.parse(widget.link));
+                                },
+                                child: Text(
+                                  widget.link,
+                                  maxLines: 3,
+                                style: GoogleFonts.merriweather(
+                                  color:Colors.blue,
+                                  fontSize: 14,
+                                  textBaseline: TextBaseline.alphabetic,
+                                  decoration: TextDecoration.underline
+                                ),)),
+                            ),
+                          )
+                        ],
+                      ),
                     ):SizedBox(),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 4),

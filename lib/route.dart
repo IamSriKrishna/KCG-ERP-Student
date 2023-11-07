@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kcgerp/Feature/Screen/Auth/Login.dart';
 import 'package:kcgerp/Feature/Screen/Auth/SignUp.dart';
+import 'package:kcgerp/Feature/Screen/Messenger/MessageScreen.dart';
+import 'package:kcgerp/Feature/Screen/Messenger/ChatScreen.dart';
 import 'package:kcgerp/Feature/Screen/OnBoard/OnboardScreen.dart';
 import 'package:kcgerp/Feature/Screen/OnBoard/Screen2.dart';
 import 'package:kcgerp/Feature/Screen/OnBoard/Screen3.dart';
+import 'package:kcgerp/Feature/Screen/OverScreen/Home/HomeScreen.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/OverScreen.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Profile/Widget/About.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/GatePass/GatePass.dart';
@@ -14,6 +17,7 @@ import 'package:kcgerp/Feature/Screen/OverScreen/Request/Leave/LeaveWidget/Leave
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/ODScreen/ODScreen.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/ODScreen/ODWidget/ODExpandWidget.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/Widget/ConfirmPage.dart';
+import 'package:kcgerp/Feature/Screen/Search/Search.dart';
 import 'package:kcgerp/SplashScreen.dart';
 import 'package:kcgerp/Util/util.dart';
 import 'package:lottie/lottie.dart';
@@ -32,6 +36,13 @@ Route<dynamic> onGenerator(RouteSettings settings,String locale) {
       return PageTransition(
         duration: Duration(milliseconds: duration.fadeMilliseconds),
         child: ODScreen(),
+        type: PageTransitionType.fade,
+        settings: settings,
+      );
+    case SearchScreen.route:
+      return PageTransition(
+        duration: Duration(milliseconds: duration.fadeMilliseconds),
+        child: SearchScreen(),
         type: PageTransitionType.fade,
         settings: settings,
       );
@@ -130,6 +141,27 @@ Route<dynamic> onGenerator(RouteSettings settings,String locale) {
       return PageTransition(
         duration: Duration(milliseconds: duration.fadeMilliseconds),
         child: const OverScreen(),
+        type: PageTransitionType.fade,
+        settings: settings,
+      );
+    case ChatScreen.route:
+      return PageTransition(
+        duration: Duration(milliseconds: duration.fadeMilliseconds),
+        child: const ChatScreen(),
+        type: PageTransitionType.fade,
+        settings: settings,
+      );
+    case HomeScreen.route:
+      return PageTransition(
+        duration: Duration(milliseconds: duration.fadeMilliseconds),
+        child: const HomeScreen(),
+        type: PageTransitionType.fade,
+        settings: settings,
+      );
+    case MessageScreen.route:
+      return PageTransition(
+        duration: Duration(milliseconds: duration.fadeMilliseconds),
+        child: MessageScreen(),
         type: PageTransitionType.fade,
         settings: settings,
       );

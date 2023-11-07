@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'package:kcgerp/Feature/Service/Authservice.dart';
 import 'package:kcgerp/Provider/DarkThemeProvider.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Profile/Widget/LanguageContoller.dart';
 import 'package:kcgerp/Provider/StudenProvider.dart';
+import 'package:kcgerp/Util/Additional/Loader.dart';
 import 'package:kcgerp/Util/LocalNotification.dart';
 import 'package:kcgerp/l10n/AppLocalization.dart';
 import 'package:kcgerp/route.dart';
@@ -74,6 +76,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   
+
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   String locale = ''; 
   final AuthService authService = AuthService();
@@ -122,7 +125,7 @@ Future<void> loadSelectedLanguage() async {
             future: authService.getUserData(context),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Scaffold(body: Center(child: CircularProgressIndicator()));
+                return Scaffold(body: Center(child: Loader()));
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
