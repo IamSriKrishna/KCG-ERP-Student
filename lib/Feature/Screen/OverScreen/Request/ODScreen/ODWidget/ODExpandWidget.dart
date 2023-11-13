@@ -41,7 +41,7 @@ class _ODEXpandWidgetState extends State<ODEXpandWidget> {
   // }
   void retreive()async{
     fetchfaculty = await  _facultyService.DisplayAllFaculty(context: context);
-    print(fetchfaculty);
+    //print(fetchfaculty);
     setState(() {
       
     });
@@ -63,7 +63,11 @@ class _ODEXpandWidgetState extends State<ODEXpandWidget> {
     String fcmtoken
   ){
     for(int i =0;i<fetchfaculty!.length;i++){
-      _fcmNotification.sendNotifications(context: context, toAllFaculty: [fetchfaculty![i].fcmtoken]);
+      _fcmNotification.sendNotifications(
+        context: context, 
+        toAllFaculty: [fetchfaculty![i].fcmtoken],
+        body:"Form Request Recieved from ${name}"
+      );
     }
     _formService.UploadForm(
       context: context, 

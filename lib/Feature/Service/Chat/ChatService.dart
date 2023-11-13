@@ -1,73 +1,82 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:kcgerp/Provider/StudenProvider.dart';
+import 'package:kcgerp/Feature/Screen/OverScreen/OverScreen.dart';
+import 'package:kcgerp/Model/Chat/InitialChat.dart';
+import 'package:kcgerp/Model/Chat/get_chat.dart';
 import 'package:kcgerp/Util/util.dart';
-import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatHelper {
+  static var client = http.Client();
 
-static Future<dynamic> createChat(BuildContext context) async {
-  try {
-    final String apiUrl = "$uri/create-chat/";
-    
-    final studentProvider = Provider.of<StudentProvider>(context);
-    final student = studentProvider.user;
+  static Future<List<dynamic>> apply(String id) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('studenttoken');
 
-    // Check if the token is expired and refresh it if necessary
-    if (studentProvider.user.token.isEmpty) {
-        print("TOken Null");
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'x-auth-token': '$token'
+    };
+
+    var url = Uri.http(halfuri, "/create-chat/");
+    var response = await client.post(url,
+        headers: requestHeaders, body: jsonEncode({"userId": id}));
+
+    if (response.statusCode == 200) {
+      var first = initialChatFromJson(response.body).id;
+      return [true, first];
+    } else {
+      return [false, "Failed to create chat"];
     }
+  }
 
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'x-auth-token': student.token,
-      },
-      body: jsonEncode({"userId": student.id}),
+  static Future<List<GetChats>> getConversations() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('studenttoken');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'x-auth-token': "$token"
+    };
+
+    var url = Uri.http(halfuri, '/get-chat/');
+    var response = await client.get(
+      url,
+      headers: requestHeaders,
     );
 
     if (response.statusCode == 200) {
-      // Successful response
-      print(response.body);
-      return jsonDecode(response.body);
+      var chats = getChatsFromJson(response.body);
+      return chats;
     } else {
-      // Handle error responses
-      print("Failed to access chat: ${response.statusCode}");
-    }
-  } catch (e) {
-    // Handle exceptions
-    print("Error accessing chat: $e");
-  }
-}
-
-
-    static Future<List<dynamic>> getChats(BuildContext context) async {
-    final String apiUrl = "$uri/get-chat/"; // Replace with your actual API endpoint
-
-    try {
-    final student = Provider.of<StudentProvider>(context).user;
-      final response = await http.get(
-        Uri.parse(apiUrl),
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': '${student.token}'
-        }
-      );
-
-      if (response.statusCode == 200) {
-        // Successful response
-        final List<dynamic> chatData = jsonDecode(response.body);
-        return chatData;
-      } else {
-        // Handle error responses
-        throw Exception("Failed to get chats: ${response.statusCode}");
-      }
-    } catch (e) {
-      // Handle exceptions
-      throw Exception("Error getting chats: $e");
+      throw Exception("Couldn't load chats");
     }
   }
+
+    static Future<bool> deleteChat(String chatId,BuildContext context) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('studenttoken');
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'x-auth-token': '$token'
+    };
+
+    var url = Uri.http(halfuri, '/delete-chat/'); // Adjust the URL accordingly
+    var response = await client.delete(
+      url,
+      headers: requestHeaders,
+      body: jsonEncode({"chatId": chatId}), // Send the chat ID to be deleted
+    );
+
+    if (response.statusCode == 200) {
+      Navigator.pushNamedAndRemoveUntil(
+        context, 
+        OverScreen.route, (route) => false);
+      return true; // Chat deleted successfully
+    } else {
+      return false; // Failed to delete chat
+    }
+  }
+
 }

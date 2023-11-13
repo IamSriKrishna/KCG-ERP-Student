@@ -75,7 +75,7 @@ class _TopMainScreenState extends State<TopMainScreen> {
               ],
             ),
             RobotoBoldFont(
-              text: "${student.user.name.toString().toUpperCase()}:)",
+              text: "${student.user.name.toString().toUpperCase()} :)",
               size: 25,
               textColor: theme.getDarkTheme ? themeColor.appThemeColor : themeColor.appThemeColor2,
             ),

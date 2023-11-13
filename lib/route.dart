@@ -145,9 +145,10 @@ Route<dynamic> onGenerator(RouteSettings settings,String locale) {
         settings: settings,
       );
     case ChatScreen.route:
+    final arg = settings.arguments as String;
       return PageTransition(
         duration: Duration(milliseconds: duration.fadeMilliseconds),
-        child: const ChatScreen(),
+        child: ChatScreen(title: arg, profile: arg, id: arg,user: [arg],),
         type: PageTransitionType.fade,
         settings: settings,
       );

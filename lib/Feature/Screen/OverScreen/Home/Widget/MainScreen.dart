@@ -31,10 +31,11 @@ class _MainScreenState extends State<MainScreen> {
   ScrollController _scrollController = ScrollController();
   List<Post>? fetchpost;
   final AddPostService _postService = AddPostService();
-
+  bool _isMounted = false;
   @override
   void initState() {
     super.initState();
+    _isMounted = true;
     checkShowcaseStatus();
     fetchAllProducts();
   }
@@ -50,9 +51,20 @@ class _MainScreenState extends State<MainScreen> {
       await prefs.setBool('showcaseShown2', true);
     }
   }
+   @override
+  void dispose() {
+    _isMounted = false;
+    super.dispose();
+  }
   fetchAllProducts() async {
-    fetchpost = await _postService.DisplayAllForm(context:context);
-    setState(() {});
+    try{
+      fetchpost = await _postService.DisplayAllForm(context:context);
+      if (_isMounted) {
+        setState(() {});
+      }
+    }catch(e){
+
+    }
   }
 
   @override

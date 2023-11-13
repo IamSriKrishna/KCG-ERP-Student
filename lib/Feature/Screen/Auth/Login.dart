@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kcgerp/Feature/Screen/Auth/SignUp.dart';
 import 'package:kcgerp/Feature/Screen/Auth/widget/LoginWidget.dart';
 import 'package:kcgerp/Feature/Service/Authservice.dart';
-import 'package:kcgerp/Feature/Service/UpdateFCMToken.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoBoldFont.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoRegularFont.dart';
 import 'package:kcgerp/Util/util.dart';
@@ -69,6 +68,7 @@ class _LoginState extends State<Login> {
                   CustomTextField(
                     hintText: 'Register Number',
                     labelText: 'Register Number',
+                    keyboardType: TextInputType.number,
                     controller: _rollNumber,
                     textCapitalization: TextCapitalization.characters,
                   ),

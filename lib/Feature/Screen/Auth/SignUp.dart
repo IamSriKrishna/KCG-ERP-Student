@@ -48,7 +48,7 @@ class _SignUpState extends State<SignUp> {
   void _initializePreferences() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     fcmToken = await pref.getString('fcmToken');
-    print(fcmToken);
+    //print(fcmToken);
   }
   void signup()async{
     if(
@@ -159,6 +159,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                     CustomTextField(
                       controller: rollNo, 
+                      keyboardType: TextInputType.number,
                       hintText: 'Register Number', 
                       labelText: 'Register Number',
                       textCapitalization: TextCapitalization.characters,

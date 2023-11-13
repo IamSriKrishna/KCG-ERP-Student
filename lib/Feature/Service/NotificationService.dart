@@ -6,14 +6,42 @@ import 'package:kcgerp/Provider/StudenProvider.dart';
 import 'package:kcgerp/Util/util.dart';
 import 'package:provider/provider.dart';
 class NotificationService{
+  sendNotificationtoOne(String registrationToken, String body) async {
+  final String url = "$uri/send-notification"; 
+  final Map<String, dynamic> requestBody = {
+    'registrationToken': registrationToken,
+    'body': body,
+  };
+
+  final headers = {
+    'Content-Type': 'application/json',
+  };
+
+  try {
+    final response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+      body: jsonEncode(requestBody),
+    );
+
+    if (response.statusCode == 200) {
+      print("Notification sent successfully");
+    } else {
+      print("Failed to send notification: ${response.statusCode}");
+    }
+  } catch (e) {
+    print("Error sending notification: $e");
+  }
+}
   void sendNotifications({
     required BuildContext context,
-    required List<String> toAllFaculty
+    required List<String> toAllFaculty,
+    required String body,
   }) async {
     final student = Provider.of<StudentProvider>(context,listen: false).user;
     final Map<String, dynamic> requestData = {
       "registrationTokens": toAllFaculty,
-      "body": "Form Request Recieved from ${student.name}", 
+      "body": body, 
     };
 
     final response = await http.post(
@@ -23,7 +51,7 @@ class NotificationService{
     );
 
     if (response.statusCode == 200) {
-      print('Successfully sent');
+      //print('Successfully sent');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

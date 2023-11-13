@@ -1,47 +1,51 @@
-import 'package:kcgerp/Model/Student.dart';
 import 'dart:convert';
 
-class GetChat {
+List<GetChats> getChatsFromJson(String str) => List<GetChats>.from(json.decode(str).map((x) => GetChats.fromJson(x)));
+
+String getChatsToJson(List<GetChats> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class GetChats {
     final String id;
     final String chatName;
     final bool isGroupChat;
-    final List<Student> users;
+    final List<Sender> users;
     final DateTime createdAt;
     final DateTime updatedAt;
-    final LatestMessage latestMessage;
+    //final LatestMessage latestMessage;
 
-    GetChat({
+    GetChats({
         required this.id,
         required this.chatName,
         required this.isGroupChat,
         required this.users,
         required this.createdAt,
         required this.updatedAt,
-        required this.latestMessage,
+        //required this.latestMessage,
     });
 
-    factory GetChat.fromJson(String str) => GetChat.fromMap(json.decode(str));
+     factory GetChats.fromJson(Map<String, dynamic> json) {
+        // Check if "latestMessage" is null in the JSON data and provide a default value if it is.
+        
 
-    String toJson() => json.encode(toMap());
+        return GetChats(
+            id: json["_id"],
+            chatName: json["chatName"],
+            isGroupChat: json["isGroupChat"],
+            users: List<Sender>.from(json["users"].map((x) => Sender.fromJson(x))),
+            createdAt: DateTime.parse(json["createdAt"]),
+            updatedAt: DateTime.parse(json["updatedAt"]),
+            //latestMessage: LatestMessage.fromJson(latestMessageJson),
+        );
+    }
 
-    factory GetChat.fromMap(Map<String, dynamic> json) => GetChat(
-        id: json["_id"],
-        chatName: json["chatName"],
-        isGroupChat: json["isGroupChat"],
-        users: List<Student>.from(json["users"].map((x) => Student.fromMap(x))),
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
-        latestMessage: LatestMessage.fromMap(json["latestMessage"]),
-    );
-
-    Map<String, dynamic> toMap() => {
+    Map<String, dynamic> toJson() => {
         "_id": id,
         "chatName": chatName,
         "isGroupChat": isGroupChat,
-        "users": List<dynamic>.from(users.map((x) => x.toMap())),
+        "users": List<dynamic>.from(users.map((x) => x.toJson())),
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
-        "latestMessage": latestMessage.toMap(),
+        //"latestMessage": latestMessage.toJson() ,
     };
 }
 
@@ -60,21 +64,17 @@ class LatestMessage {
         required this.chat,
     });
 
-    factory LatestMessage.fromJson(String str) => LatestMessage.fromMap(json.decode(str));
-
-    String toJson() => json.encode(toMap());
-
-    factory LatestMessage.fromMap(Map<String, dynamic> json) => LatestMessage(
+    factory LatestMessage.fromJson(Map<String, dynamic> json) => LatestMessage(
         id: json["_id"],
-        sender: Sender.fromMap(json["sender"]),
+        sender: Sender.fromJson(json["sender"]),
         content: json["content"],
         receiver: json["receiver"],
         chat: json["chat"],
     );
 
-    Map<String, dynamic> toMap() => {
+    Map<String, dynamic> toJson() => {
         "_id": id,
-        "sender": sender.toMap(),
+        "sender": sender.toJson(),
         "content": content,
         "receiver": receiver,
         "chat": chat,
@@ -86,29 +86,28 @@ class Sender {
     final String name;
     final String rollno;
     final String dp;
-
+    final String fcmtoken;
     Sender({
         required this.id,
         required this.name,
         required this.rollno,
         required this.dp,
+        required this.fcmtoken
     });
 
-    factory Sender.fromJson(String str) => Sender.fromMap(json.decode(str));
-
-    String toJson() => json.encode(toMap());
-
-    factory Sender.fromMap(Map<String, dynamic> json) => Sender(
+    factory Sender.fromJson(Map<String, dynamic> json) => Sender(
         id: json["_id"],
         name: json["name"],
         rollno: json["rollno"],
         dp: json["dp"],
+        fcmtoken:json['fcmtoken']
     );
 
-    Map<String, dynamic> toMap() => {
+    Map<String, dynamic> toJson() => {
         "_id": id,
         "name": name,
         "rollno": rollno,
         "dp": dp,
+        'fcmtoken':fcmtoken
     };
 }

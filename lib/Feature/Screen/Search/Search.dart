@@ -1,11 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kcgerp/Feature/Screen/Messenger/ChatScreen.dart';
+import 'package:kcgerp/Feature/Screen/OverScreen/OverScreen.dart';
 import 'package:kcgerp/Feature/Service/Authservice.dart';
+import 'package:kcgerp/Feature/Service/Chat/ChatService.dart';
+import 'package:kcgerp/Feature/Service/NotificationService.dart';
 import 'package:kcgerp/Model/Student.dart';
 import 'package:kcgerp/Provider/DarkThemeProvider.dart';
+import 'package:kcgerp/Provider/StudenProvider.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoBoldFont.dart';
+import 'package:kcgerp/Util/showsnackbar.dart';
 import 'package:kcgerp/Util/util.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -23,16 +27,17 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController _searchController = TextEditingController();
   AuthService authService = AuthService();
   List<Student> _searchedStudents = [];
-
+  NotificationService _notificationService = NotificationService();
   Future<void> _search() async {
     try {
+      final student = Provider.of<StudentProvider>(context,listen: false).user;
       List<Student> searchedStudents =
-          await authService.searchStudentsByName(_searchController.text);
+          await authService.searchStudentsByName(_searchController.text,student.id);
       setState(() {
         _searchedStudents = searchedStudents;
       });
     } catch (e) {
-      print('Error fetching student data: $e');
+      //print('Error fetching student data: $e');
     }
   }
 
@@ -49,29 +54,29 @@ class _SearchScreenState extends State<SearchScreen> {
   void _onSearchTextChanged() {
     _search();
     setState(() {
-      
     });
   }
 
   Widget _buildStudentList() {
     final theme = Provider.of<DarkThemeProvider>(context);
+    final student = Provider.of<StudentProvider>(context).user;
     if (_searchedStudents.isNotEmpty) {
       return SliverList(
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                  context, 
-                  ChatScreen.route,
-                  (route)=>false,
-                  arguments: {
-                    'name':_searchedStudents[index].name,
-                    'dp':_searchedStudents[index].dp,
-                    'registerno':_searchedStudents[index].rollno,
-                    'dep':_searchedStudents[index].department
-                  }
+                showSnackBar(
+                  context: context, 
+                  text: '${_searchedStudents[index].name} added to Messenger'
                 );
+                _notificationService.sendNotifications(
+                  context: context, 
+                  toAllFaculty: [_searchedStudents[index].fcmtoken],
+                  body: '${student.name} wants to message You!'
+                );
+                ChatHelper.apply(_searchedStudents[index].id.toString());
+                Navigator.pushNamedAndRemoveUntil(context, OverScreen.route,(route)=>false);
               },
               child: ListTile(
                 leading: ClipOval(
@@ -80,6 +85,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     width: MediaQuery.of(context).size.width * 0.135,
                     height: MediaQuery.of(context).size.height * 0.065,
                     fit: BoxFit.cover,
+                    progressIndicatorBuilder: 
+                    (context, url, progress) => Center(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 1,
+                        color:theme.getDarkTheme?themeColor.themeColor: themeColor.darkTheme,
+                      ),
+                    ),
                   ),
                 ),
                 title: Row(
@@ -121,8 +133,9 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: Lottie.asset('asset/lottie/null.json'),
               ),
               Text(
-                'No students found with the provided name',
+                'No students found with the\nprovided name',
                 textAlign: TextAlign.center,
+                maxLines: 2,
                 style: GoogleFonts.merriweather(
                   fontSize: 20
                 ),

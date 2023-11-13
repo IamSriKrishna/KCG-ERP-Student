@@ -1,5 +1,8 @@
-
 import 'dart:convert';
+
+CreateChat createChatFromJson(String str) => CreateChat.fromJson(json.decode(str));
+
+String createChatToJson(CreateChat data) => json.encode(data.toJson());
 
 class CreateChat {
     final String userId;
@@ -8,15 +11,11 @@ class CreateChat {
         required this.userId,
     });
 
-    factory CreateChat.fromJson(String str) => CreateChat.fromMap(json.decode(str));
-
-    String toJson() => json.encode(toMap());
-
-    factory CreateChat.fromMap(Map<String, dynamic> json) => CreateChat(
+    factory CreateChat.fromJson(Map<String, dynamic> json) => CreateChat(
         userId: json["userId"],
     );
 
-    Map<String, dynamic> toMap() => {
+    Map<String, dynamic> toJson() => {
         "userId": userId,
     };
 }

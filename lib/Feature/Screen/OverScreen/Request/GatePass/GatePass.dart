@@ -3,7 +3,10 @@ import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kcgerp/Feature/Service/Credit.dart';
+import 'package:kcgerp/Feature/Service/FacultyData.dart';
 import 'package:kcgerp/Feature/Service/FormService.dart';
+import 'package:kcgerp/Feature/Service/NotificationService.dart';
+import 'package:kcgerp/Model/faculty.dart';
 import 'package:kcgerp/Provider/DarkThemeProvider.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/GatePass/GatePassHistory.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/Widget/ApprovalButton.dart';
@@ -29,6 +32,21 @@ class _GatePassScreenState extends State<GatePassScreen> {
   TimeOfDay selectedTo = TimeOfDay.now();
   StudentCredit studentCredit = StudentCredit();
   FormService _formService = FormService();
+  List<faculty>? fetchfaculty;
+  FacultyService _facultyService = FacultyService();
+  final NotificationService _fcmNotification = NotificationService();
+  @override
+  void initState() {
+    retreive();
+    super.initState();
+  }
+  void retreive()async{
+    fetchfaculty = await  _facultyService.DisplayAllFaculty(context: context);
+    //print(fetchfaculty);
+    setState(() {
+      
+    });
+  }
   void leave({
     required String rollno,
     required String name,
@@ -43,6 +61,13 @@ class _GatePassScreenState extends State<GatePassScreen> {
     required String from,
     required String to,
   }){
+    for(int i =0;i<fetchfaculty!.length;i++){
+      _fcmNotification.sendNotifications(
+        context: context, 
+        toAllFaculty: [fetchfaculty![i].fcmtoken],
+        body:"Form Request Recieved from ${name}"
+      );
+    }
     _formService.UploadForm(
       context: context, 
       rollno: rollno, 
@@ -62,10 +87,7 @@ class _GatePassScreenState extends State<GatePassScreen> {
       spent: spent
     );
   }
-  @override
-  void initState() {
-    super.initState();
-  }
+  
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
@@ -320,7 +342,7 @@ class _GatePassScreenState extends State<GatePassScreen> {
             message: message,
             onTap: () async{
               if(student.credit <= 0){
-                print('Insuffient Balence');
+                //print('Insuffient Balence');
                 studentCredit.updateStudentCreditToZero(student.id, 0);
               }
               else{

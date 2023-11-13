@@ -1,93 +1,66 @@
+
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:kcgerp/Provider/StudenProvider.dart';
+import 'package:kcgerp/Model/Chat/ReceiveMessage.dart';
+import 'package:kcgerp/Model/Chat/sendMessage.dart';
 import 'package:kcgerp/Util/util.dart';
-import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MesssagingHelper {
+  static var client = http.Client();
 
-Future<Map<String, dynamic>?> sendMessage({
-    required String content,
-    required String chatId,
-    required String receiver,
-    required BuildContext context
-  }) async {
-    
-    final student = Provider.of<StudentProvider>(context).user;
-    if (content.isEmpty || chatId.isEmpty) {
-      print("Invalid data passed into request");
-      return null; 
-    }
+  // Apply for job
+  static Future<List<dynamic>> sendMessage(SendMessage model) async {
 
-    final newMessage = {
-      "sender": student.id, 
-      "content": content,
-      "receiver": receiver,
-      "chat": chatId,
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('studenttoken');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'x-auth-token': '${token}'
     };
 
-    try {
-      final response = await http.post(
-        Uri.parse('$uri/send-message/'), // Replace with your API endpoint.
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'token': '${student.token}'
-        },
-        body: jsonEncode(newMessage),
-      );
+    var url = Uri.http(halfuri,'/send-message/');
+    var response = await http.post(url,
+        headers: requestHeaders, body: jsonEncode(model.toJson()));
+    
+    
+    print(response.statusCode);
 
-      if (response.statusCode == 200) {
-        final message = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      ReceivedMessge message =
+          ReceivedMessge.fromJson(jsonDecode(response.body));
 
-        return message;
-      } else {
-        print("Request failed with status: ${response.statusCode}");
-        return null; 
-      }
-    } catch (error) {
-      print("Error: $error");
-      return null;
+      Map<String, dynamic> responseMap = jsonDecode(response.body);
+      return [true, message, responseMap];
+    } else {
+      return [false];
     }
   }
 
-Future<List<dynamic>> getAllMessages(String chatId, int page,BuildContext context) async {
-    try {
-      final student = Provider.of<StudentProvider>(context).user;
+  static Future<List<ReceivedMessge>> getMessages(
+      String chatId, int offset,) async {
 
-      final Uri url = Uri.parse('$uri/get-message/$chatId');
-      final Map<String, String> headers = {
-          'Content-Type': 'application/json; charset=UTF-8',
-          'token': '${student.token}'
-        };
-      final Map<String, dynamic> requestData = {
-        "chatId": chatId,
-        "page": page.toString(),
-      };
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('studenttoken');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'x-auth-token': '${token}'
+    };
 
-      final http.Response response = await http.post(
-        url,
-        headers: headers,
-        body: jsonEncode(requestData),
-      );
+    var url = Uri.http(halfuri, "/get-message/$chatId",
+        {"page": offset.toString()});
+    var response = await client.get(
+      url,
+      headers: requestHeaders,
+    );
+    //print(response.body);
+    if (response.statusCode == 200) {
+      var messages = receivedMessgeFromJson(response.body);
 
-      if (response.statusCode == 200) {
-        final List<dynamic> messages = jsonDecode(response.body);
-
-        // You can now handle the list of messages as needed.
-
-        return messages;
-      } else {
-        // Handle the error response here.
-        print("Request failed with status: ${response.statusCode}");
-        return [];
-      }
-    } catch (error) {
-      // Handle the error here.
-      print("Error: $error");
-      return [];
+      return messages;
+    } else {
+      throw Exception(" failed to load messages");
     }
   }
-
 }

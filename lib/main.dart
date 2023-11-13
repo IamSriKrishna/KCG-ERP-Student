@@ -1,28 +1,96 @@
-
-
 import 'dart:io';
-
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:kcgerp/Constrains/ThemeStyle.dart';
+import 'package:kcgerp/Feature/Screen/NoInternet.dart';
 import 'package:kcgerp/Feature/Screen/OnBoard/OnboardScreen.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/OverScreen.dart';
 import 'package:kcgerp/Feature/Service/Authservice.dart';
 import 'package:kcgerp/Provider/DarkThemeProvider.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Profile/Widget/LanguageContoller.dart';
 import 'package:kcgerp/Provider/StudenProvider.dart';
+import 'package:kcgerp/Provider/chat_provider.dart';
 import 'package:kcgerp/Util/Additional/Loader.dart';
 import 'package:kcgerp/Util/LocalNotification.dart';
 import 'package:kcgerp/l10n/AppLocalization.dart';
 import 'package:kcgerp/route.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  Firebase.initializeApp(
+    options:FirebaseOptions(
+      apiKey: 'AIzaSyCishefTquUez42NWNNToO61QKxIomFJkE', 
+      appId: '1:879927221521:android:c46c67a6f1ea8b6eb1c0b0', 
+      messagingSenderId: '879927221521', 
+      projectId: 'campuslink-d1f2d'
+    )
+    );
+  showFlutterNotification(message);
+  print('Handling a background message ${message.messageId}');
+}
+
+/// Create a [AndroidNotificationChannel] for heads up notifications
+late AndroidNotificationChannel channel;
+
+bool isFlutterLocalNotificationsInitialized = false;
+
+Future<void> setupFlutterNotifications() async {
+  if (isFlutterLocalNotificationsInitialized) {
+    return;
+  }
+  channel = const AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    description:
+        'This channel is used for important notifications.', // description
+    importance: Importance.high,
+  );
+
+  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+  FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+  isFlutterLocalNotificationsInitialized = true;
+}
+
+void showFlutterNotification(RemoteMessage message) async{
+  final FlutterLocalNotificationsPlugin
+      _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  RemoteNotification? notification = message.notification;
+      const AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails('your channel id', 'your channel name',
+            channelDescription: 'your channel description',
+            importance: Importance.max,
+            priority: Priority.high,
+            ticker: 'ticker');
+    const NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+    await _flutterLocalNotificationsPlugin
+        .show(0, notification!.title, notification.body, notificationDetails, );
+
+  isFlutterLocalNotificationsInitialized = true;
+}
+late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   Platform.isAndroid?
@@ -38,14 +106,11 @@ void main() async{
   FirebaseMessaging.instance.getToken().then((value)async{
   SharedPreferences pref = await SharedPreferences.getInstance();
   pref.setString('fcmToken', value!);
-  print('main file la print agudhu:$value');
   });
   await SharedPreferences.getInstance();
-  Get.put(LanguageController()); // Initialize the LanguageController
+  Get.put(LanguageController());
 
-  FirebaseMessaging.onBackgroundMessage((message) => 
-    firebaseMessaginBackgroundHandler(message)
-  );
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) =>  runApp(
         MultiProvider(
@@ -56,17 +121,16 @@ void main() async{
             ),
             ChangeNotifierProvider(
               create: (context) => StudentProvider(),
-            )
+            ),
+            ChangeNotifierProvider(
+              create: (context) => ChatNotifier(),
+            ),
           ],child: MyApp(), 
         )
     
   ));
 }
 
-Future<void> firebaseMessaginBackgroundHandler(RemoteMessage message)async{
-  await Firebase.initializeApp();
-  print('FirebaseMessageing:$message');
-}
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -77,23 +141,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   
 
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  
   String locale = ''; 
   final AuthService authService = AuthService();
 
   @override
   void initState() {
     super.initState();
-    _firebaseMessaging.setForegroundNotificationPresentationOptions(
-      badge: true,
-      sound: true
-    );
-    _firebaseMessaging.requestPermission(
-      announcement: true,
-      carPlay: true,
-      criticalAlert: true,
-      provisional: true
-    );
+    _requestNotificationPermission();
     authService.getUserData(context);
     loadSelectedLanguage();
   }
@@ -105,9 +160,12 @@ Future<void> loadSelectedLanguage() async {
   });
 }
 
-
+Future<void> _requestNotificationPermission() async {
+    await Permission.notification.request();
+}
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     return Consumer<DarkThemeProvider>(
       builder: (context, darkThemeProvider, child) {
         return GetMaterialApp(
@@ -126,7 +184,11 @@ Future<void> loadSelectedLanguage() async {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Scaffold(body: Center(child: Loader()));
-              } else if (snapshot.hasError) {
+              } 
+              else if(snapshot.connectionState == ConnectionState.none){
+                return NoInternet();
+              }
+              else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
                 final student = Provider.of<StudentProvider>(context).user;

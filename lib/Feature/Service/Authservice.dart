@@ -47,7 +47,7 @@ class AuthService{
         credit: 0,
         token: '',
       );
-      print(response.url);
+      //print(response.url);
       http.Response res = await http.post(
         Uri.parse('$uri/kcg/student/signup'),
         body: user.toJson(),
@@ -55,8 +55,8 @@ class AuthService{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print(res);
-      print(res.body);
+      //print(res);
+      //print(res.body);
       httpErrorHandle(
         response: res,
         context: context,
@@ -92,7 +92,7 @@ class AuthService{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print(res.body);
+      //(res.body);
       httpErrorHandle(
         response: res,
         context: context,
@@ -100,6 +100,8 @@ class AuthService{
           SharedPreferences prefs = await SharedPreferences.getInstance();
           Provider.of<StudentProvider>(context, listen: false).setUser(res.body);
           final student = Provider.of<StudentProvider>(context,listen: false).user;
+          await prefs.setString('studenttoken', student.token);
+          await prefs.setString('userId', student.id);
           LocalNotifications.showSimpleNotification(
             title: "Campus Link",
             body: "Welcome Back, ${student.name}:)",
@@ -151,7 +153,7 @@ class AuthService{
         userProvider.setUser(userRes.body);
       }
     } catch (e) {
-      print(e);
+      //print(e);
     }
   }
 
@@ -159,15 +161,19 @@ class AuthService{
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('x-auth-token');
     final a =  prefs.getString("x-auth-token");
-    print(a);
+    //print(a);
   }
 
-Future<List<Student>> searchStudentsByName(String name) async {
+Future<List<Student>> searchStudentsByName(String name, String loggedInUserId) async {
   final response = await http.get(Uri.parse('$uri/students/search?name=$name'));
   print(response.body);
   if (response.statusCode == 200) {
     List<dynamic> jsonList = json.decode(response.body);
     List<Student> students = jsonList.map((json) => Student.fromMap(json)).toList();
+
+    // Filter out the logged-in user's data
+    students = students.where((student) => student.id != loggedInUserId).toList();
+
     return students;
   } else if (response.statusCode == 404) {
     return []; 

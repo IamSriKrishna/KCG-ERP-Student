@@ -6,7 +6,10 @@ import 'package:intl/intl.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/OverScreen.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/Leave/LeaveWidget/LeaveAppbar.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/Leave/LeaveWidget/LeaveCustomField.dart';
+import 'package:kcgerp/Feature/Service/FacultyData.dart';
 import 'package:kcgerp/Feature/Service/FormService.dart';
+import 'package:kcgerp/Feature/Service/NotificationService.dart';
+import 'package:kcgerp/Model/faculty.dart';
 import 'package:kcgerp/Provider/StudenProvider.dart';
 import 'package:kcgerp/Util/util.dart';
 import 'package:kcgerp/l10n/AppLocalization.dart';
@@ -23,6 +26,22 @@ class LeaveExpand extends StatefulWidget {
 class _LeaveExpandState extends State<LeaveExpand> {
   FormService _formService = FormService();
   TextEditingController _reason = TextEditingController();
+  
+  List<faculty>? fetchfaculty;
+  FacultyService _facultyService = FacultyService();
+  final NotificationService _fcmNotification = NotificationService();
+  @override
+  void initState() {
+    retreive();
+    super.initState();
+  }
+  void retreive()async{
+    fetchfaculty = await  _facultyService.DisplayAllFaculty(context: context);
+    //print(fetchfaculty);
+    setState(() {
+      
+    });
+  }
   void UploadForm(
     String studentid,
     String rollno,
@@ -39,6 +58,13 @@ class _LeaveExpandState extends State<LeaveExpand> {
     int spent,
     String fcmToken
   ){
+    for(int i =0;i<fetchfaculty!.length;i++){
+      _fcmNotification.sendNotifications(
+        context: context, 
+        toAllFaculty: [fetchfaculty![i].fcmtoken],
+        body:"Form Request Recieved from ${name}"
+      );
+    }
     _formService.UploadForm(
       studentid: studentid,
       context: context, 

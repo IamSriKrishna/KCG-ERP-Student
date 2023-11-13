@@ -1,5 +1,8 @@
-
 import 'dart:convert';
+
+SendMessage sendMessageFromJson(String str) => SendMessage.fromJson(json.decode(str));
+
+String sendMessageToJson(SendMessage data) => json.encode(data.toJson());
 
 class SendMessage {
     final String content;
@@ -12,17 +15,13 @@ class SendMessage {
         required this.receiver,
     });
 
-    factory SendMessage.fromJson(String str) => SendMessage.fromMap(json.decode(str));
-
-    String toJson() => json.encode(toMap());
-
-    factory SendMessage.fromMap(Map<String, dynamic> json) => SendMessage(
+    factory SendMessage.fromJson(Map<String, dynamic> json) => SendMessage(
         content: json["content"],
         chatId: json["chatId"],
         receiver: json["receiver"],
     );
 
-    Map<String, dynamic> toMap() => {
+    Map<String, dynamic> toJson() => {
         "content": content,
         "chatId": chatId,
         "receiver": receiver,

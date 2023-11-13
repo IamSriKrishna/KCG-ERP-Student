@@ -19,13 +19,13 @@ class PasswordService{
 
     if (response.statusCode == 200) {
       // Password updated successfully
-      print('Password updated successfully');
+      //print('Password updated successfully');
     } else if (response.statusCode == 400) {
       // Current password is incorrect
-      print('Current password is incorrect');
+      //print('Current password is incorrect');
     } else {
       // Handle other errors, e.g., server errors
-      print('Error: ${response.statusCode}');
+      //print('Error: ${response.statusCode}');
     }
   }
 
@@ -45,10 +45,10 @@ class PasswordService{
 
     if (response.statusCode == 200) {
       // Password changed successfully
-      print('Password changed successfully');
+      //print('Password changed successfully');
     } else {
       // Handle errors, e.g., server errors
-      print('Error: ${response.statusCode}');
+      //print('Error: ${response.statusCode}');
     }
   }
 }

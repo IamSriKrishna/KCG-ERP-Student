@@ -18,3 +18,5 @@ AssetImage assetImage = AssetImage();
 AppDuration duration = AppDuration();
 
 String uri ="http://192.168.29.172:3000";
+
+String halfuri ="192.168.29.172:3000";

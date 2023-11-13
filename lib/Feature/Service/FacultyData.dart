@@ -22,7 +22,7 @@ class FacultyService{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print("response2=${res.body}");
+      //print("response2=${res.body}");
       httpErrorHandle(
         response: res,
         context: context,
@@ -51,7 +51,7 @@ class FacultyService{
     final data = json.decode(response.body);
     return data;
   } else { 
-    print('Failed to load data');
+    //print('Failed to load data');
   }
 }
 }

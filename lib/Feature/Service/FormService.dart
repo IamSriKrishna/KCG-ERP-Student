@@ -122,7 +122,7 @@ class FormService{
           'x-auth-token': Student.token
         },
       );
-      print("response1=${res.body}");
+      //print("response1=${res.body}");
       httpErrorHandle(
         response: res,
         context: context,
@@ -161,7 +161,7 @@ class FormService{
           'x-auth-token': Student.token
         },
       );
-      print("response2=${res.body}");
+      //print("response2=${res.body}");
       httpErrorHandle(
         response: res,
         context: context,

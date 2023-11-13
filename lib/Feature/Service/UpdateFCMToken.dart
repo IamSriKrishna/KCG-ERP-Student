@@ -21,11 +21,11 @@ class UpdateFCMToken{
         body: jsonEncode(data),
       );
       if (res.statusCode == 200) {
-        print('FCMTOKEN updated successfully:'+fcmtoken);
+        //print('FCMTOKEN updated successfully:'+fcmtoken);
         // You can handle success here
       } else {
-        print('Failed to update Form');
-        print(res.body);
+        //print('Failed to update Form');
+        //print(res.body);
         // Handle error here
       }
     }catch(e){

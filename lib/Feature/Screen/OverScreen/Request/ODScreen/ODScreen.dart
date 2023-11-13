@@ -76,7 +76,7 @@ class _ODScreenState extends State<ODScreen>with SingleTickerProviderStateMixin 
                   else{
                     controller.animateTo(0.5);
                   }
-                  print(_selectedRange!.startDate);
+                  //print(_selectedRange!.startDate);
                 },
                 headerStyle: DateRangePickerHeaderStyle(
                   textStyle: TextStyle(

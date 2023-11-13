@@ -17,7 +17,7 @@ class GatePassSQL{
       'gatepassHistory.db',
       version: 1,
       onCreate: (sql.Database db,int version) async{
-        print('....CREATING DATABASE');
+        //print('....CREATING DATABASE');
         await CreateTable(db);
       },
     );

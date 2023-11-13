@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kcgerp/Feature/Service/Chat/ChatService.dart';
+import 'package:kcgerp/Model/Chat/get_chat.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatNotifier extends ChangeNotifier {
-  Future<List<dynamic>>? chats;
+  late Future<List<GetChats>> chats;
   List<String> _online = [];
   bool _typing = false;
-
   bool get typing => _typing;
 
   set typingStatus(bool newState) {
@@ -22,26 +24,31 @@ class ChatNotifier extends ChangeNotifier {
 
   String? userId;
 
-  getChats(BuildContext context) {
-    chats = ChatHelper.getChats(context);
+  getChats() {
+    chats = ChatHelper.getConversations();
   }
 
-  
-  // String msgTime(String timestamp) {
-  //   DateTime now = DateTime.now().toUtc();
-  //   DateTime messageTimeUtc = DateTime.parse(timestamp).toUtc();
-  //   DateTime messageTimeBeijing =
-  //       messageTimeUtc.toLocal().add(const Duration(hours: 15));
-  //   if (now.year == messageTimeBeijing.year &&
-  //       now.month == messageTimeBeijing.month &&
-  //       now.day == messageTimeBeijing.day) {
-  //     return DateFormat.jm().format(messageTimeBeijing);
-  //   } else if (now.year == messageTimeBeijing.year &&
-  //       now.month == messageTimeBeijing.month &&
-  //       now.day - messageTimeBeijing.day == 1 ) {
-  //     return "Yesterday";
-  //   } else {
-  //     return DateFormat.yMEd().format(messageTimeBeijing);
-  //   }
-  // }
+  getPrefs() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId = prefs.getString('userId');
+  }
+
+
+ String msgTime(String timestamp) {
+  DateTime now = DateTime.now();
+  DateTime messageTimeUtc = DateTime.parse(timestamp);
+  DateTime messageTimeIndian = messageTimeUtc.add(const Duration(hours: 5, minutes: 30));
+
+  if (now.year == messageTimeIndian.year &&
+      now.month == messageTimeIndian.month &&
+      now.day == messageTimeIndian.day) {
+    return DateFormat.jm().format(messageTimeIndian);
+  } else if (now.year == messageTimeIndian.year &&
+      now.month == messageTimeIndian.month &&
+      now.day - messageTimeIndian.day == 1) {
+    return "Yesterday";
+  } else {
+    return DateFormat.yMEd().format(messageTimeIndian);
+  }
+}
 }

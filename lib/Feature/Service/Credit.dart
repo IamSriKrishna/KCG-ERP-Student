@@ -21,13 +21,13 @@ class StudentCredit{
     );
 
     if (response.statusCode == 200) {
-      print('Credit updated successfully');
+      //print('Credit updated successfully');
       // You can handle success here
     } else {
-      print('Failed to update credit');
+      //print('Failed to update credit');
       
       //print(response.body);
-      print(data);
+      //print(data);
       // Handle error here
     }
   }
@@ -50,11 +50,11 @@ class StudentCredit{
     );
 
     if (response.statusCode == 200) {
-      print('Credit updated successfully');
+      //print('Credit updated successfully');
       // You can handle success here
     } else {
-      print('Failed to update credit');
-      print(response.body);
+      //print('Failed to update credit');
+      //print(response.body);
       // Handle error here
     }
   }

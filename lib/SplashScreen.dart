@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/OverScreen.dart';
 import 'package:kcgerp/Feature/Service/UpdateFCMToken.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoRegularFont.dart';
+import 'package:kcgerp/Util/util.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   void _initializePreferences() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     fcmToken = await pref.getString('fcmToken');
-    print(fcmToken);
+    //print(fcmToken);
   }
   @override
   void initState() {
@@ -45,6 +46,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   }
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: themeColor.themeColor,
       body: Stack(
         children: [
           Align(
@@ -55,7 +57,11 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             child: Lottie.asset('asset/lottie/load.json',height: 150,)),
           Align(
             alignment: Alignment(0, 0.95),
-            child: RobotoRegularFont(text: 'Developed By Sri Krishna & Krithick',size: 9,)),
+            child: RobotoRegularFont(
+              text: 'Developed By Sri Krishna & Krithick',
+              size: 9,
+              textColor: themeColor.darkTheme,
+            )),
         ],
       ),
     );

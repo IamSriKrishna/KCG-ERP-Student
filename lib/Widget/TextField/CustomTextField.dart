@@ -6,10 +6,12 @@ class CustomTextField extends StatelessWidget {
   final String labelText;
   final TextEditingController controller;
   final TextCapitalization textCapitalization;
+  final TextInputType keyboardType;
   const CustomTextField({
     super.key,
     required this.controller,
     required this.hintText,
+    this.keyboardType = TextInputType.text,
     this.textCapitalization = TextCapitalization.none,
     required this.labelText
   });
@@ -28,7 +30,7 @@ class CustomTextField extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal:8.0),
           child: TextField(
             controller: controller,
-            keyboardType: TextInputType.name,
+            keyboardType: keyboardType,
             enableSuggestions: true,
             textCapitalization: textCapitalization,
             style: GoogleFonts.merriweather(
@@ -53,3 +55,4 @@ class CustomTextField extends StatelessWidget {
     );
   }
 }
+
