@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:kcgerp/Provider/StudenProvider.dart';
 import 'package:kcgerp/Util/util.dart';
-import 'package:provider/provider.dart';
 class NotificationService{
   sendNotificationtoOne(String registrationToken, String body) async {
   final String url = "$uri/send-notification"; 
@@ -38,7 +36,6 @@ class NotificationService{
     required List<String> toAllFaculty,
     required String body,
   }) async {
-    final student = Provider.of<StudentProvider>(context,listen: false).user;
     final Map<String, dynamic> requestData = {
       "registrationTokens": toAllFaculty,
       "body": body, 
@@ -51,8 +48,9 @@ class NotificationService{
     );
 
     if (response.statusCode == 200) {
-      //print('Successfully sent');
+      print('Successfully sent');
     } else {
+      print('Failed to sent');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Failed to send notifications"),

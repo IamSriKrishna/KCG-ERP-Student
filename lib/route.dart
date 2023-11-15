@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:kcgerp/Feature/Screen/3rdUserProfile/ThirdUserProfile.dart';
 import 'package:kcgerp/Feature/Screen/Auth/Login.dart';
 import 'package:kcgerp/Feature/Screen/Auth/SignUp.dart';
 import 'package:kcgerp/Feature/Screen/Messenger/MessageScreen.dart';
 import 'package:kcgerp/Feature/Screen/Messenger/ChatScreen.dart';
+import 'package:kcgerp/Feature/Screen/MyProfile/EditProfile.dart';
+import 'package:kcgerp/Feature/Screen/MyProfile/MyProfile.dart';
 import 'package:kcgerp/Feature/Screen/OnBoard/OnboardScreen.dart';
 import 'package:kcgerp/Feature/Screen/OnBoard/Screen2.dart';
 import 'package:kcgerp/Feature/Screen/OnBoard/Screen3.dart';
@@ -163,6 +166,27 @@ Route<dynamic> onGenerator(RouteSettings settings,String locale) {
       return PageTransition(
         duration: Duration(milliseconds: duration.fadeMilliseconds),
         child: MessageScreen(),
+        type: PageTransitionType.fade,
+        settings: settings,
+      );
+    case MyProfile.route:
+      return PageTransition(
+        duration: Duration(milliseconds: duration.fadeMilliseconds),
+        child: MyProfile(),
+        type: PageTransitionType.fade,
+        settings: settings,
+      );
+    // case ThirdUserProfile.route:
+    //   return PageTransition(
+    //     duration: Duration(milliseconds: duration.fadeMilliseconds),
+    //     child: ThirdUserProfile(),
+    //     type: PageTransitionType.fade,
+    //     settings: settings,
+    //   );
+    case EditProfile.route:
+      return PageTransition(
+        duration: Duration(milliseconds: duration.fadeMilliseconds),
+        child: EditProfile(),
         type: PageTransitionType.fade,
         settings: settings,
       );

@@ -5,7 +5,7 @@ void showSnackBar({required BuildContext context,required String text}){
   
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: 2),
       padding: const EdgeInsets.all(10),
       elevation: 0,
       backgroundColor: Colors.white.withOpacity(0),

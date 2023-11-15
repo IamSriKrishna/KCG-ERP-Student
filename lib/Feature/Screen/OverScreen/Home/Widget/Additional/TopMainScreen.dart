@@ -54,33 +54,28 @@ class _TopMainScreenState extends State<TopMainScreen> {
   Widget build(BuildContext context) {
     final student = Provider.of<StudentProvider>(context);
     final theme = Provider.of<DarkThemeProvider>(context);
-    return InkWell(
-      onTap: () {
-        scrollToTop();
-      },
-      child: Container(
-        padding: const EdgeInsets.all(5),
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height * 0.102,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                RobotoBoldFont(
-                  text: greeting,
-                  size: 25,
-                  textColor: theme.getDarkTheme ? themeColor.backgroundColor : themeColor.darkTheme,
-                ),
-              ],
-            ),
-            RobotoBoldFont(
-              text: "${student.user.name.toString().toUpperCase()} :)",
-              size: 25,
-              textColor: theme.getDarkTheme ? themeColor.appThemeColor : themeColor.appThemeColor2,
-            ),
-          ],
-        ),
+    return Container(
+      padding: const EdgeInsets.all(5),
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.102,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              RobotoBoldFont(
+                text: greeting,
+                size: 25,
+                textColor: theme.getDarkTheme ? themeColor.backgroundColor : themeColor.darkTheme,
+              ),
+            ],
+          ),
+          RobotoBoldFont(
+            text: "${student.user.name.toString().toUpperCase()} :)",
+            size: 25,
+            textColor: theme.getDarkTheme ? themeColor.appThemeColor : themeColor.appThemeColor2,
+          ),
+        ],
       ),
     );
   }

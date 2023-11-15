@@ -13,6 +13,8 @@ class Student {
   final String dp;
   final String Studentclass;
   final String year;
+  final List<dynamic> followers;
+  final List<dynamic> following;
   Student({
     required this.id,
     required this.name,
@@ -25,7 +27,9 @@ class Student {
     required this.token,
     required this.dp,
     required this.year,
-    required this.Studentclass
+    required this.Studentclass,
+    required this.followers,
+    required this.following
   });
 
   Map<String, dynamic> toMap() {
@@ -41,6 +45,8 @@ class Student {
       'dp':dp,
       'year':year,
       'Studentclass':Studentclass,
+      'following':following,
+      'followers':followers,
       'token': token,
     };
   }
@@ -55,6 +61,8 @@ class Student {
       password: map['password'] ?? '',
       dp:map["dp"]??'',
       year:map['year']??'',
+      followers:map['followers']??[],
+      following:map['following']??[],
       Studentclass:map['Studentclass']??'',
       department:map['department']?? '',
       credit: map['credit'] ?? 0,
@@ -77,6 +85,8 @@ class Student {
     String? fcmtoken,
     String? Studentclass,
     String? year,
+    List<dynamic>? following,
+    List<dynamic>? followers,
     int? credit,
     String? token,
   }) {
@@ -86,6 +96,8 @@ class Student {
       certified:certified??this.certified,
       dp:dp?? this.dp,
       fcmtoken:fcmtoken??this.fcmtoken,
+      followers: followers??this.followers,
+      following: following??this.following,
       year:year??this.year,
       Studentclass:Studentclass??this.Studentclass,
       department: department??this.department,

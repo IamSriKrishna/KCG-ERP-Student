@@ -1,3 +1,3 @@
 class AppDuration {
-  final int fadeMilliseconds = 300;
+  final int fadeMilliseconds = 150;
 }

@@ -115,43 +115,44 @@ class _PostCardState extends State<PostCard> {
                   onScaleStop: () {}, // optional VoidCallback
                   child: CachedNetworkImage(
                       imageUrl: widget.images[0],
+                      fit: BoxFit.fitWidth,
                   ),
                 ),
               ),
               // LIKE, COMMENT SECTION OF THE POST
-              Row(
-                children: <Widget>[
-                  LikeAnimation(
-                    isAnimating: isLikeAnimating,
-                    smallLike: true,
-                    child: IconButton(
-                      icon: isLikeAnimating
-                          ? const Icon(
-                              Icons.favorite,
-                              color: Colors.red,
-                            )
-                          : const Icon(
-                              Icons.favorite_border,
-                            ),
-                      onPressed: () {
-                        isLikeAnimating = !isLikeAnimating;
-                      }
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.comment_outlined,
-                    ),
-                    onPressed: () {}
-                  ),
-                  Expanded(
-                      child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: IconButton(
-                        icon: const Icon(Icons.bookmark_border), onPressed: () {}),
-                  ))
-                ],
-              ),
+              // Row(
+              //   children: <Widget>[
+              //     LikeAnimation(
+              //       isAnimating: isLikeAnimating,
+              //       smallLike: true,
+              //       child: IconButton(
+              //         icon: isLikeAnimating
+              //             ? const Icon(
+              //                 Icons.favorite,
+              //                 color: Colors.red,
+              //               )
+              //             : const Icon(
+              //                 Icons.favorite_border,
+              //               ),
+              //         onPressed: () {
+              //           isLikeAnimating = !isLikeAnimating;
+              //         }
+              //       ),
+              //     ),
+              //     IconButton(
+              //       icon: const Icon(
+              //         Icons.comment_outlined,
+              //       ),
+              //       onPressed: () {}
+              //     ),
+              //     Expanded(
+              //         child: Align(
+              //       alignment: Alignment.bottomRight,
+              //       child: IconButton(
+              //           icon: const Icon(Icons.bookmark_border), onPressed: () {}),
+              //     ))
+              //   ],
+              // ),
               //DESCRIPTION AND NUMBER OF COMMENTS
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -159,15 +160,15 @@ class _PostCardState extends State<PostCard> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    DefaultTextStyle(
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .copyWith(fontWeight: FontWeight.w800),
-                        child: Text(
-                          '0 Likes',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        )),
+                    // DefaultTextStyle(
+                    //     style: Theme.of(context)
+                    //         .textTheme
+                    //         .titleSmall!
+                    //         .copyWith(fontWeight: FontWeight.w800),
+                    //     child: Text(
+                    //       '0 Likes',
+                    //       style: Theme.of(context).textTheme.bodyMedium,
+                    //     )),
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.only(

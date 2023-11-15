@@ -38,6 +38,8 @@ class AuthService{
         certified:false,
         name: name,
         fcmtoken:fcmtoken,
+        followers: [],
+        following: [],
         dp:response.url,
         password: password,
         year: year,

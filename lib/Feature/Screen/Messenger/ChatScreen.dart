@@ -127,6 +127,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void sendMessage(String content, String chatId, String receiver) {
+    messageController.clear();
     SendMessage model =
         SendMessage(content: content, chatId: chatId, receiver: receiver);
 

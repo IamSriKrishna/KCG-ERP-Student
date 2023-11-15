@@ -17,6 +17,6 @@ AssetImage assetImage = AssetImage();
 // To access App Duration
 AppDuration duration = AppDuration();
 
-String uri ="http://192.168.29.172:3000";
+String uri ="http://13.126.172.50:3000";
 
-String halfuri ="192.168.29.172:3000";
+String halfuri ="13.126.172.50:3000";

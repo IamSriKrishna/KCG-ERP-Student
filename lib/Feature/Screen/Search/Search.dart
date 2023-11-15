@@ -1,15 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kcgerp/Feature/Screen/OverScreen/OverScreen.dart';
+import 'package:kcgerp/Feature/Screen/3rdUserProfile/ThirdUserProfile.dart';
 import 'package:kcgerp/Feature/Service/Authservice.dart';
-import 'package:kcgerp/Feature/Service/Chat/ChatService.dart';
 import 'package:kcgerp/Feature/Service/NotificationService.dart';
 import 'package:kcgerp/Model/Student.dart';
 import 'package:kcgerp/Provider/DarkThemeProvider.dart';
 import 'package:kcgerp/Provider/StudenProvider.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoBoldFont.dart';
-import 'package:kcgerp/Util/showsnackbar.dart';
 import 'package:kcgerp/Util/util.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +55,6 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
     });
   }
-
   Widget _buildStudentList() {
     final theme = Provider.of<DarkThemeProvider>(context);
     final student = Provider.of<StudentProvider>(context).user;
@@ -66,17 +64,27 @@ class _SearchScreenState extends State<SearchScreen> {
           (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                showSnackBar(
-                  context: context, 
-                  text: '${_searchedStudents[index].name} added to Messenger'
-                );
                 _notificationService.sendNotifications(
-                  context: context, 
-                  toAllFaculty: [_searchedStudents[index].fcmtoken],
-                  body: '${student.name} wants to message You!'
-                );
-                ChatHelper.apply(_searchedStudents[index].id.toString());
-                Navigator.pushNamedAndRemoveUntil(context, OverScreen.route,(route)=>false);
+                    context: context, 
+                    toAllFaculty: [_searchedStudents[index].fcmtoken],
+                    body: '${student.name} Viewed Your Profile!'
+                  );
+                Get.to(()=>
+                  ThirdUserProfile(
+                    name: _searchedStudents[index].name, 
+                    department: _searchedStudents[index].department, 
+                    rollno: _searchedStudents[index].rollno, 
+                    dp: _searchedStudents[index].dp, 
+                    certified: _searchedStudents[index].certified,
+                    id: _searchedStudents[index].id,
+                    fcmtoken: _searchedStudents[index].fcmtoken,
+                    current_student_id:student.id
+                    )
+                  );
+
+                  
+                
+                
               },
               child: ListTile(
                 leading: ClipOval(
@@ -165,19 +173,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     : themeColor.appBarColor,
               ),
             ),
-            floating: true,
-            backgroundColor: theme.getDarkTheme
-                ? themeColor.darkTheme
-                : themeColor.themeColor,
-            title: RobotoBoldFont(
-              text: 'Search',
-              textColor: theme.getDarkTheme
-                  ? themeColor.backgroundColor
-                  : themeColor.appBarColor,
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
+            bottom: PreferredSize(
+              preferredSize: Size(double.infinity, MediaQuery.of(context).size.width * 0.108), 
+              child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 height: MediaQuery.of(context).size.width * 0.108,
@@ -197,8 +195,22 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
               ),
+            )
+            ),
+            floating: true,
+            backgroundColor: theme.getDarkTheme
+                ? themeColor.darkTheme
+                : themeColor.themeColor,
+            title: RobotoBoldFont(
+              text: 'Search',
+              textColor: theme.getDarkTheme
+                  ? themeColor.backgroundColor
+                  : themeColor.appBarColor,
             ),
           ),
+          // SliverToBoxAdapter(
+          //   child: ,
+          // ),
           _buildStudentList(),
         ],
       ),
