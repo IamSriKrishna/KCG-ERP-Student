@@ -201,6 +201,7 @@ class _MainScreenState extends State<MainScreen> {
                   return _show?PostCard(
                     title: productData.title,
                     dp: productData.dp,
+                    createdAt: productData.createdAt,
                     images: productData.image_url,
                     description: productData.description,
                     likes: productData.likes,

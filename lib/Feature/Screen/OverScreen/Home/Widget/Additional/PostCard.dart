@@ -20,6 +20,7 @@ class PostCard extends StatefulWidget {
   final List<String> likes;
   final List<String> images;
   final String link;
+  final DateTime createdAt;
   const PostCard({
     Key? key,
     required this.title,
@@ -28,7 +29,8 @@ class PostCard extends StatefulWidget {
     required this.description,
     required this.likes,
     required this.link,
-    required this.name
+    required this.name,
+    required this.createdAt
   }) : super(key: key);
 
   @override
@@ -235,7 +237,7 @@ class _PostCardState extends State<PostCard> {
                       padding: const EdgeInsets.symmetric(vertical: 4),
                       child: Text(
                         DateFormat.yMMMd()
-                            .format(DateTime.now()),
+                            .format(widget.createdAt),
                         style:  GoogleFonts.merriweather(
                             color:theme.getDarkTheme?themeColor.backgroundColor: themeColor.darkTheme,
                             fontSize: 14
