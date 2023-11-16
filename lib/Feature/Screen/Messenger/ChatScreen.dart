@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kcgerp/Feature/Screen/3rdUserProfile/ThirdUserProfile.dart';
 import 'package:kcgerp/Feature/Screen/Messenger/messageTExtField.dart';
 import 'package:kcgerp/Feature/Service/Chat/MessageService.dart';
 import 'package:kcgerp/Model/Chat/ReceiveMessage.dart';
 import 'package:kcgerp/Model/Chat/sendMessage.dart';
+import 'package:kcgerp/Provider/StudenProvider.dart';
 import 'package:kcgerp/Provider/chat_provider.dart';
 import 'package:kcgerp/Util/util.dart';
 import 'package:kcgerp/Widget/Additional/CustomAppBar.dart';
@@ -23,10 +26,20 @@ class ChatScreen extends StatefulWidget {
       required this.title,
       required this.id,
       required this.profile,
+      required this.fcmtoken,
+      required this.rollno,
+      required this.certified,
+      required this.department,
+      required this.studentid,
       required this.user});
 
   final String title;
+  final String department;
+  final String rollno;
   final String id;
+  final String fcmtoken;
+  final String studentid;
+  final bool certified;
   final String profile;
   final List<String> user;
 
@@ -156,6 +169,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final my = Provider.of<StudentProvider>(context).user;
     return Consumer<ChatNotifier>(
       builder: (context, chatNotifier, child) {
         receiver = widget.user.firstWhere((id) => id != chatNotifier.userId);
@@ -188,8 +202,24 @@ class _ChatScreenState extends State<ChatScreen> {
                       padding: const EdgeInsets.all(8),
                       child: Stack(
                         children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(widget.profile),
+                          InkWell(
+                            onTap: () {
+                              Get.to(
+                                ()=> ThirdUserProfile(
+                                  name: widget.title, 
+                                  department: widget.department, 
+                                  rollno: widget.rollno, 
+                                  dp: widget.profile, 
+                                  certified: widget.certified,
+                                  id: widget.studentid,
+                                  fcmtoken: widget.fcmtoken,
+                                  current_student_id:my.id
+                                  )
+                              );
+                            },
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(widget.profile),
+                            ),
                           ),
                           Positioned(
                               right: 3,

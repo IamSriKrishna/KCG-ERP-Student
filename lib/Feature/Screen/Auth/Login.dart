@@ -97,13 +97,13 @@ class _LoginState extends State<Login> {
           ),
         ],
       ),
-      bottomNavigationBar:AuthBottomNavigatorWidget(
-                  prefixText: 'Ready to Begin Your Journey?', 
-                  sufixText: 'Sign Up', 
-                  onTap: (){
-            Navigator.pushNamed(context, SignUp.route);
-                  }
-                ) ,
+      // bottomNavigationBar:AuthBottomNavigatorWidget(
+      //             prefixText: 'Ready to Begin Your Journey?', 
+      //             sufixText: 'Sign Up', 
+      //             onTap: (){
+      //       Navigator.pushNamed(context, SignUp.route);
+      //             }
+      //           ) ,
     );
   }
 }

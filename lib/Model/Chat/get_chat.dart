@@ -87,12 +87,16 @@ class Sender {
     final String rollno;
     final String dp;
     final String fcmtoken;
+    final bool certified;
+    final String department;
     Sender({
         required this.id,
         required this.name,
         required this.rollno,
         required this.dp,
-        required this.fcmtoken
+        required this.fcmtoken,
+        required this.certified,
+        required this.department
     });
 
     factory Sender.fromJson(Map<String, dynamic> json) => Sender(
@@ -100,7 +104,9 @@ class Sender {
         name: json["name"],
         rollno: json["rollno"],
         dp: json["dp"],
-        fcmtoken:json['fcmtoken']
+        fcmtoken:json['fcmtoken'],
+        certified: json['certified'],
+        department: json['department']
     );
 
     Map<String, dynamic> toJson() => {
@@ -108,6 +114,7 @@ class Sender {
         "name": name,
         "rollno": rollno,
         "dp": dp,
-        'fcmtoken':fcmtoken
+        'fcmtoken':fcmtoken,
+        'certified':certified
     };
 }

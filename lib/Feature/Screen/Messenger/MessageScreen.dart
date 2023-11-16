@@ -109,6 +109,11 @@ class _MessageScreenState extends State<MessageScreen> {
                                 );
                                 Get.to(() => ChatScreen(
                                     id: chat.id,
+                                    studentid: user.first.id,
+                                    fcmtoken: user.first.fcmtoken,
+                                    certified: user.first.certified,
+                                    department: user.first.department,
+                                    rollno: user.first.rollno,
                                     title: user.first.name,
                                     profile: user.first.dp,
                                     user: [chat.users[0].id, chat.users[1].id]));

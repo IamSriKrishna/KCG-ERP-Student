@@ -104,9 +104,14 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 title: Row(
                   children: [
-                    Text(
-                      _searchedStudents[index].name,
-                      style: GoogleFonts.merriweather(),
+                    Expanded(
+                      child: Text(
+                        _searchedStudents[index].name,
+                        maxLines: 2,
+                        style: GoogleFonts.merriweather(
+                          fontSize: 14
+                        ),
+                      ),
                     ),
                     _searchedStudents[index].certified==true?
                     Padding(

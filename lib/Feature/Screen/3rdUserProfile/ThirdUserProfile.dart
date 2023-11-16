@@ -9,6 +9,8 @@ import 'package:kcgerp/Provider/StudenProvider.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoBoldFont.dart';
 import 'package:kcgerp/Util/showsnackbar.dart';
 import 'package:kcgerp/Util/util.dart';
+import 'package:kcgerp/Widget/CupertinoWidgets/CustomCupertinoModalpop.dart';
+import 'package:kcgerp/l10n/AppLocalization.dart';
 import 'package:provider/provider.dart';
 
 class ThirdUserProfile extends StatefulWidget {
@@ -42,55 +44,46 @@ class _ThirdUserProfileState extends State<ThirdUserProfile> {
   FollowersOrFollowing _followersOrFollowing = FollowersOrFollowing();
   bool _isfollowing = false;
   @override
-  void initState() {
-    onRefresh();
-    super.initState();
-  }
-  @override
-  void didChangeDependencies() {
-    onRefresh();
-    super.didChangeDependencies();
-  }
-  Future<void> onRefresh()async{
-    setState(() {
-      
-    });
-  }
+
   @override
   Widget build(BuildContext context) {
     final my = Provider.of<StudentProvider>(context).user;
     final theme = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        leadingWidth: 0,
-        leading: Icon(null),
-        backgroundColor: theme.getDarkTheme?themeColor.darkTheme:themeColor.themeColor,
-        title: Row(
-          children: [
-            RobotoBoldFont(text:widget.rollno),
-            widget.certified==true?
-            Image.asset('asset/tick.png',height: MediaQuery.of(context).size.height * 0.02,)
-            :Text('')
-          ],
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(Icons.favorite_outlined,color: Colors.red,),
-          )
-        ],
-      ),
-      body: RefreshIndicator(
-        onRefresh: onRefresh,
-        child: Column(
-          children: [
-            ThirdUserProfileTopScreen(
-              name:widget.name, 
-              department:widget.department, 
-              dp:widget.dp,
-              thirdUserid: widget.id,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            floating: true,
+            leadingWidth: MediaQuery.of(context).size.width * 0.45,
+            leading: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left:5.0),
+                  child: RobotoBoldFont(text: widget.rollno,size: 20,),
+                ),
+                widget.certified==true?
+                Image.asset('asset/tick.png',height: MediaQuery.of(context).size.height * 0.02,)
+                :Text('')
+              ],
             ),
-            Padding(
+            backgroundColor: theme.getDarkTheme?themeColor.darkTheme:themeColor.themeColor,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.favorite_outlined,color: Colors.red,),
+              )
+            ],
+          ),
+          SliverToBoxAdapter(
+            child: ThirdUserProfileTopScreen(
+            name:widget.name, 
+            department:widget.department, 
+            dp:widget.dp,
+            thirdUserid: widget.id,
+          ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
               padding: const EdgeInsets.symmetric(horizontal:8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -131,14 +124,53 @@ class _ThirdUserProfileState extends State<ThirdUserProfile> {
                         );
                         showSnackBar(context: context, text: 'Go to messenger to chat with ${widget.name}');
                     }, 
-                    text: 'Message'
+                    text: 'Add To Messenger'
                   ),
                 ],
               ),
-            )
-          ],
-        ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(top:10.0),
+              child: Column(
+                children: [
+                  Icon(Icons.grid_view),
+                  Divider(
+                    endIndent: MediaQuery.of(context).size.width * 0.05,
+                    indent: MediaQuery.of(context).size.width * 0.05,
+                    thickness: 2,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverGrid.builder(
+            gridDelegate:SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 1,
+              mainAxisSpacing: 1
+            ), 
+            itemBuilder:(context, index) {
+              return InkWell(
+                onTap: () {
+                  CustomCupertinoModalPop(context: context, content: S.current.development);
+                },
+                child: Container(
+                  color:theme.getDarkTheme?Colors.white12: Colors.black12,
+                ),
+              );
+            },
+          )
+        ],
       ),
     );
   }
 }
+
+/**Column(
+        children: [
+
+          
+        ],
+      ) */

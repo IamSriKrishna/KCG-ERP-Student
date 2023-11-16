@@ -74,7 +74,7 @@ class _ThirdUserProfileTopScreenState extends State<ThirdUserProfileTopScreen> {
     final theme = Provider.of<DarkThemeProvider>(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
-      height: MediaQuery.of(context).size.height * 0.15,
+      height: MediaQuery.of(context).size.height * 0.16,
       width: double.infinity,
       //color: Colors.black,
       child: Column(
@@ -130,7 +130,8 @@ class _ThirdUserProfileTopScreenState extends State<ThirdUserProfileTopScreen> {
             ),
           ),
           Expanded(
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //Student Name
                 RobotoBoldFont(text: widget.name),

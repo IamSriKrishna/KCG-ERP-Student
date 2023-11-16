@@ -72,7 +72,7 @@ class _MyProfileTopScreenState extends State<MyProfileTopScreen> {
     final theme = Provider.of<DarkThemeProvider>(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
-      height: MediaQuery.of(context).size.height * 0.15,
+      height: MediaQuery.of(context).size.height * 0.16,
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,7 +127,8 @@ class _MyProfileTopScreenState extends State<MyProfileTopScreen> {
             ),
           ),
           Expanded(
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //Student Name
                 RobotoBoldFont(text: widget.name),
@@ -135,7 +136,7 @@ class _MyProfileTopScreenState extends State<MyProfileTopScreen> {
                 RobotoRegularFont(
                   text: '(${widget.department})',
                   fontWeight: FontWeight.w100,
-                  size: 10,
+                  size: 11.5,
                 )
               ],
             )

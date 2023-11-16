@@ -106,7 +106,7 @@ class _ProBackgroundState extends State<ProBackground> {
             child: CachedNetworkImage(
               imageUrl: student.user.dp,
               width: MediaQuery.of(context).size.width * 0.23, // Adjust the width and height as needed
-              height: MediaQuery.of(context).size.height * 0.115,
+              height: MediaQuery.of(context).size.height * 0.105,
               fit: BoxFit.cover, // You can choose how the image fits within the circle
             ),
           ),),

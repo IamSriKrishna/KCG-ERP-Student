@@ -120,19 +120,22 @@ class _MainScreenState extends State<MainScreen> {
           slivers: <Widget>[
             SliverAppBar(
               floating: true,
+              leadingWidth: MediaQuery.of(context).size.width *0.55,
               backgroundColor:
                   theme.getDarkTheme ? themeColor.darkTheme : themeColor.themeColor,
-              title: Row(
+              leading: Row(
                 children: [
                   InkWell(
                     onTap: () {
                       showPopupMenu(context);
                     },
-                    child: Icon(Icons.more_vert),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:10.0,right: 10),
+                      child: Icon(Icons.more_vert),
+                    ),
                   ),
                   InkWell(
                     onTap: () {
-                      
                   _scrollController.animateTo(
                     0.0,
                     duration: Duration(milliseconds: 500),
@@ -140,6 +143,7 @@ class _MainScreenState extends State<MainScreen> {
                   );
                     },
                     child: RobotoBoldFont(
+                      size: 18,
                       text: S.current.myClass,
                       textColor: theme.getDarkTheme
                           ? themeColor.backgroundColor
