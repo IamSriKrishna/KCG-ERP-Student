@@ -115,6 +115,7 @@ class Sender {
         "rollno": rollno,
         "dp": dp,
         'fcmtoken':fcmtoken,
-        'certified':certified
+        'certified':certified,
+        'department':department
     };
 }

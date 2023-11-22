@@ -32,7 +32,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   Firebase.initializeApp(
     options:FirebaseOptions(
       apiKey: 'AIzaSyCishefTquUez42NWNNToO61QKxIomFJkE', 
-      appId: '1:879927221521:android:e890f086f7ad445eb1c0b0', 
+      appId: '1:879927221521:android:6c90c1bd25ebc4f4b1c0b0', 
       messagingSenderId: '879927221521', 
       projectId: 'campuslink-d1f2d'
     )

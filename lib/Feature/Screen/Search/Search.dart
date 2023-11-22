@@ -56,6 +56,7 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
   Widget _buildStudentList() {
+    final itemCount = _searchedStudents.length > 15 ? 15 : _searchedStudents.length;
     final theme = Provider.of<DarkThemeProvider>(context);
     final student = Provider.of<StudentProvider>(context).user;
     if (_searchedStudents.isNotEmpty) {
@@ -104,13 +105,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 title: Row(
                   children: [
-                    Expanded(
-                      child: Text(
-                        _searchedStudents[index].name,
-                        maxLines: 2,
-                        style: GoogleFonts.merriweather(
-                          fontSize: 14
-                        ),
+                    Text(
+                      _searchedStudents[index].name,
+                      maxLines: 2,
+                      style: GoogleFonts.merriweather(
+                        fontSize: 11.5
                       ),
                     ),
                     _searchedStudents[index].certified==true?
@@ -122,7 +121,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         color: theme.getDarkTheme?themeColor.appThemeColor:Colors.black,
                       ),
                     ):
-                    Text('')
+                    Text(''),
+                    
                   ],
                 ),
                 subtitle: Text(
@@ -133,7 +133,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             );
           },
-          childCount: _searchedStudents.length,
+          childCount: itemCount,
         ),
       );
     } else {
@@ -196,7 +196,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         color: theme.getDarkTheme
                             ? themeColor.backgroundColor
                             : themeColor.appBarColor),
-                    hintText: 'Search',
+                    hintText: 'Type Here To Find Your College Mate',
                   ),
                 ),
               ),
@@ -213,9 +213,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   : themeColor.appBarColor,
             ),
           ),
-          // SliverToBoxAdapter(
-          //   child: ,
-          // ),
           _buildStudentList(),
         ],
       ),

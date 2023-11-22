@@ -1,13 +1,13 @@
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 import 'package:kcgerp/Feature/Screen/MyProfile/EditProfile.dart';
+import 'package:kcgerp/Feature/Screen/MyProfile/Widget/MyProfileBottomCheet.dart';
 import 'package:kcgerp/Feature/Screen/MyProfile/Widget/MyProfileTopScreen.dart';
 import 'package:kcgerp/Provider/DarkThemeProvider.dart';
 import 'package:kcgerp/Provider/StudenProvider.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoBoldFont.dart';
 import 'package:kcgerp/Util/util.dart';
-import 'package:kcgerp/l10n/AppLocalization.dart';
 import 'package:provider/provider.dart';
 
 class MyProfile extends StatelessWidget {
@@ -72,7 +72,8 @@ class MyProfile extends StatelessWidget {
                       foregroundColor: themeColor.themeColor
                     ),
                     onPressed: (){
-                      Navigator.pushNamed(context, EditProfile.route);
+                      Get.to(()=>EditProfile());
+                      //Navigator.pushNamed(context, EditProfile.route);
                     }, 
                     child: RobotoBoldFont(text: 'Edit My Profile',size: 12,)
                   ),
@@ -90,25 +91,7 @@ class MyProfile extends StatelessWidget {
                       foregroundColor: themeColor.themeColor
                     ),
                     onPressed: (){
-                      showModalBottomSheet(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15),
-                          )
-                        ),
-                        context: context, 
-                        builder:(context) => Container(
-                          height: MediaQuery.of(context).size.height * 0.2,
-                          child: Center(
-                            child: Text(
-                              S.current.development,
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.sansita(),
-                            ),
-                          ),
-                        ),
-                      );
+                      MyProfileBottomSheet(context: context);
                     }, 
                     child: RobotoBoldFont(text: 'Academic',size: 12,)
                   ),

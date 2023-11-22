@@ -1,4 +1,4 @@
-package com.example.kcgerp
+package com.campuslink.kcgerp
 
 import io.flutter.embedding.android.FlutterActivity
 
