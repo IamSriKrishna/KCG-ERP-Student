@@ -84,6 +84,10 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   change_app_package_name: ^1.1.0
   gap: ^3.0.1
+  typewritertext: ^2.3.0
+  insta_like_button: ^0.1.1
+  image_gallery_saver: ^2.0.3
+  dio: ^5.3.4
 
 dev_dependencies:
   flutter_test:

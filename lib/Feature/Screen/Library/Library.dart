@@ -1,14 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kcgerp/Feature/Screen/Library/LibraryExpand/LibraryExpand.dart';
 import 'package:kcgerp/Feature/Screen/Library/Widget/LibraryCustomSliverList.dart';
 import 'package:kcgerp/Feature/Service/LibraryService.dart';
 import 'package:kcgerp/Model/LibraryData.dart';
 import 'package:kcgerp/Provider/DarkThemeProvider.dart';
+import 'package:kcgerp/Util/Additional/Loader.dart';
 import 'package:kcgerp/Util/util.dart';
+import 'package:kcgerp/Widget/CupertinoWidgets/CustomCupertinoModalpop.dart';
+import 'package:kcgerp/l10n/AppLocalization.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 class Library extends StatefulWidget {
@@ -23,21 +24,21 @@ class _LibraryState extends State<Library> {
   List<LibraryModel> _searchedBooks = [];
   final TextEditingController _searchController = TextEditingController();
   Future<void> fetchBooks()async{
-   try{
-     http.Response res = await http.get(
-      Uri.parse('$uri/library/getAllBookData'),
-      headers: <String,String>{
-        '':''
-      }
-    );
-    books = jsonDecode(res.body);
-    setState(() {
-      
-    });
-    //print(books);
-   }catch(error){
-    print(error);
-   }
+    try{
+      http.Response res = await http.get(
+        Uri.parse('$uri/library/getAllBookData'),
+        headers: <String,String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        }
+      );
+      books = jsonDecode(res.body);
+      setState(() {
+        
+      });
+      //print(books);
+    }catch(error){
+      print(error);
+    }
   }
   
   Future<void> _search() async {
@@ -77,7 +78,7 @@ class _LibraryState extends State<Library> {
   Widget build(BuildContext context) {
     final theme = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
-      body: CustomScrollView(
+      body:books.isEmpty? Loader():CustomScrollView(
         physics: BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
@@ -121,22 +122,26 @@ class _LibraryState extends State<Library> {
             ),
           ),
           SliverList.builder(
-            itemCount: _searchedBooks.isEmpty?books.length:_searchedBooks.length,
+            itemCount: _searchedBooks.isEmpty?25:_searchedBooks.length,
             itemBuilder:(context, index) {
               return _searchedBooks.isEmpty?
               LibraryCustomSliverList(
                 onTap: () {
+                  CustomCupertinoModalPop(context: context, content: S.current.development);
                 },
                 image: books[index]['section_image'],
-                no_of_authors: 18, 
+                access_no: books[index]['access_no'],
+                no_of_authors: books[index]['authors'], 
                 no_of_Books: books[index]['no_of_copies'], 
                 subject: books[index]['book_title']
               )
               : LibraryCustomSliverList(
                 onTap: () {
+                  CustomCupertinoModalPop(context: context, content: S.current.development);
                 },
                 image: _searchedBooks[index].section_image,
-                no_of_authors: 18, 
+                no_of_authors: _searchedBooks[index].authors, 
+                access_no: _searchedBooks[index].access_no,
                 no_of_Books: _searchedBooks[index].no_of_copies, 
                 subject: _searchedBooks[index].book_title
               );

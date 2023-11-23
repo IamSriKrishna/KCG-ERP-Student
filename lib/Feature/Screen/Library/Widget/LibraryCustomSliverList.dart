@@ -6,10 +6,11 @@ import 'package:kcgerp/Util/util.dart';
 import 'package:provider/provider.dart';
 
 class LibraryCustomSliverList extends StatelessWidget {
-  final int no_of_authors;
+  final List<dynamic> no_of_authors;
   final String no_of_Books;
   final String subject;
   final String image;
+  final List<dynamic> access_no;
   final void Function() onTap;
   const LibraryCustomSliverList({
     super.key,
@@ -17,9 +18,9 @@ class LibraryCustomSliverList extends StatelessWidget {
     required this.no_of_Books,
     required this.subject,
     required this.onTap,
-    required this.image
+    required this.image,
+    required this.access_no
   });
-
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<DarkThemeProvider>(context);
@@ -58,11 +59,30 @@ class LibraryCustomSliverList extends StatelessWidget {
                     children: [
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.05,
+                        width: double.infinity,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: access_no.length,
+                          itemBuilder:(context, index) {
+                            return Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  '${access_no[index]}',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left:8.0),
                         child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.045,
+                          height: MediaQuery.of(context).size.height * 0.06,
                           width: double.infinity,
                           child: Text(
                             subject,
@@ -75,32 +95,34 @@ class LibraryCustomSliverList extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left:8.0,top: 8),
+                        padding: const EdgeInsets.only(left:8.0),
                         child: Text(
-                          '${no_of_authors} Authors',
+                          '${no_of_authors[0]}',
+                          maxLines: 2,
                           style: GoogleFonts.luxuriousRoman(
                             fontSize: 18,
                             fontWeight: FontWeight.w300
                           ),
                         ),
                       ),
-                      Gap(20),
+                      Gap(10),
                       Container(
                         width: double.infinity,
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.only(right:8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
                                 '$no_of_Books',
                                 style: GoogleFonts.luxuriousRoman(
-                                  fontSize: 18,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold
                                 ),
                               ),
                               Text(
-                                ' Books',
+                                access_no.length==1?
+                                ' Book Available':' Books Available',
                                 style: GoogleFonts.luxuriousRoman(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w300

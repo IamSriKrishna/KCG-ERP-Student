@@ -1,13 +1,21 @@
 
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:typed_data';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:insta_like_button/insta_like_button.dart';
 import 'package:intl/intl.dart';
 import 'package:kcgerp/Provider/DarkThemeProvider.dart';
+import 'package:kcgerp/Util/showsnackbar.dart';
 import 'package:kcgerp/Util/util.dart';
 import 'package:kcgerp/Widget/Additional/likeAnimation.dart';
+import 'package:kcgerp/Widget/CupertinoWidgets/CustomCupertinoModalpop.dart';
+import 'package:kcgerp/l10n/AppLocalization.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zoom_pinch_overlay/zoom_pinch_overlay.dart';
@@ -102,60 +110,106 @@ class _PostCardState extends State<PostCard> {
                   ],
                 ),
               ),
-              // IMAGE SECTION OF THE POST
-              SizedBox(
+              InstaLikeButton(
+                image: NetworkImage(widget.images[0]),
+                onChanged: () {
+                  // Do something...
+                },
+                icon: Icons.favorite_outlined,
+                iconSize: 100,
+                iconColor: Colors.red,
+                curve: Curves.fastLinearToSlowEaseIn,
                 height: MediaQuery.of(context).size.height * 0.27,
                 width: double.infinity,
-                child: ZoomOverlay(
-                  modalBarrierColor: Colors.black12, // Optional
-                  minScale: 0.5, // Optional
-                  maxScale: 3.0, // Optional
-                  animationCurve: Curves.fastOutSlowIn, // Defaults to fastOutSlowIn which mimics IOS instagram behavior
-                  animationDuration: Duration(milliseconds: 300), // Defaults to 100 Milliseconds. Recommended duration is 300 milliseconds for Curves.fastOutSlowIn
-                  twoTouchOnly: true, // Defaults to false
-                  onScaleStart: () {}, // optional VoidCallback
-                  onScaleStop: () {}, // optional VoidCallback
-                  child: CachedNetworkImage(
-                      imageUrl: widget.images[0],
-                      fit: BoxFit.fitWidth,
-                  ),
+                duration: const Duration(seconds: 1),
+                onImageError: (e, _) {
+                  // Do something...
+                },
+                imageAlignment: Alignment.topLeft,
+                imageBoxfit: BoxFit.fill,
+                imageScale: 2.0,
+                imageColorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(1),
+                  BlendMode.dstATop,
                 ),
               ),
-              // LIKE, COMMENT SECTION OF THE POST
-              // Row(
-              //   children: <Widget>[
-              //     LikeAnimation(
-              //       isAnimating: isLikeAnimating,
-              //       smallLike: true,
-              //       child: IconButton(
-              //         icon: isLikeAnimating
-              //             ? const Icon(
-              //                 Icons.favorite,
-              //                 color: Colors.red,
-              //               )
-              //             : const Icon(
-              //                 Icons.favorite_border,
-              //               ),
-              //         onPressed: () {
-              //           isLikeAnimating = !isLikeAnimating;
-              //         }
-              //       ),
+              // IMAGE SECTION OF THE POST
+              // SizedBox(
+              //   height: MediaQuery.of(context).size.height * 0.27,
+              //   width: double.infinity,
+              //   child: ZoomOverlay(
+              //     modalBarrierColor: Colors.black12, // Optional
+              //     minScale: 0.5, // Optional
+              //     maxScale: 3.0, // Optional
+              //     animationCurve: Curves.fastOutSlowIn, // Defaults to fastOutSlowIn which mimics IOS instagram behavior
+              //     animationDuration: Duration(milliseconds: 300), // Defaults to 100 Milliseconds. Recommended duration is 300 milliseconds for Curves.fastOutSlowIn
+              //     twoTouchOnly: true, // Defaults to false
+              //     onScaleStart: () {}, // optional VoidCallback
+              //     onScaleStop: () {}, // optional VoidCallback
+              //     child: CachedNetworkImage(
+              //         imageUrl: widget.images[0],
+              //         fit: BoxFit.fitWidth,
               //     ),
-              //     IconButton(
-              //       icon: const Icon(
-              //         Icons.comment_outlined,
-              //       ),
-              //       onPressed: () {}
-              //     ),
-              //     Expanded(
-              //         child: Align(
-              //       alignment: Alignment.bottomRight,
-              //       child: IconButton(
-              //           icon: const Icon(Icons.bookmark_border), onPressed: () {}),
-              //     ))
-              //   ],
+              //   ),
               // ),
-              //DESCRIPTION AND NUMBER OF COMMENTS
+              Row(
+                children: <Widget>[
+                  InkWell(
+                    onTap: () {
+                      CustomCupertinoModalPop(
+                        context: context, 
+                        content: S.current.development
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:15.0,right: 5),
+                      child: Icon(Icons.favorite_border),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.comment_outlined,
+                    ),
+                    onPressed: () {
+                      CustomCupertinoModalPop(
+                        context: context, 
+                        content: S.current.development
+                      );
+                    }
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.send_outlined,
+                    ),
+                    onPressed: () {
+                      CustomCupertinoModalPop(
+                        context: context, 
+                        content: S.current.development
+                      );
+                    }
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: IconButton(
+                        icon: const Icon(Icons.download), 
+                        onPressed: () async{
+                              var response = await Dio().get(
+                                widget.images[0],
+                                options: Options(responseType: ResponseType.bytes));
+                                
+                            final result = await ImageGallerySaver.saveImage(
+                                Uint8List.fromList(response.data),
+                                quality: 60,
+                                name: "Campus~link");
+                                showSnackBar(context: context, text: 'Downloaded');
+                            print(result);
+                        }
+                      ),
+                    )
+                  )
+                ],
+              ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
