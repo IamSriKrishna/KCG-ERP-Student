@@ -7,15 +7,17 @@ import 'package:provider/provider.dart';
 
 class LibraryCustomSliverList extends StatelessWidget {
   final int no_of_authors;
-  final int no_of_Books;
+  final String no_of_Books;
   final String subject;
+  final String image;
   final void Function() onTap;
   const LibraryCustomSliverList({
     super.key,
     required this.no_of_authors,
     required this.no_of_Books,
     required this.subject,
-    required this.onTap
+    required this.onTap,
+    required this.image
   });
 
   @override
@@ -45,8 +47,8 @@ class LibraryCustomSliverList extends StatelessWidget {
                       bottomLeft: Radius.circular(15),
                     ),
                     image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage('https://www.readm.org/uploads/chapter_files/cover/tbn/1587296988_198x0.jpg')
+                      fit: BoxFit.fill,
+                      image: NetworkImage('${image}')
                     )
                   ),
                 ),
@@ -91,7 +93,7 @@ class LibraryCustomSliverList extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                '${no_of_Books}',
+                                '$no_of_Books',
                                 style: GoogleFonts.luxuriousRoman(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold

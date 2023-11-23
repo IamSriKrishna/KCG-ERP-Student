@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:kcgerp/Model/FollowerORFollowingModel.dart';
-import 'package:kcgerp/Model/Student.dart';
 import 'package:kcgerp/Util/util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class FollowersOrFollowing{
