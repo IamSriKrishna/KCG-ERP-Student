@@ -76,8 +76,9 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     final student = Provider.of<StudentProvider>(context).user;
     final theme = Provider.of<DarkThemeProvider>(context);
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked:(didPop) async{
         await showCupertinoModalPopup<void>(
           context: context,
           builder: (context) => CupertinoAlertDialog(
@@ -96,7 +97,9 @@ class _MainScreenState extends State<MainScreen> {
                 },
                 child: Text(
                   S.current.no,
-                  style: GoogleFonts.merriweather(),
+                  style: GoogleFonts.merriweather(
+                    color: Colors.blue
+                  ),
                 ),
               ),
               TextButton(
@@ -105,13 +108,14 @@ class _MainScreenState extends State<MainScreen> {
                 },
                 child: Text(
                   S.current.yes,
-                  style: GoogleFonts.merriweather(),
+                  style: GoogleFonts.merriweather(
+                    color: Colors.blue
+                  ),
                 ),
               ),
             ],
           ),
         );
-        return false;
       },
       child: Scaffold(
         body: CustomScrollView(

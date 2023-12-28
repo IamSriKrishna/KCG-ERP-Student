@@ -22,6 +22,7 @@ class ApprovalButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10)
             ),
+            foregroundColor: Colors.white,
             backgroundColor: themeColor.appThemeColor2
           ),
           onPressed: onTap,

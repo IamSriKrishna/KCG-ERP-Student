@@ -59,15 +59,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             child: Lottie.asset('asset/lottie/load.json',height: 150,)),
             Align(
             alignment: Alignment(0, 0.6),
-            child: TypeWriterText(
-              text: Text(
+            child: Text(
                 'Computer Science Department',
                 style: GoogleFonts.merriweather(
                   fontSize: 20
                 ),
-              ),
-              duration: Duration(milliseconds: 25),
-            )),
+              )
+            ),
           Align(
             alignment: Alignment(0, 0.95),
             child: RobotoRegularFont(

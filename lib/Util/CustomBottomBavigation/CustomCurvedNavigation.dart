@@ -26,6 +26,7 @@ class CustomCurvedNavigation extends StatelessWidget {
       backgroundColor:theme.getDarkTheme?themeColor.darkTheme: backgroundColor,
       items: [
         Image.asset('asset/bottom/earth.png',height: MediaQuery.of(context).size.height * 0.04,),
+        //Image.asset('asset/bottom/chat.png',height: MediaQuery.of(context).size.height * 0.04,),
         Image.asset('asset/bottom/approval.png',height: MediaQuery.of(context).size.height * 0.04,),
         //Image.asset('asset/bottom/calendar.png',height: MediaQuery.of(context).size.height * 0.04,),
         Image.asset('asset/bottom/rocket.png',height: MediaQuery.of(context).size.height * 0.04,),

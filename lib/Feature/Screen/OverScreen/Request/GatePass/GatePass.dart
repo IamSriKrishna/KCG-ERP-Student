@@ -313,7 +313,8 @@ class _GatePassScreenState extends State<GatePassScreen> {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Card(
-              elevation: 10,
+              color: Colors.transparent,
+              elevation: 0,
               shape: RoundedRectangleBorder(
                 side: BorderSide(
                     color: theme.getDarkTheme?Colors.white:themeColor.appBarColor,
@@ -321,7 +322,9 @@ class _GatePassScreenState extends State<GatePassScreen> {
                 borderRadius: BorderRadius.circular(15)
               ),
               child: Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10
+                ),
                 child: TextField(
                   style:GoogleFonts.merriweather(
                     fontWeight: FontWeight.w400,
@@ -331,6 +334,9 @@ class _GatePassScreenState extends State<GatePassScreen> {
                   maxLines: 15,
                   controller: message,
                   decoration: InputDecoration(
+                    hintStyle: TextStyle(
+                      color:theme.getDarkTheme?Colors.white:Colors.black
+                    ),
                     hintText: S.current.reason,
                     border: InputBorder.none
                   ),

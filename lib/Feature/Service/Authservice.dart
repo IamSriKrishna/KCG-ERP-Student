@@ -109,6 +109,7 @@ class AuthService{
             body: "Welcome Back, ${student.name}:)",
           );
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+          await prefs.setString('LoggedIn', 'Logged');
           Navigator.pushNamedAndRemoveUntil(
             context,
             SplashScreen.route,
@@ -162,8 +163,9 @@ class AuthService{
   Future<void> signOutUser(String token) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('x-auth-token');
-    final a =  prefs.getString("x-auth-token");
-    //print(a);
+    await prefs.setString('LoggedIn','LoggedOut');
+    final a =  prefs.getString("LoggedIn");
+    print(a);
   }
 
 Future<List<Student>> searchStudentsByName(String name, String loggedInUserId) async {

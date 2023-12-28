@@ -36,12 +36,7 @@ class MyProfile extends StatelessWidget {
               ],
             ),
             backgroundColor: theme.getDarkTheme?themeColor.darkTheme:themeColor.themeColor,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(Icons.favorite_outlined,color: Colors.red,),
-              )
-            ],
+            
           ),
           SliverToBoxAdapter(
             child: MyProfileTopScreen(
@@ -75,7 +70,7 @@ class MyProfile extends StatelessWidget {
                       Get.to(()=>EditProfile());
                       //Navigator.pushNamed(context, EditProfile.route);
                     }, 
-                    child: RobotoBoldFont(text: 'Edit My Profile',size: 12,)
+                    child: RobotoBoldFont(text: 'Edit Profile',size: 12,)
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(

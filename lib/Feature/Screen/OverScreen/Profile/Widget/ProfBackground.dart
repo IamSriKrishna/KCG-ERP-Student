@@ -73,7 +73,11 @@ class _ProBackgroundState extends State<ProBackground> {
         ),
         Align(
           alignment: Alignment(-0.9,-0.85),
-          child: RobotoMediumFont(text: S.current.profile, size: 18)
+          child: RobotoMediumFont(
+            text: S.current.profile, 
+            size: 18,
+            textColor:theme.getDarkTheme ? Colors.white:Colors.black
+          )
         ),
         Align(
           alignment: Alignment(0.95,-0.88),
@@ -115,13 +119,15 @@ class _ProBackgroundState extends State<ProBackground> {
           child: RobotoMediumFont(
             text: student.user.name.toUpperCase(), 
             size: 18,
+            textColor:theme.getDarkTheme ? Colors.white:Colors.black
           )
         ),
         Align(
           alignment: Alignment(0.0, -0.43),
           child: RobotoMediumFont(
             text: student.user.rollno, 
-            size: 18
+            size: 18,
+            textColor:theme.getDarkTheme ? Colors.white:Colors.black,
           )
         ),
       ],

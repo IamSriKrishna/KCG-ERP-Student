@@ -180,7 +180,9 @@ class _ODEXpandWidgetState extends State<ODEXpandWidget> {
                   padding: const EdgeInsets.all(15.0),
                   child: Text(
                     S.current.submit,
-                    style: GoogleFonts.merriweather(),
+                    style: GoogleFonts.merriweather(
+                      color: Colors.white
+                    ),
                   ),
                 )
               ),

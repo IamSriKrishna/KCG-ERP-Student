@@ -57,7 +57,6 @@ class _TopMainScreenState extends State<TopMainScreen> {
     return Container(
       padding: const EdgeInsets.all(5),
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.102,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -65,14 +64,14 @@ class _TopMainScreenState extends State<TopMainScreen> {
             children: [
               RobotoBoldFont(
                 text: greeting,
-                size: 25,
+                size: 20,
                 textColor: theme.getDarkTheme ? themeColor.backgroundColor : themeColor.darkTheme,
               ),
             ],
           ),
           RobotoBoldFont(
             text: "${student.user.name.toString().toUpperCase()} :)",
-            size: 25,
+            size: 20,
             textColor: theme.getDarkTheme ? themeColor.appThemeColor : themeColor.appThemeColor2,
           ),
         ],

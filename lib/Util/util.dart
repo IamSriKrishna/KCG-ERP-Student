@@ -20,3 +20,5 @@ AppDuration duration = AppDuration();
 String uri ="http://13.126.172.50:3000";
 
 String halfuri ="13.126.172.50:3000";
+
+String kcgSKCHAt = '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';

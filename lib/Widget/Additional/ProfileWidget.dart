@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kcgerp/Provider/DarkThemeProvider.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoRegularFont.dart';
+import 'package:provider/provider.dart';
 
 class ProfileWidget extends StatelessWidget {
   final Color color;
@@ -20,6 +22,7 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  final theme = Provider.of<DarkThemeProvider>(context);
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -47,7 +50,10 @@ class ProfileWidget extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(left:8.0),
-              child: RobotoRegularFont(text: title),
+              child: RobotoRegularFont(
+                text: title,
+                textColor: theme.getDarkTheme ? Colors.white:Colors.black,
+              ),
             ),
                 ],
               ),

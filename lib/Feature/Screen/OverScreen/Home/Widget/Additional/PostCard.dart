@@ -167,8 +167,9 @@ class _PostCardState extends State<PostCard> {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.comment_outlined,
+                      color: theme.getDarkTheme?Colors.white:Colors.black,
                     ),
                     onPressed: () {
                       CustomCupertinoModalPop(
@@ -178,8 +179,9 @@ class _PostCardState extends State<PostCard> {
                     }
                   ),
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.send_outlined,
+                      color: theme.getDarkTheme?Colors.white:Colors.black,
                     ),
                     onPressed: () {
                       CustomCupertinoModalPop(
@@ -192,7 +194,10 @@ class _PostCardState extends State<PostCard> {
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: IconButton(
-                        icon: const Icon(Icons.download), 
+                        icon: Icon(
+                          Icons.download,
+                          color: theme.getDarkTheme?Colors.white:Colors.black,
+                        ), 
                         onPressed: () async{
                               var response = await Dio().get(
                                 widget.images[0],

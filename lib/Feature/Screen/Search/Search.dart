@@ -36,7 +36,6 @@ class _SearchScreenState extends State<SearchScreen> {
         _searchedStudents = searchedStudents;
       });
     } catch (e) {
-      //print('Error fetching student data: $e');
     }
   }
 
@@ -82,10 +81,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     current_student_id:student.id
                     )
                   );
-
-                  
-                
-                
               },
               child: ListTile(
                 leading: ClipOval(
@@ -109,7 +104,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       _searchedStudents[index].name,
                       maxLines: 2,
                       style: GoogleFonts.merriweather(
-                        fontSize: 11.5
+                        fontSize: 11.5,
+                        color: theme.getDarkTheme?Colors.white:Colors.black
                       ),
                     ),
                     _searchedStudents[index].certified==true?
@@ -118,7 +114,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: Image.asset(
                         'asset/tick.png',
                         height: MediaQuery.of(context).size.height * 0.019,
-                        color: theme.getDarkTheme?themeColor.appThemeColor:Colors.black,
+                        color: theme.getDarkTheme?null:Colors.black,
                       ),
                     ):
                     Text(''),
@@ -127,16 +123,21 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 subtitle: Text(
                   '${_searchedStudents[index].rollno}',
-                  style: GoogleFonts.merriweather(),
+                  style: GoogleFonts.merriweather(
+                    color: theme.getDarkTheme?Colors.white:Colors.black
+                  ),
                 ),
-                trailing: Icon(Icons.arrow_forward_ios),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: theme.getDarkTheme?Colors.white:Colors.black
+                ),
               ),
             );
           },
           childCount: itemCount,
         ),
       );
-    } else {
+    }else if(_searchController.text.isEmpty){
       return SliverToBoxAdapter(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -150,7 +151,31 @@ class _SearchScreenState extends State<SearchScreen> {
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 style: GoogleFonts.merriweather(
-                  fontSize: 20
+                  fontSize: 20,
+                  color: theme.getDarkTheme?Colors.white:Colors.black
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    else {
+      return SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Center(
+                child: Lottie.asset('asset/lottie/null.json'),
+              ),
+              Text(
+                'No students found with the\nprovided name',
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                style: GoogleFonts.merriweather(
+                  fontSize: 20,
+                  color: theme.getDarkTheme?Colors.white:Colors.black
                 ),
               ),
             ],

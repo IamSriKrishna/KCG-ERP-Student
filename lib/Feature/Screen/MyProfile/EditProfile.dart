@@ -85,6 +85,7 @@ class _EditProfileState extends State<EditProfile> {
     final theme = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: MediaQuery.of(context).size.width *0.2,
         leading: InkWell(
           onTap: () {
             Navigator.pop(context);
@@ -198,6 +199,9 @@ class _EditProfileState extends State<EditProfile> {
                         child: TextField(
                           controller: _newPassword,
                           decoration: InputDecoration(
+                            labelStyle: GoogleFonts.luxuriousRoman(
+                              color: theme.getDarkTheme ? Colors.grey:Colors.black,
+                            ),
                             labelText: 'New password',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)
@@ -210,6 +214,9 @@ class _EditProfileState extends State<EditProfile> {
                         child: TextField(
                           controller: _confirmPassword,
                           decoration: InputDecoration(
+                            labelStyle: GoogleFonts.luxuriousRoman(
+                              color: theme.getDarkTheme ? Colors.grey:Colors.black,
+                            ),
                             labelText: 'Confirm password',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)

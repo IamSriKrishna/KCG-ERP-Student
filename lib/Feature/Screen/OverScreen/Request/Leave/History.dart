@@ -87,6 +87,7 @@ class _HistoryState extends State<History> {
                             child: Text(
                               form.formtype,
                               style: GoogleFonts.merriweather(
+                                color:theme.getDarkTheme ? Colors.white:Colors.black,
                                 fontWeight: FontWeight.bold
                               ),
                             ),
@@ -123,7 +124,9 @@ class _HistoryState extends State<History> {
                             alignment: Alignment(-0.9, 0.2),
                             child: Text(
                               '${S.current.from}:${form.from}\n${S.current.to}:${form.to}',
-                              style: GoogleFonts.merriweather(),
+                              style: GoogleFonts.merriweather(
+                                color:theme.getDarkTheme ? Colors.white:Colors.black,
+                              ),
                             ),
                           ),
                           
@@ -133,6 +136,7 @@ class _HistoryState extends State<History> {
                             child: Text(
                               '${S.current.noofdays}:${form.no_of_days}',
                               style: GoogleFonts.merriweather(
+                                color:theme.getDarkTheme ? Colors.white:Colors.black,
                               ),
                             ),
                           ),

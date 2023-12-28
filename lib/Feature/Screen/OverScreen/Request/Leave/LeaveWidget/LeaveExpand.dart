@@ -174,7 +174,9 @@ class _LeaveExpandState extends State<LeaveExpand> {
                   padding: const EdgeInsets.all(15.0),
                   child: Text(
                     'SUBMIT',
-                    style: GoogleFonts.merriweather(),
+                    style: GoogleFonts.merriweather(
+                      color: Colors.white
+                    ),
                   ),
                 )
               ),

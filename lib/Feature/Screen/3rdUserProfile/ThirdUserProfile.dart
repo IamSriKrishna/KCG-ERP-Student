@@ -54,7 +54,7 @@ class _ThirdUserProfileState extends State<ThirdUserProfile> {
         slivers: [
           SliverAppBar(
             floating: true,
-            leadingWidth: MediaQuery.of(context).size.width * 0.45,
+            leadingWidth: double.infinity,
             leading: Row(
               children: [
                 Padding(
@@ -67,12 +67,6 @@ class _ThirdUserProfileState extends State<ThirdUserProfile> {
               ],
             ),
             backgroundColor: theme.getDarkTheme?themeColor.darkTheme:themeColor.themeColor,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(Icons.favorite_outlined,color: Colors.red,),
-              )
-            ],
           ),
           SliverToBoxAdapter(
             child: ThirdUserProfileTopScreen(

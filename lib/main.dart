@@ -7,8 +7,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:kcgerp/Constrains/ThemeStyle.dart';
-import 'package:kcgerp/Feature/Screen/NoInternet.dart';
+import 'package:kcgerp/Feature/Screen/Auth/Login.dart';
 import 'package:kcgerp/Feature/Screen/OnBoard/OnboardScreen.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/OverScreen.dart';
 import 'package:kcgerp/Feature/Service/Authservice.dart';
@@ -16,7 +17,6 @@ import 'package:kcgerp/Provider/DarkThemeProvider.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Profile/Widget/LanguageContoller.dart';
 import 'package:kcgerp/Provider/StudenProvider.dart';
 import 'package:kcgerp/Provider/chat_provider.dart';
-import 'package:kcgerp/Util/Additional/Loader.dart';
 import 'package:kcgerp/Util/LocalNotification.dart';
 import 'package:kcgerp/l10n/AppLocalization.dart';
 import 'package:kcgerp/route.dart';
@@ -137,9 +137,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
 
-  
+  String token = '';
   String locale = ''; 
   final AuthService authService = AuthService();
 
@@ -147,12 +146,30 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _requestNotificationPermission();
-    
+    _loadToken();
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     authService.getUserData(context);
     loadSelectedLanguage();
   }
 
+Future<void> checkForUpdate() async {
+    InAppUpdate.checkForUpdate().then((info) {
+      setState(() {
+        if(info.updateAvailability == UpdateAvailability.updateAvailable){
+          update();
+        }
+      });
+    }).catchError((e) {
+      print(e.toString());
+    });
+  }
+
+  void update()async{
+    await InAppUpdate.startFlexibleUpdate();
+    InAppUpdate.completeFlexibleUpdate().then((_){}).catchError((e){
+      print(e.toString());
+    });
+  }
 Future<void> loadSelectedLanguage() async {
   final pref = GetStorage(); // Use GetStorage to retrieve the selected language subcode
   setState(() {
@@ -160,6 +177,12 @@ Future<void> loadSelectedLanguage() async {
   });
 }
 
+  _loadToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      token = prefs.getString('LoggedIn').toString();
+    });
+  }
 Future<void> _requestNotificationPermission() async {
     await Permission.notification.request();
 }
@@ -179,27 +202,7 @@ Future<void> _requestNotificationPermission() async {
           supportedLocales: S.delegate.supportedLocales,
           theme:  Styles().themeData(darkThemeProvider.getDarkTheme, context),
           debugShowCheckedModeBanner: false,
-          home:FutureBuilder(
-            future: authService.getUserData(context),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Scaffold(body: Center(child: Loader()));
-              } 
-              else if(snapshot.connectionState == ConnectionState.none){
-                return NoInternet();
-              }
-              else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                final student = Provider.of<StudentProvider>(context).user;
-                if (student.token.isNotEmpty) {
-                  return OverScreen();
-                } else {
-                  return OnBoardScreen();
-                }
-              }
-            },
-          ),
+          home:token=='Logged'?OverScreen():token=='LoggedOut'?Login():OnBoardScreen(),
           onGenerateRoute: (settings) => onGenerator(settings,locale),
         );
       },

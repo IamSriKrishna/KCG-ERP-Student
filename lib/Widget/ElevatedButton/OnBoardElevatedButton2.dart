@@ -15,6 +15,7 @@ class OnBoardElevatedButton2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
         elevation: 10,
         shadowColor: backgroundColor,
         backgroundColor: backgroundColor,

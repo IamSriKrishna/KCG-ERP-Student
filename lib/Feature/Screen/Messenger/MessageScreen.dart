@@ -131,10 +131,22 @@ class _MessageScreenState extends State<MessageScreen> {
                                   ),
                                   title: Text(
                                     user.first.name,
-                                    style: GoogleFonts.merriweather(),
+                                    style: GoogleFonts.merriweather(
+                                      color: theme.getDarkTheme?Colors.white:Colors.black
+                                    ),
                                   ),
-                                  subtitle: Text(user.first.rollno),
-                                  trailing: Text(chatNotifier.msgTime(chat.updatedAt.toString())),
+                                  subtitle: Text(
+                                    user.first.rollno,
+                                    style: GoogleFonts.merriweather(
+                                      color: theme.getDarkTheme?Colors.white:Colors.black
+                                    ),
+                                  ),
+                                  trailing: Text(
+                                    chatNotifier.msgTime(chat.updatedAt.toString()),
+                                    style: TextStyle(
+                                      color: theme.getDarkTheme?Colors.white:Colors.black
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

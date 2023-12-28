@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kcgerp/Feature/Screen/Auth/SignUp.dart';
 import 'package:kcgerp/Feature/Screen/Auth/widget/LoginWidget.dart';
 import 'package:kcgerp/Feature/Service/Authservice.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoBoldFont.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoRegularFont.dart';
 import 'package:kcgerp/Util/util.dart';
-import 'package:kcgerp/Widget/AuthBottomNavigatorWidget/AuthBottomNavigatorWidget.dart';
 import 'package:kcgerp/Widget/TextField/CustomTextField.dart';
 import 'package:kcgerp/Widget/TextField/CustomTextFieldPassword.dart';
 
@@ -32,7 +30,7 @@ class _LoginState extends State<Login> {
         children: [
           LoginWidget(),
           Padding(
-            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.415),
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.42),
             child: Container(
               height: MediaQuery.of(context).size.height * 0.7,
               width: double.infinity,
@@ -80,6 +78,7 @@ class _LoginState extends State<Login> {
                     padding: const EdgeInsets.symmetric(horizontal:60.0),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
                         backgroundColor: themeColor.appThemeColor2,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -97,13 +96,7 @@ class _LoginState extends State<Login> {
           ),
         ],
       ),
-      // bottomNavigationBar:AuthBottomNavigatorWidget(
-      //             prefixText: 'Ready to Begin Your Journey?', 
-      //             sufixText: 'Sign Up', 
-      //             onTap: (){
-      //       Navigator.pushNamed(context, SignUp.route);
-      //             }
-      //           ) ,
+
     );
   }
 }

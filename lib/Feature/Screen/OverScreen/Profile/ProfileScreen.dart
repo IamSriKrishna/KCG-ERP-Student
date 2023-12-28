@@ -43,7 +43,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(onWillPop: ()async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked:(didPop)async{
         await showCupertinoModalPopup<void>(
           context: context, 
           builder:(context) => CupertinoAlertDialog(
@@ -78,7 +80,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
         );
-        return false;
       },
       child: Scaffold(
         body: SizedBox(

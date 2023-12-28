@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kcgerp/Provider/DarkThemeProvider.dart';
+import 'package:provider/provider.dart';
 
 class CustomProfileDetails extends StatelessWidget {
   final String title;
@@ -14,12 +16,14 @@ class CustomProfileDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<DarkThemeProvider>(context);
     return Row(
       children: [
         Text(
           title,
           style: GoogleFonts.merriweatherSans(
-            fontSize: 15.5
+            fontSize: 15.5,
+            color:theme.getDarkTheme ? Colors.white:Colors.black,
           ),
         ),
         Expanded(

@@ -88,17 +88,45 @@ class _ThirdUserProfileTopScreenState extends State<ThirdUserProfileTopScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 //profile Picture
-                ClipOval(
-                  child: CachedNetworkImage(
-                    imageUrl: widget.dp,
-                    width: MediaQuery.of(context).size.width * 0.215,
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    fit: BoxFit.cover,
-                    progressIndicatorBuilder: 
-                    (context, url, progress) => Center(
-                      child: CircularProgressIndicator(
-                        strokeWidth: 1,
-                        color:theme.getDarkTheme?themeColor.themeColor: themeColor.darkTheme,
+                InkWell(
+                  onLongPress: () {
+                    showAdaptiveDialog(
+                      context: context, 
+                      builder:(context) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: CachedNetworkImage(
+                              imageUrl: widget.dp,
+                              fit: BoxFit.contain,
+                              progressIndicatorBuilder: 
+                              (context, url, progress) => Center(
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 1,
+                                  color:theme.getDarkTheme?themeColor.themeColor: themeColor.darkTheme,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: widget.dp,
+                      width: MediaQuery.of(context).size.width * 0.215,
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      fit: BoxFit.cover,
+                      progressIndicatorBuilder: 
+                      (context, url, progress) => Center(
+                        child: CircularProgressIndicator(
+                          strokeWidth: 1,
+                          color:theme.getDarkTheme?themeColor.themeColor: themeColor.darkTheme,
+                        ),
                       ),
                     ),
                   ),
@@ -112,15 +140,31 @@ class _ThirdUserProfileTopScreenState extends State<ThirdUserProfileTopScreen> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('$_followersCount'),
-                          RobotoBoldFont(text: 'Followers')
+                          Text(
+                            '$_followersCount',
+                            style: TextStyle(
+                              color: theme.getDarkTheme?Colors.white:Colors.black,
+                            ),
+                          ),
+                          RobotoBoldFont(
+                            text: 'Followers',
+                            textColor: theme.getDarkTheme?Colors.white:Colors.black,
+                          )
                         ],
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('$_followingCount'),
-                          RobotoBoldFont(text: 'Following')
+                          Text(
+                            '$_followingCount',
+                            style: TextStyle(
+                              color: theme.getDarkTheme?Colors.white:Colors.black,
+                            ),
+                          ),
+                          RobotoBoldFont(
+                            text: 'Following',
+                            textColor: theme.getDarkTheme?Colors.white:Colors.black,
+                            )
                         ],
                       ),
                     ],
@@ -134,11 +178,15 @@ class _ThirdUserProfileTopScreenState extends State<ThirdUserProfileTopScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //Student Name
-                RobotoBoldFont(text: widget.name),
+                RobotoBoldFont(
+                  text: widget.name,
+                  textColor: theme.getDarkTheme?Colors.white:Colors.black,
+                ),
                 //Student Department
                 RobotoRegularFont(
                   text: '(${widget.department})',
                   fontWeight: FontWeight.w100,
+                  textColor: theme.getDarkTheme?Colors.white:Colors.black,
                   size: 10,
                 )
               ],
