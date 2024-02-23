@@ -105,7 +105,7 @@ class AuthService{
           await prefs.setString('studenttoken', student.token);
           await prefs.setString('userId', student.id);
           LocalNotifications.showSimpleNotification(
-            title: "Campus Link",
+            title: "JBAS Duty Ease",
             body: "Welcome Back, ${student.name}:)",
           );
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);

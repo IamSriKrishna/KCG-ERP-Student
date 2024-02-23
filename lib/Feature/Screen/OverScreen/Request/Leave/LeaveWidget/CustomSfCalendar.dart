@@ -119,13 +119,13 @@ class _CustomSFCalendarState extends State<CustomSFCalendar>with SingleTickerPro
             ),
           ),
           //Diplay Total Credit You having
-          LeaveDetailsWidget(text: 'Credit You Have',hint: '${student.credit}',),
+          //LeaveDetailsWidget(text: 'Credit You Have',hint: '${student.credit}',),
           //Diplay per Credit 
-          LeaveDetailsWidget(text: 'Per Credit',hint: '${credit}',),
+          //LeaveDetailsWidget(text: 'Per Credit',hint: '${credit}',),
           //Diplay no of days selected
           LeaveDetailsWidget(text: 'Total days selected',hint: '${calculateTotalDaysSelected()}',),
           //Calulate no of days selected and credit
-          LeaveDetailsWidget(text: 'Total Credit',hint: '${calculateTotalDaysSelected() * credit}',),
+          //LeaveDetailsWidget(text: 'Total Credit',hint: '${calculateTotalDaysSelected() * credit}',),
           // Container(
           //   alignment: Alignment.center,
           //   child: Lottie.asset('asset/lottie/house.json',height: 100,controller: controller))

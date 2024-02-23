@@ -3,7 +3,6 @@
 
 import 'dart:typed_data';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,12 +12,10 @@ import 'package:intl/intl.dart';
 import 'package:kcgerp/Provider/DarkThemeProvider.dart';
 import 'package:kcgerp/Util/showsnackbar.dart';
 import 'package:kcgerp/Util/util.dart';
-import 'package:kcgerp/Widget/Additional/likeAnimation.dart';
 import 'package:kcgerp/Widget/CupertinoWidgets/CustomCupertinoModalpop.dart';
 import 'package:kcgerp/l10n/AppLocalization.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:zoom_pinch_overlay/zoom_pinch_overlay.dart';
 
 class PostCard extends StatefulWidget {
   final String dp;

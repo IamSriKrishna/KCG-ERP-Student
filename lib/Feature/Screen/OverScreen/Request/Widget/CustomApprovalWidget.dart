@@ -79,15 +79,15 @@ class _CustomApprovalWidgetState extends State<CustomApprovalWidget> {
                   ),
               ),
             ),
-            Positioned(
-              bottom: 10,
-              right: 15,
-              child: RobotoMediumFont(
-                text: '${S.current.credit}: ${widget.credit}', 
-                size: 15,
-                textColor: Colors.white,
-              )
-            )
+            // Positioned(
+            //   bottom: 10,
+            //   right: 15,
+            //   child: RobotoMediumFont(
+            //     text: '${S.current.credit}: ${widget.credit}', 
+            //     size: 15,
+            //     textColor: Colors.white,
+            //   )
+            // )
           ],
         ),
       ),

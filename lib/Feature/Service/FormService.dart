@@ -84,6 +84,9 @@ class FormService{
         },
       );
 
+      var response = user.toJson();
+      print("result ......$response");
+
       httpErrorHandle(
         response: res,
         context: context,

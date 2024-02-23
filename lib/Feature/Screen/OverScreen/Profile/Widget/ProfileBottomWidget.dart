@@ -12,6 +12,7 @@ import 'package:kcgerp/Util/util.dart';
 import 'package:kcgerp/Widget/Additional/ProfileWidget.dart';
 import 'package:kcgerp/l10n/AppLocalization.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 class ProfileBottomWidget extends StatefulWidget {
   final GlobalKey myProfile;
   final GlobalKey forgetPIN;
@@ -100,8 +101,8 @@ class _ProfileBottomWidgetState extends State<ProfileBottomWidget> {
               ),
             ),
             ProfileWidget(
-                onTap: (){
-                  Navigator.pushNamed(context, AboutWebviewScreen.route);
+                onTap: ()async{
+                  await launchUrl(Uri.parse("https://www.jbascollege.edu.in/"));
                 }, 
                 title: S.current.about, 
                 iconColor: Color.fromRGBO(188, 233, 130, 1), 

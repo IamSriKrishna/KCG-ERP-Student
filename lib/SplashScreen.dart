@@ -53,14 +53,14 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         children: [
           Align(
             alignment: Alignment(0, -0.0),
-            child: Image.asset('asset/Logo/kcg.png',height: MediaQuery.of(context).size.height * 0.3)),
+            child: Image.asset('asset/Logo/jbas.jpeg',height: MediaQuery.of(context).size.height * 0.3)),
           Align(
             alignment: Alignment(0, 0.6),
             child: Lottie.asset('asset/lottie/load.json',height: 150,)),
             Align(
             alignment: Alignment(0, 0.6),
             child: Text(
-                'Computer Science Department',
+                'The Justice Basheer Ahmed Sayeed',
                 style: GoogleFonts.merriweather(
                   fontSize: 20
                 ),
@@ -69,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           Align(
             alignment: Alignment(0, 0.95),
             child: RobotoRegularFont(
-              text: 'Developed By Sri Krishna & Krithick',
+              text: 'Developed By Harini sundar & Asan sariba',
               size: 13,
               textColor: themeColor.darkTheme,
             )),

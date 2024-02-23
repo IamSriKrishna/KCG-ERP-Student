@@ -52,15 +52,15 @@ class _HistoryState extends State<History> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 5),
-            child: Text(
-              '${S.current.totalspend}:\$${totalSpend.toStringAsFixed(0)}',
-              style: GoogleFonts.merriweather(
-                fontSize: 16
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 5),
+          //   child: Text(
+          //     '${S.current.totalspend}:\$${totalSpend.toStringAsFixed(0)}',
+          //     style: GoogleFonts.merriweather(
+          //       fontSize: 16
+          //     ),
+          //   ),
+          // ),
           Expanded(
             child: ListView.builder(
               physics: const BouncingScrollPhysics(),
@@ -142,16 +142,16 @@ class _HistoryState extends State<History> {
                           ),
                           
                           //Credit Spend
-                          Align(
-                            alignment: Alignment(0.9, 0.8),
-                            child: Text(
-                              '\$${form.spent}',
-                              style: GoogleFonts.merriweather(
-                                fontSize: 20,
-                                color: Colors.green
-                              ),
-                            ),
-                          ),
+                          // Align(
+                          //   alignment: Alignment(0.9, 0.8),
+                          //   child: Text(
+                          //     '\$${form.spent}',
+                          //     style: GoogleFonts.merriweather(
+                          //       fontSize: 20,
+                          //       color: Colors.green
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),

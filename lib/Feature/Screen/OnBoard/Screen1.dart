@@ -48,7 +48,7 @@ class ScreenOne extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left:40.0,top: 12.5),
                     child: RobotoRegularFont(
-                      text: 'Revolutionize college management with our CampusLink',
+                      text: 'Revolutionize college management with our JBAS',
                       size: 22.5,
                       textColor: Colors.grey,
                       fontWeight: FontWeight.w100,

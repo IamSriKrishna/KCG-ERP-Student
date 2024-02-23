@@ -13,6 +13,8 @@ class UpdateFCMToken{
     final student = Provider.of<StudentProvider>(context,listen: false).user;
     try{
       final Map<String, dynamic> data = {'fcmtoken': fcmtoken};
+      var response = data;
+      print('$response');
       http.Response res = await http.put(
         Uri.parse('$uri/kcg/student/fcm-token/${student.id}'),
         headers: <String,String>{

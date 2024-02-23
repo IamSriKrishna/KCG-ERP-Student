@@ -121,13 +121,13 @@ class _ODScreenState extends State<ODScreen>with SingleTickerProviderStateMixin 
             ),
           ),
           //Diplay Total Credit You having
-          LeaveDetailsWidget(text: S.current.credityouhave,hint: '${student.credit}',),
+          //LeaveDetailsWidget(text: S.current.credityouhave,hint: '${student.credit}',),
           //Diplay per Credit 
-          LeaveDetailsWidget(text: S.current.percredit,hint: '${credit}',),
+          //LeaveDetailsWidget(text: S.current.percredit,hint: '${credit}',),
           //Diplay no of days selected
           LeaveDetailsWidget(text: S.current.totaldaysselected,hint: '${calculateTotalDaysSelected()}',),
           //Calulate no of days selected and credit
-          LeaveDetailsWidget(text: S.current.totalcredit,hint: '${calculateTotalDaysSelected() * credit}',),
+          //LeaveDetailsWidget(text: S.current.totalcredit,hint: '${calculateTotalDaysSelected() * credit}',),
           // Container(
           //   alignment: Alignment.center,
           //   child: Lottie.asset('asset/lottie/house.json',height: 100,controller: controller))

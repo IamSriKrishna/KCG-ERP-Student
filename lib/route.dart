@@ -10,8 +10,8 @@ import 'package:kcgerp/Feature/Screen/OnBoard/Screen3.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Home/HomeScreen.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/OverScreen.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Profile/Widget/About.dart';
-import 'package:kcgerp/Feature/Screen/OverScreen/Request/GatePass/GatePass.dart';
-import 'package:kcgerp/Feature/Screen/OverScreen/Request/GatePass/GatePassHistory.dart';
+// import 'package:kcgerp/Feature/Screen/OverScreen/Request/GatePass/GatePass.dart';
+// import 'package:kcgerp/Feature/Screen/OverScreen/Request/GatePass/GatePassHistory.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/Leave/History.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/Leave/LeaveWidget/CustomSfCalendar.dart';
 import 'package:kcgerp/Feature/Screen/OverScreen/Request/Leave/LeaveWidget/LeaveExpand.dart';
@@ -47,20 +47,20 @@ Route<dynamic> onGenerator(RouteSettings settings,String locale) {
         type: PageTransitionType.fade,
         settings: settings,
       );
-    case GatePassHistory.route:
-      return PageTransition(
-        duration: Duration(milliseconds: duration.fadeMilliseconds),
-        child: GatePassHistory(),
-        type: PageTransitionType.fade,
-        settings: settings,
-      );
-    case GatePassScreen.route:
-      return PageTransition(
-        duration: Duration(milliseconds: duration.fadeMilliseconds),
-        child: GatePassScreen(locale: locale,),
-        type: PageTransitionType.fade,
-        settings: settings,
-      );
+    // case GatePassHistory.route:
+    //   return PageTransition(
+    //     duration: Duration(milliseconds: duration.fadeMilliseconds),
+    //     child: GatePassHistory(),
+    //     type: PageTransitionType.fade,
+    //     settings: settings,
+    //   );
+    // case GatePassScreen.route:
+    //   return PageTransition(
+    //     duration: Duration(milliseconds: duration.fadeMilliseconds),
+    //     child: GatePassScreen(locale: locale,),
+    //     type: PageTransitionType.fade,
+    //     settings: settings,
+    //   );
     case LeaveExpand.route:
       return PageTransition(
         duration: Duration(milliseconds: duration.fadeMilliseconds),

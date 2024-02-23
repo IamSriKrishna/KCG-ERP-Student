@@ -3,7 +3,6 @@ import 'package:kcgerp/Provider/DarkThemeProvider.dart';
 import 'package:kcgerp/Provider/StudenProvider.dart';
 import 'package:kcgerp/Util/FontStyle/RobotoBoldFont.dart';
 import 'package:kcgerp/Util/util.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class CustomApprovalSliverAppBar extends StatefulWidget {
@@ -60,23 +59,23 @@ class _CustomApprovalSliverAppBarState extends State<CustomApprovalSliverAppBar>
                 : themeColor.appBarColor,
           ),
           floating: true,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Lottie.asset('asset/lottie/coin.json'),
-                  RobotoBoldFont(
-                    text: '${student.user.credit}',
-                    textColor: theme.getDarkTheme
-                        ? themeColor.backgroundColor
-                        : themeColor.appBarColor,
-                    size: 18,
-                  )
-                ],
-              ),
-            ),
-          ],
+          // actions: [
+          //   Padding(
+          //     padding: const EdgeInsets.all(8.0),
+          //     child: Row(
+          //       children: [
+          //         Lottie.asset('asset/lottie/coin.json'),
+          //         RobotoBoldFont(
+          //           text: '${student.user.credit}',
+          //           textColor: theme.getDarkTheme
+          //               ? themeColor.backgroundColor
+          //               : themeColor.appBarColor,
+          //           size: 18,
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ],
         );
       },
     );
