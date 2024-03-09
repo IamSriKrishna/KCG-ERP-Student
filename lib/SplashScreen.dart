@@ -17,62 +17,67 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   String? fcmToken = '';
 
   final UpdateFCMToken _updateFCMToken = UpdateFCMToken();
-  void Update(){
-    _updateFCMToken.fcmUpdate(
-      context: context, fcmtoken: fcmToken!);
+  void Update() {
+    _updateFCMToken.fcmUpdate(context: context, fcmtoken: fcmToken!);
   }
+
   void _initializePreferences() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     fcmToken = await pref.getString('fcmToken');
     //print(fcmToken);
   }
+
   @override
   void initState() {
     super.initState();
     _initializePreferences();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    Future.delayed(Duration(milliseconds: 2950),(){
+    Future.delayed(Duration(milliseconds: 2950), () {
       Navigator.pushReplacementNamed(context, OverScreen.route);
     }).then((value) => Update());
   }
-  @override
 
+  @override
   void dispose() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,overlays: SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
     super.dispose();
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: themeColor.themeColor,
       body: Stack(
         children: [
           Align(
-            alignment: Alignment(0, -0.0),
-            child: Image.asset('asset/Logo/jbas.jpeg',height: MediaQuery.of(context).size.height * 0.3)),
+              alignment: Alignment(0, -0.0),
+              child: Image.asset('asset/Logo/jbas.jpeg',
+                  height: MediaQuery.of(context).size.height * 0.3)),
           Align(
-            alignment: Alignment(0, 0.6),
-            child: Lottie.asset('asset/lottie/load.json',height: 150,)),
-            Align(
-            alignment: Alignment(0, 0.6),
-            child: Text(
+              alignment: Alignment(0, 0.6),
+              child: Lottie.asset(
+                'asset/lottie/load.json',
+                height: 150,
+              )),
+          Align(
+              alignment: Alignment(0, 0.6),
+              child: Text(
                 'The Justice Basheer Ahmed Sayeed',
-                style: GoogleFonts.merriweather(
-                  fontSize: 20
-                ),
-              )
-            ),
+                style: GoogleFonts.merriweather(fontSize: 20),
+              )),
           Align(
-            alignment: Alignment(0, 0.95),
-            child: RobotoRegularFont(
-              text: 'Developed By Harini sundar & Asan sariba',
-              size: 13,
-              textColor: themeColor.darkTheme,
-            )),
+              alignment: Alignment(0, 0.95),
+              child: RobotoRegularFont(
+                text: 'Developed By Harini sundar & Asan sariba',
+                size: 13,
+                textColor: themeColor.darkTheme,
+              )),
         ],
       ),
     );
@@ -89,26 +94,25 @@ class Waiting extends StatelessWidget {
       body: Stack(
         children: [
           Align(
-            alignment: Alignment(0, -0.0),
-            child: Image.asset('asset/Logo/kcg.png',height: MediaQuery.of(context).size.height * 0.3)),
+              alignment: Alignment(0, -0.0),
+              child: Image.asset('asset/Logo/kcg.png',
+                  height: MediaQuery.of(context).size.height * 0.3)),
           Align(
-            alignment: Alignment(0, 0.6),
-            child: TypeWriterText(
-              text: Text(
-                'Computer Science Department',
-                style: GoogleFonts.merriweather(
-                  fontSize: 20
+              alignment: Alignment(0, 0.6),
+              child: TypeWriterText(
+                text: Text(
+                  'Computer Science Department',
+                  style: GoogleFonts.merriweather(fontSize: 20),
                 ),
-              ),
-              duration: Duration(milliseconds: 3),
-            )),
+                duration: Duration(milliseconds: 3),
+              )),
           Align(
-            alignment: Alignment(0, 0.95),
-            child: RobotoRegularFont(
-              text: 'Developed By Sri Krishna & Krithick',
-              size: 9,
-              textColor: themeColor.darkTheme,
-            )),
+              alignment: Alignment(0, 0.95),
+              child: RobotoRegularFont(
+                text: 'Developed By Harini sundar & Asan sariba',
+                size: 9,
+                textColor: themeColor.darkTheme,
+              )),
         ],
       ),
     );

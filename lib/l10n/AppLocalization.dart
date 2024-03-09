@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kcgerp/l10n/Intl/intl_All.dart';
 
 class S {
-    S();
+  S();
 
   static S? _current;
 
@@ -29,6 +28,7 @@ class S {
       return instance;
     });
   }
+
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
     assert(instance != null,
@@ -59,7 +59,7 @@ class S {
       args: [],
     );
   }
-  
+
   //Good Afternoon
   String get goodAfternoon {
     return Intl.message(
@@ -69,7 +69,7 @@ class S {
       args: [],
     );
   }
-    
+
   //homeScreenTitle
   String get homeScreenTitle {
     return Intl.message(
@@ -80,7 +80,7 @@ class S {
     );
   }
 
-  String get onduty{
+  String get onduty {
     return Intl.message(
       'On Duty',
       name: 'onduty',
@@ -89,7 +89,7 @@ class S {
     );
   }
 
-  String get leave{
+  String get leave {
     return Intl.message(
       'Leave',
       name: 'leave',
@@ -98,7 +98,7 @@ class S {
     );
   }
 
-  String get gatePass{
+  String get gatePass {
     return Intl.message(
       'Gate Pass',
       name: 'gatePass',
@@ -107,7 +107,7 @@ class S {
     );
   }
 
-  String get myClass{
+  String get myClass {
     return Intl.message(
       'My Class',
       name: 'myClass',
@@ -115,8 +115,8 @@ class S {
       args: [],
     );
   }
-  
-  String get credit{
+
+  String get credit {
     return Intl.message(
       'Credit',
       name: 'credit',
@@ -124,8 +124,8 @@ class S {
       args: [],
     );
   }
-  
-  String get notification{
+
+  String get notification {
     return Intl.message(
       'Notification',
       name: 'notification',
@@ -133,8 +133,8 @@ class S {
       args: [],
     );
   }
-  
-  String get myProfile{
+
+  String get myProfile {
     return Intl.message(
       'myProfile',
       name: 'myProfile',
@@ -142,8 +142,8 @@ class S {
       args: [],
     );
   }
-  
-  String get forgetPin{
+
+  String get forgetPin {
     return Intl.message(
       'forgetPin',
       name: 'forgetPin',
@@ -151,8 +151,8 @@ class S {
       args: [],
     );
   }
-  
-  String get language{
+
+  String get language {
     return Intl.message(
       'language',
       name: 'language',
@@ -160,8 +160,8 @@ class S {
       args: [],
     );
   }
-  
-  String get signOut{
+
+  String get signOut {
     return Intl.message(
       'signOut',
       name: 'signOut',
@@ -169,8 +169,8 @@ class S {
       args: [],
     );
   }
-  
-  String get warningMessage{
+
+  String get warningMessage {
     return Intl.message(
       'Warning Message',
       name: 'warningMessage',
@@ -178,8 +178,8 @@ class S {
       args: [],
     );
   }
-  
-  String get ondutyDetails{
+
+  String get ondutyDetails {
     return Intl.message(
       'Record your work hours efficiently',
       name: 'ondutyDetails',
@@ -187,8 +187,8 @@ class S {
       args: [],
     );
   }
-  
-  String get leaveDetails{
+
+  String get leaveDetails {
     return Intl.message(
       'Request time off with ease',
       name: 'leaveDetails',
@@ -196,8 +196,8 @@ class S {
       args: [],
     );
   }
-  
-  String get gatePassDetails{
+
+  String get gatePassDetails {
     return Intl.message(
       'Authorize entry and exit',
       name: 'gatePassDetails',
@@ -205,8 +205,8 @@ class S {
       args: [],
     );
   }
-  
-  String get from{
+
+  String get from {
     return Intl.message(
       'From',
       name: 'from',
@@ -214,8 +214,8 @@ class S {
       args: [],
     );
   }
-  
-  String get to{
+
+  String get to {
     return Intl.message(
       'To',
       name: 'to',
@@ -223,8 +223,8 @@ class S {
       args: [],
     );
   }
-  
-  String get today{
+
+  String get today {
     return Intl.message(
       'Today',
       name: 'today',
@@ -232,8 +232,8 @@ class S {
       args: [],
     );
   }
-  
-  String get send{
+
+  String get send {
     return Intl.message(
       'Send',
       name: 'send',
@@ -241,8 +241,8 @@ class S {
       args: [],
     );
   }
-  
-  String get reason{
+
+  String get reason {
     return Intl.message(
       'Reason',
       name: 'reason',
@@ -250,8 +250,8 @@ class S {
       args: [],
     );
   }
-  
-  String get profile{
+
+  String get profile {
     return Intl.message(
       'Profile',
       name: 'profile',
@@ -259,8 +259,8 @@ class S {
       args: [],
     );
   }
-  
-  String get about{
+
+  String get about {
     return Intl.message(
       'About',
       name: 'about',
@@ -268,8 +268,8 @@ class S {
       args: [],
     );
   }
-  
-  String get approval{
+
+  String get approval {
     return Intl.message(
       'Approval',
       name: 'approval',
@@ -277,8 +277,8 @@ class S {
       args: [],
     );
   }
-  
-  String get development{
+
+  String get development {
     return Intl.message(
       'Development',
       name: 'development',
@@ -287,8 +287,7 @@ class S {
     );
   }
 
-  
-  String get booking{
+  String get booking {
     return Intl.message(
       'Booking',
       name: 'booking',
@@ -297,17 +296,16 @@ class S {
     );
   }
 
-  String get credityouhave{
+  String get credityouhave {
     return Intl.message(
       'credityouhave',
       name: 'credityouhave',
       desc: '',
       args: [],
     );
-  } 
+  }
 
-  
-  String get percredit{
+  String get percredit {
     return Intl.message(
       'percredit',
       name: 'percredit',
@@ -316,8 +314,7 @@ class S {
     );
   }
 
-  
-  String get totaldaysselected{
+  String get totaldaysselected {
     return Intl.message(
       'totaldaysselected',
       name: 'totaldaysselected',
@@ -326,8 +323,7 @@ class S {
     );
   }
 
-  
-  String get totalcredit{
+  String get totalcredit {
     return Intl.message(
       'totalcredit',
       name: 'totalcredit',
@@ -336,8 +332,7 @@ class S {
     );
   }
 
-  
-  String get continues{
+  String get continues {
     return Intl.message(
       'continues',
       name: 'continues',
@@ -346,8 +341,7 @@ class S {
     );
   }
 
-  
-  String get warning{
+  String get warning {
     return Intl.message(
       'warning',
       name: 'warning',
@@ -356,8 +350,7 @@ class S {
     );
   }
 
-  
-  String get pleaseselectoneormoredaystocontinue{
+  String get pleaseselectoneormoredaystocontinue {
     return Intl.message(
       'pleaseselectoneormoredaystocontinue',
       name: 'pleaseselectoneormoredaystocontinue',
@@ -366,8 +359,7 @@ class S {
     );
   }
 
-  
-  String get ok{
+  String get ok {
     return Intl.message(
       'ok',
       name: 'ok',
@@ -376,8 +368,7 @@ class S {
     );
   }
 
-  
-  String get kindlyrefillyourcredit{
+  String get kindlyrefillyourcredit {
     return Intl.message(
       'kindlyrefillyourcredit',
       name: 'kindlyrefillyourcredit',
@@ -386,8 +377,7 @@ class S {
     );
   }
 
-  
-  String get name{
+  String get name {
     return Intl.message(
       'name',
       name: 'name',
@@ -396,18 +386,16 @@ class S {
     );
   }
 
-  
-  String get pleasedonotexitthispageyourcreditwillbelost{
+  String get yousurewanttoexitthispage {
     return Intl.message(
-      'pleasedonotexitthispageyourcreditwillbelost',
-      name: 'pleasedonotexitthispageyourcreditwillbelost',
+      'You sure want to exit this page',
+      name: 'yousurewanttoexitthispage',
       desc: '',
       args: [],
     );
   }
 
-  
-  String get cancel{
+  String get cancel {
     return Intl.message(
       'cancel',
       name: 'cancel',
@@ -416,8 +404,7 @@ class S {
     );
   }
 
-  
-  String get proceed{
+  String get proceed {
     return Intl.message(
       'proceed',
       name: 'proceed',
@@ -426,8 +413,7 @@ class S {
     );
   }
 
-  
-  String get rollnumber{
+  String get rollnumber {
     return Intl.message(
       'rollnumber',
       name: 'rollnumber',
@@ -436,8 +422,7 @@ class S {
     );
   }
 
-  
-  String get department{
+  String get department {
     return Intl.message(
       'department',
       name: 'department',
@@ -446,8 +431,7 @@ class S {
     );
   }
 
-  
-  String get noofday{
+  String get noofday {
     return Intl.message(
       'noofday',
       name: 'noofday',
@@ -456,8 +440,7 @@ class S {
     );
   }
 
-  
-  String get noofdays{
+  String get noofdays {
     return Intl.message(
       'noofdays',
       name: 'noofdays',
@@ -466,8 +449,7 @@ class S {
     );
   }
 
-  
-  String get day{
+  String get day {
     return Intl.message(
       'day',
       name: 'day',
@@ -476,8 +458,7 @@ class S {
     );
   }
 
-  
-  String get days{
+  String get days {
     return Intl.message(
       'days',
       name: 'days',
@@ -486,8 +467,7 @@ class S {
     );
   }
 
-  
-  String get enteryourreason{
+  String get enteryourreason {
     return Intl.message(
       'enteryourreason',
       name: 'enteryourreason',
@@ -496,8 +476,7 @@ class S {
     );
   }
 
-  
-  String get submit{
+  String get submit {
     return Intl.message(
       'submit',
       name: 'submit',
@@ -506,8 +485,7 @@ class S {
     );
   }
 
-  
-  String get history{
+  String get history {
     return Intl.message(
       'history',
       name: 'history',
@@ -516,8 +494,7 @@ class S {
     );
   }
 
-  
-  String get yes{
+  String get yes {
     return Intl.message(
       'yes',
       name: 'yes',
@@ -526,8 +503,7 @@ class S {
     );
   }
 
-  
-  String get wanttoexitcampuslink{
+  String get wanttoexitcampuslink {
     return Intl.message(
       'wanttoexitcampuslink',
       name: 'wanttoexitcampuslink',
@@ -536,8 +512,7 @@ class S {
     );
   }
 
-  
-  String get no{
+  String get no {
     return Intl.message(
       'no',
       name: 'no',
@@ -546,8 +521,7 @@ class S {
     );
   }
 
-  
-  String get totalspend{
+  String get totalspend {
     return Intl.message(
       'totalspend',
       name: 'totalspend',
@@ -555,10 +529,7 @@ class S {
       args: [],
     );
   }
-
 }
-
-
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   const AppLocalizationDelegate();
@@ -588,4 +559,5 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
       }
     }
     return false;
-  }}
+  }
+}

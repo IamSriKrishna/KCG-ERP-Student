@@ -24,7 +24,7 @@ import 'package:kcgerp/Util/util.dart';
 import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 
-Route<dynamic> onGenerator(RouteSettings settings,String locale) {
+Route<dynamic> onGenerator(RouteSettings settings, String locale) {
   switch (settings.name) {
     case ODEXpandWidget.route:
       return PageTransition(
@@ -170,7 +170,7 @@ Route<dynamic> onGenerator(RouteSettings settings,String locale) {
     case MyProfile.route:
       return PageTransition(
         duration: Duration(milliseconds: duration.fadeMilliseconds),
-        child: MyProfile(),
+        child: EditProfile(),
         type: PageTransitionType.fade,
         settings: settings,
       );
