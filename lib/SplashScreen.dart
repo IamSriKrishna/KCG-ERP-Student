@@ -68,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen>
           Align(
               alignment: Alignment(0, 0.6),
               child: Text(
-                'The Justice Basheer Ahmed Sayeed',
+                'Justice Basheer Ahmed Sayeed College For Women',
                 style: GoogleFonts.merriweather(fontSize: 20),
               )),
           Align(
